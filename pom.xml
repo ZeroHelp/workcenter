@@ -15,6 +15,11 @@
   </scm>
   
 	<modules>
+		<module>workcenter-model</module>
+		<module>workcenter-dao</module>
+		<module>workcenter-common</module>
+		<module>workcenter-service</module>
+		<module>workcenter-conroller</module>
 		<module>workcenter-kpi</module>
 		<module>workcenter-web</module>
 	</modules>

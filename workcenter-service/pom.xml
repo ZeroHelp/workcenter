@@ -6,18 +6,19 @@
 		<artifactId>workcenter-parent</artifactId>
 		<version>0.0.1.Alpha1-SNAPSHOT</version>
 	</parent>
-	<artifactId>workcenter-kpi</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>workcenter-service</artifactId>
+	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
-	<description>The config module of dubbo project</description>
+	<description>The spring config module of dubbo project</description>
 	<properties>
-		<skip_maven_deploy>true</skip_maven_deploy>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<modules>
-		<module>workcenter-kpi-model</module>
-		<module>workcenter-kpi-dao</module>
-		<module>workcenter-kpi-common</module>
-		<module>workcenter-kpi-service</module>
-		<module>workcenter-kpi-conroller</module>
-	</modules>
+	<dependencies>
+		<!-- workcenter -->
+		<dependency>
+			<groupId>cn.workcenter</groupId>
+			<artifactId>workcenter-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>
