@@ -46,10 +46,10 @@
           <ul class="nav navbar-nav navbar-right">
 			
 			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">linwang37 <span class="caret"></span></a>
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王林 <span class="caret"></span></a>
 			  <ul class="dropdown-menu">
 				
-				<li><a href="#">修改密码</a></li>
+				<!-- <li><a href="#">修改密码</a></li> -->
 				<li role="separator" class="divider"></li>
 			  </ul>
 			</li>
@@ -87,6 +87,7 @@
 					<th>备注</th>
 					<th>待考核人</th>
 					<th>审核人</th>
+					<th>等级</th>
 					<th>状态</th>
 					<th>操作</th>
 				</tr>
@@ -96,26 +97,25 @@
 					<th scope="row">1</th>
 					<td>2015</td>
 					<td>年末考评</td>
-					<td>linwang37</td>
-					<td>baojianliu</td>
+					<td>王林</td>
+					<td>刘宝剑</td>
+					<td>未评出</td>
 					<td>起草</td>
-					<td><button type="button" class="btn btn-sm btn-default"><a href="./4write_task.html">起草</a></button></td>
+					<td><button id="write" type="button" class="btn btn-sm btn-default">起草</button></td>
 				</tr>
 				<tr>
 					<th scope="row">2</th>
 					<td>2015</td>
 					<td>年中考评</td>
-					<td>linwang37</td>
-					<td>baojianliu</td>
+					<td>王林</td>
+					<td>刘宝剑</td>
+					<td>A</td>
 					<td>完成</td>
-					<td><button type="button" class="btn btn-sm btn-default"><a href="./8viewkpi.html">查看</a></button></td>
+					<td><button id="view" type="button" class="btn btn-sm btn-default">查看</button></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	  
-	  
-	  
 	  
     </div> <!-- /container -->
 	
@@ -129,7 +129,18 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="./assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="./dist/js/bootstrap.min.js"></script>
+    
+    <script>
+    $(document).ready(function() {
+    	$("#write").on("click", function() {
+    		 window.location.href = './4write_task.html';
+    	});
+    	$("#view").on("click", function() {
+   		 window.location.href = './9viewkpi.html';
+   	});
+    })
+    
+    </script>
   </body>
 </html>

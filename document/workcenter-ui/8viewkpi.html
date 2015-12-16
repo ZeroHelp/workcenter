@@ -46,10 +46,10 @@
           <ul class="nav navbar-nav navbar-right">
 			
 			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">linwang37 <span class="caret"></span></a>
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王林 <span class="caret"></span></a>
 			  <ul class="dropdown-menu">
 				
-				<li><a href="#">修改密码</a></li>
+				<!-- <li><a href="#">修改密码</a></li> -->
 				<li role="separator" class="divider"></li>
 			  </ul>
 			</li>
@@ -326,13 +326,41 @@
 		</tbody>
 	</table>
 	
+	<span class="label label-info">汇总</span>
+	
+	<table class="table">
+		<tbody>
+			<tr>
+				<td>
+					<div class="row">
+						<div class="col-sm-2 col-sm-offset-8">
+						<div class="input-group">
+						  <span class="input-group-addon">等级</span>
+						  <input type="text" class="form-control text-center" aria-label="Amount (to the nearest dollar)" value="B" readonly>
+						</div>
+						</div>
+					  
+						<div class="col-sm-2 ">
+						<div class="input-group">
+						  <span class="input-group-addon">总分</span>
+						  <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)" value="4.5" readonly>
+						  <span class="input-group-addon">分</span>
+						</div>
+						</div>
+					 </div><!-- /.col-lg-6 -->
+					  
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
 	
 	
 		
 	  <div class="row">&nbsp;</div><!-- /.row -->
 	  
 	  <div class="span7 text-center">
-		 <button type="button" class="btn btn-primary btn-lg">返回<a href="3kpi.html">返回</a></button>
+		 <button id="back" type="button" class="btn btn-primary btn-lg">返回</button>
 	  </div>
 	 
 		
@@ -342,7 +370,16 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="./assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="./dist/js/bootstrap.min.js"></script>
+    
+    <script>
+    $(document).ready(function() {
+    	$("#back").on("click", function() {
+   		 window.location.href = './3kpi.html';
+   		});
+    })
+    
+    </script>
+    
   </body>
 </html>

@@ -46,10 +46,10 @@
           <ul class="nav navbar-nav navbar-right">
 			
 			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">linwang37 <span class="caret"></span></a>
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王林 <span class="caret"></span></a>
 			  <ul class="dropdown-menu">
 				
-				<li><a href="#">修改密码</a></li>
+				<!-- <li><a href="#">修改密码</a></li> -->
 				<li role="separator" class="divider"></li>
 			  </ul>
 			</li>
@@ -80,7 +80,7 @@
             <div class="span7 text-center"><h3>KPI系统</h3></div>
             <div class="span7 text-center">
 			<p>
-			<a href="./3kpi.html" class="btn btn-primary" role="button">进入</a>
+			<a id="kpi" href="./3kpi.html" class="btn btn-primary" role="button">进入</a>
 			</p>
 			</div>
           </div>
@@ -111,7 +111,14 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="./assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="./dist/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function() {
+    	$("#kpi").on("click", function() {
+    		 window.location.href = './3kpi.html';
+    	})
+    })
+    
+    </script>
   </body>
 </html>

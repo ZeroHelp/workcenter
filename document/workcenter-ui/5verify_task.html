@@ -46,10 +46,10 @@
           <ul class="nav navbar-nav navbar-right">
 			
 			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">linwang37 <span class="caret"></span></a>
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王林 <span class="caret"></span></a>
 			  <ul class="dropdown-menu">
 				
-				<li><a href="#">修改密码</a></li>
+				<!-- <li><a href="#">修改密码</a></li> -->
 				<li role="separator" class="divider"></li>
 			  </ul>
 			</li>
@@ -95,7 +95,7 @@
 						  <div class="col-lg-12">
 							<div class="input-group">
 							  <span class="input-group-addon" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							  <input type="text" class="form-control" placeholder="编写方向..." value="宜信财富在线1" readonly>
+							  <input type="text" class="form-control" placeholder="填写方向..." value="宜信财富在线1" readonly>
 							</div><!-- /input-group -->
 						  </div><!-- /.col-lg-12 -->
 						  
@@ -131,7 +131,7 @@
 				  <div class="col-lg-12">
 					<div class="input-group">
 					  <span class="input-group-addon" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-					  <input type="text" class="form-control" placeholder="编写方向..." value="宜信财富在线2" readonly >
+					  <input type="text" class="form-control" placeholder="填写方向..." value="宜信财富在线2" readonly >
 					</div><!-- /input-group -->
 				  </div><!-- /.col-lg-12 -->
 				</div><!-- /.row -->
@@ -172,7 +172,7 @@
 						  <div class="col-lg-12">
 							<div class="input-group">
 							  <span class="input-group-addon">企业文化</span>
-							  <input type="text" class="form-control" placeholder="编写企业文化..."  value="评价标准参见《宜信员工企业文化表现指标库》:诚信、专业、创新、以客户为本、共享价值" readonly>
+							  <input type="text" class="form-control" placeholder="填写企业文化..."  value="评价标准参见《宜信员工企业文化表现指标库》:诚信、专业、创新、以客户为本、共享价值" readonly>
 							</div><!-- /input-group -->
 						  </div><!-- /.col-lg-12 -->
 						  
@@ -199,7 +199,7 @@
 				  <div class="col-lg-12">
 					<div class="input-group">
 					  <span class="input-group-addon">行为规范</span>
-					    <input type="text" class="form-control" placeholder="编写行为规范..."  value="个人行为规范符合度" readonly>
+					    <input type="text" class="form-control" placeholder="填写行为规范..."  value="个人行为规范符合度" readonly>
 					</div><!-- /input-group -->
 				  </div><!-- /.col-lg-12 -->
 				</div><!-- /.row -->
@@ -226,7 +226,7 @@
 				  <div class="col-lg-12">
 					<div class="input-group">
 					  <span class="input-group-addon" id="basic-addon3">能力素质</span>
-					    <input type="text" class="form-control" placeholder="编写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)" value="XXXXXXX能力素质" readonly>
+					    <input type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)" value="XXXXXXX能力素质" readonly>
 					</div><!-- /input-group -->
 				  </div><!-- /.col-lg-12 -->
 				</div><!-- /.row -->
@@ -255,8 +255,8 @@
 	  <div class="row">&nbsp;</div><!-- /.row -->
 	  
 	  <div class="span7 text-center">
-		 <button type="button" class="btn btn-primary btn-lg">不通过审批<a href="3kpi.html" >审批</a></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		  <button type="button" class="btn btn-primary btn-lg">通过审批<a href="6self_rating.html" >审批</a></button>
+		 <button id="kpi" type="button" class="btn btn-primary btn-lg">不通过审批</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  <button id="verify" type="button" class="btn btn-primary btn-lg">通过审批</button>
 	  </div>
 	 
 		
@@ -266,7 +266,18 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="./assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="./dist/js/bootstrap.min.js"></script>
+    
+    <script>
+    $(document).ready(function() {
+    	$("#kpi").on("click", function() {
+    		 window.location.href = './3kpi.html';
+    	});
+    	$("#verify").on("click", function() {
+   		 window.location.href = './6self_rating.html';
+   	});
+    })
+    
+    </script>
   </body>
 </html>
