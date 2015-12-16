@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.workcenter.xml.FlowTaskinstanceMapper">
+  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowTaskinstance">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="swimlane_id" jdbcType="BIGINT" property="swimlaneId" />
+    <result column="processinstance_id" jdbcType="BIGINT" property="processinstanceId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="duedate" jdbcType="TIMESTAMP" property="duedate" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="is_cancelled" jdbcType="INTEGER" property="isCancelled" />
+    <result column="is_suspended" jdbcType="INTEGER" property="isSuspended" />
+    <result column="is_open" jdbcType="INTEGER" property="isOpen" />
+    <result column="is_blocking" jdbcType="INTEGER" property="isBlocking" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, swimlane_id, processinstance_id, task_id, name, description, create_time, start_time, 
+    end_time, duedate, priority, is_cancelled, is_suspended, is_open, is_blocking
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_flow_taskinstance
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from base_flow_taskinstance
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.workcenter.model.FlowTaskinstance">
+    insert into base_flow_taskinstance (id, swimlane_id, processinstance_id, 
+      task_id, name, description, 
+      create_time, start_time, end_time, 
+      duedate, priority, is_cancelled, 
+      is_suspended, is_open, is_blocking
+      )
+    values (#{id,jdbcType=BIGINT}, #{swimlaneId,jdbcType=BIGINT}, #{processinstanceId,jdbcType=BIGINT}, 
+      #{taskId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{duedate,jdbcType=TIMESTAMP}, #{priority,jdbcType=INTEGER}, #{isCancelled,jdbcType=INTEGER}, 
+      #{isSuspended,jdbcType=INTEGER}, #{isOpen,jdbcType=INTEGER}, #{isBlocking,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTaskinstance">
+    insert into base_flow_taskinstance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="swimlaneId != null">
+        swimlane_id,
+      </if>
+      <if test="processinstanceId != null">
+        processinstance_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="duedate != null">
+        duedate,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="isCancelled != null">
+        is_cancelled,
+      </if>
+      <if test="isSuspended != null">
+        is_suspended,
+      </if>
+      <if test="isOpen != null">
+        is_open,
+      </if>
+      <if test="isBlocking != null">
+        is_blocking,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="swimlaneId != null">
+        #{swimlaneId,jdbcType=BIGINT},
+      </if>
+      <if test="processinstanceId != null">
+        #{processinstanceId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duedate != null">
+        #{duedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="isCancelled != null">
+        #{isCancelled,jdbcType=INTEGER},
+      </if>
+      <if test="isSuspended != null">
+        #{isSuspended,jdbcType=INTEGER},
+      </if>
+      <if test="isOpen != null">
+        #{isOpen,jdbcType=INTEGER},
+      </if>
+      <if test="isBlocking != null">
+        #{isBlocking,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowTaskinstance">
+    update base_flow_taskinstance
+    <set>
+      <if test="swimlaneId != null">
+        swimlane_id = #{swimlaneId,jdbcType=BIGINT},
+      </if>
+      <if test="processinstanceId != null">
+        processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duedate != null">
+        duedate = #{duedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="isCancelled != null">
+        is_cancelled = #{isCancelled,jdbcType=INTEGER},
+      </if>
+      <if test="isSuspended != null">
+        is_suspended = #{isSuspended,jdbcType=INTEGER},
+      </if>
+      <if test="isOpen != null">
+        is_open = #{isOpen,jdbcType=INTEGER},
+      </if>
+      <if test="isBlocking != null">
+        is_blocking = #{isBlocking,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowTaskinstance">
+    update base_flow_taskinstance
+    set swimlane_id = #{swimlaneId,jdbcType=BIGINT},
+      processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      duedate = #{duedate,jdbcType=TIMESTAMP},
+      priority = #{priority,jdbcType=INTEGER},
+      is_cancelled = #{isCancelled,jdbcType=INTEGER},
+      is_suspended = #{isSuspended,jdbcType=INTEGER},
+      is_open = #{isOpen,jdbcType=INTEGER},
+      is_blocking = #{isBlocking,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowTaskinstance">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="swimlane_id" jdbcType="BIGINT" property="swimlaneId" />
+    <result column="processinstance_id" jdbcType="BIGINT" property="processinstanceId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="duedate" jdbcType="TIMESTAMP" property="duedate" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="is_cancelled" jdbcType="INTEGER" property="isCancelled" />
+    <result column="is_suspended" jdbcType="INTEGER" property="isSuspended" />
+    <result column="is_open" jdbcType="INTEGER" property="isOpen" />
+    <result column="is_blocking" jdbcType="INTEGER" property="isBlocking" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, swimlane_id, processinstance_id, task_id, name, description, create_time, start_time, 
+    end_time, duedate, priority, is_cancelled, is_suspended, is_open, is_blocking
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_flow_taskinstance
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from base_flow_taskinstance
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.workcenter.model.FlowTaskinstance">
+    insert into base_flow_taskinstance (id, swimlane_id, processinstance_id, 
+      task_id, name, description, 
+      create_time, start_time, end_time, 
+      duedate, priority, is_cancelled, 
+      is_suspended, is_open, is_blocking
+      )
+    values (#{id,jdbcType=BIGINT}, #{swimlaneId,jdbcType=BIGINT}, #{processinstanceId,jdbcType=BIGINT}, 
+      #{taskId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{duedate,jdbcType=TIMESTAMP}, #{priority,jdbcType=INTEGER}, #{isCancelled,jdbcType=INTEGER}, 
+      #{isSuspended,jdbcType=INTEGER}, #{isOpen,jdbcType=INTEGER}, #{isBlocking,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTaskinstance">
+    insert into base_flow_taskinstance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="swimlaneId != null">
+        swimlane_id,
+      </if>
+      <if test="processinstanceId != null">
+        processinstance_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="duedate != null">
+        duedate,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="isCancelled != null">
+        is_cancelled,
+      </if>
+      <if test="isSuspended != null">
+        is_suspended,
+      </if>
+      <if test="isOpen != null">
+        is_open,
+      </if>
+      <if test="isBlocking != null">
+        is_blocking,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="swimlaneId != null">
+        #{swimlaneId,jdbcType=BIGINT},
+      </if>
+      <if test="processinstanceId != null">
+        #{processinstanceId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duedate != null">
+        #{duedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="isCancelled != null">
+        #{isCancelled,jdbcType=INTEGER},
+      </if>
+      <if test="isSuspended != null">
+        #{isSuspended,jdbcType=INTEGER},
+      </if>
+      <if test="isOpen != null">
+        #{isOpen,jdbcType=INTEGER},
+      </if>
+      <if test="isBlocking != null">
+        #{isBlocking,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowTaskinstance">
+    update base_flow_taskinstance
+    <set>
+      <if test="swimlaneId != null">
+        swimlane_id = #{swimlaneId,jdbcType=BIGINT},
+      </if>
+      <if test="processinstanceId != null">
+        processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duedate != null">
+        duedate = #{duedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="isCancelled != null">
+        is_cancelled = #{isCancelled,jdbcType=INTEGER},
+      </if>
+      <if test="isSuspended != null">
+        is_suspended = #{isSuspended,jdbcType=INTEGER},
+      </if>
+      <if test="isOpen != null">
+        is_open = #{isOpen,jdbcType=INTEGER},
+      </if>
+      <if test="isBlocking != null">
+        is_blocking = #{isBlocking,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowTaskinstance">
+    update base_flow_taskinstance
+    set swimlane_id = #{swimlaneId,jdbcType=BIGINT},
+      processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      duedate = #{duedate,jdbcType=TIMESTAMP},
+      priority = #{priority,jdbcType=INTEGER},
+      is_cancelled = #{isCancelled,jdbcType=INTEGER},
+      is_suspended = #{isSuspended,jdbcType=INTEGER},
+      is_open = #{isOpen,jdbcType=INTEGER},
+      is_blocking = #{isBlocking,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
