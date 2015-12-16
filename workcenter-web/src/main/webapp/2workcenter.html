@@ -39,21 +39,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">kpi系统</a>
+          <a class="navbar-brand" href="#">Workcenter</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           
           <ul class="nav navbar-nav navbar-right">
 			
 			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">linwang37 <span class="caret"></span></a>
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王林 <span class="caret"></span></a>
 			  <ul class="dropdown-menu">
 				
-				<li><a href="#">修改密码</a></li>
+				<!-- <li><a href="#">修改密码</a></li> -->
 				<li role="separator" class="divider"></li>
 			  </ul>
 			</li>
-			<li><a href="#">退出</a></li>
+			<li><a href="1login.html">退出</a></li>
 		  </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -63,7 +63,7 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <div class="span7 text-center"><h1>欢迎使用,kpi系统</h1></div>
+        <div class="span7 text-center"><h1>欢迎使用,workcenter</h1></div>
         <!--<p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
         <p>To see the difference between static and fixed top navbars, just scroll.</p>
         <p>
@@ -71,65 +71,54 @@
         </p>-->
       </div>
 
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+		  <p>&nbsp;</p>
+          <img src="./img/icons/png/Infinity-Loop.png" alt="Infinity-Loop" class="tile-image big-illustration">
+          <div class="caption">
+            <div class="span7 text-center"><h3>KPI系统</h3></div>
+            <div class="span7 text-center">
+			<p>
+			<a id="kpi" href="./3kpi.html" class="btn btn-primary" role="button">进入</a>
+			</p>
+			</div>
+          </div>
+        </div>
+      </div>
 	  
+	  <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+		  <p>&nbsp;</p>
+          <img src="./img/icons/png/Pensils.png" alt="Pensils" class="tile-image big-illustration">
+          <div class="caption">
+            <div class="span7 text-center"><h3>admin后台</h3></div>
+            <div class="span7 text-center">
+			<p>
+			<a href="#" class="btn btn-primary disabled" role="button">暂不可用</a>
+			</p>
+			</div>
+          </div>
+        </div>
+      </div>
 	  
-	  
-	  <div class="panel panel-default">
-		<div class="panel-heading">&nbsp;考核列表</div>
-		<!--<div class="panel-body">
-			<p>&nbsp;</p>
-		</div>-->
-		<table class="table">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>年度</th>
-					<th>备注</th>
-					<th>待考核人</th>
-					<th>审核人</th>
-					<th>状态</th>
-					<th>操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>2015</td>
-					<td>年末考评</td>
-					<td>linwang37</td>
-					<td>baojianliu</td>
-					<td>进行中</td>
-					<td><button type="button" class="btn btn-sm btn-default">起草</button></td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>2015</td>
-					<td>年中考评</td>
-					<td>linwang37</td>
-					<td>baojianliu</td>
-					<td>进行中</td>
-					<td><button type="button" class="btn btn-sm btn-default">查看</button></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	  
-	  
-	  
-	  
-    </div> <!-- /container -->
-	
-	
-	
-	
-	
+    </div>
 
+
+</div> <!-- /container -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="./assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="./dist/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function() {
+    	$("#kpi").on("click", function() {
+    		 window.location.href = './3kpi.html';
+    	})
+    })
+    
+    </script>
   </body>
 </html>
