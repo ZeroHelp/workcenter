@@ -1,182 +1,112 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.workcenter.xml.UserMapper">
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.User">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="real_name" jdbcType="VARCHAR" property="realName" />
-    <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.workcenter.xml.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.workcenter.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="last_login" property="lastLogin" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, user_name, real_name, last_login, status
+  <sql id="Base_Column_List" >
+    id, user_name, real_name, password, last_login, status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from base_user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from base_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.User">
+  <insert id="insert" parameterType="cn.workcenter.model.User" >
     insert into base_user (id, user_name, real_name, 
-      last_login, status)
+      password, last_login, status
+      )
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
-      #{lastLogin,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+      #{password,jdbcType=VARCHAR}, #{lastLogin,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.User">
+  <insert id="insertSelective" parameterType="cn.workcenter.model.User" >
     insert into base_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="userName != null">
+      <if test="userName != null" >
         user_name,
       </if>
-      <if test="realName != null">
+      <if test="realName != null" >
         real_name,
       </if>
-      <if test="lastLogin != null">
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="lastLogin != null" >
         last_login,
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="userName != null">
+      <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="realName != null">
+      <if test="realName != null" >
         #{realName,jdbcType=VARCHAR},
       </if>
-      <if test="lastLogin != null">
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLogin != null" >
         #{lastLogin,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.User">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.User" >
     update base_user
-    <set>
-      <if test="userName != null">
+    <set >
+      <if test="userName != null" >
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="realName != null">
+      <if test="realName != null" >
         real_name = #{realName,jdbcType=VARCHAR},
       </if>
-      <if test="lastLogin != null">
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLogin != null" >
         last_login = #{lastLogin,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.User">
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.User" >
     update base_user
     set user_name = #{userName,jdbcType=VARCHAR},
       real_name = #{realName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
       last_login = #{lastLogin,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.User">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="real_name" jdbcType="VARCHAR" property="realName" />
-    <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, user_name, real_name, last_login, status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from base_user
-    where id = #{id,jdbcType=BIGINT}
+  <select id="getUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from base_user
+  	where user_name = #{usernmae}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from base_user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.User">
-    insert into base_user (id, user_name, real_name, 
-      last_login, status)
-    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
-      #{lastLogin,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.User">
-    insert into base_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="realName != null">
-        real_name,
-      </if>
-      <if test="lastLogin != null">
-        last_login,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="realName != null">
-        #{realName,jdbcType=VARCHAR},
-      </if>
-      <if test="lastLogin != null">
-        #{lastLogin,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.User">
-    update base_user
-    <set>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="realName != null">
-        real_name = #{realName,jdbcType=VARCHAR},
-      </if>
-      <if test="lastLogin != null">
-        last_login = #{lastLogin,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.User">
-    update base_user
-    set user_name = #{userName,jdbcType=VARCHAR},
-      real_name = #{realName,jdbcType=VARCHAR},
-      last_login = #{lastLogin,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 </mapper>

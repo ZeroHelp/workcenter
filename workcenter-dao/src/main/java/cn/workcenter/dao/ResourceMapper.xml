@@ -13,6 +13,9 @@
   <sql id="Base_Column_List">
     id, parent_id, resource_name, resource_url, create_time, create_userid, status
   </sql>
+  <sql id="Re_Base_Column_List">
+    re.id, re.parent_id, re.resource_name, re.resource_url, re.create_time, re.create_userid, re.status
+  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -227,4 +230,31 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <!-- no auto -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_resource
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getResourcesByRoleName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Re_Base_Column_List" />
+  	from base_resource re
+  	left join base_role_resource rr on rr.resource_id = re.id
+  	left join base_role ro on rr.role_id = ro.id
+  	where ro.role_name = #{rolename}
+  </select>
+  <select id="getResourcesByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Re_Base_Column_List" />
+  	from base_resource re
+  	left join base_role_resource rr on rr.resource_id = re.id
+  	left join base_role ro on rr.role_id = ro.id
+  	left join base_user_role ur on ur.role_id = ro.id
+  	left join base_user ue on ue.id = ur.user_id
+  	where ue.user_name = #{username}
+  </select>
+  
+  
 </mapper>

@@ -13,11 +13,22 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+		<!-- Servlet API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 		<!-- workcenter -->
 		<dependency>
 			<groupId>cn.workcenter</groupId>
 			<artifactId>workcenter-dao</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.decartes</groupId>
+			<artifactId>common-utils</artifactId>
+			<version>0.0.1.SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -35,6 +46,15 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.cache</groupId>
+			<artifactId>cache-api</artifactId>
+		</dependency>
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
 		</dependency>
 	</dependencies>
 </project>

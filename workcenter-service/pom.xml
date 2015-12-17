@@ -20,5 +20,10 @@
 			<artifactId>workcenter-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
 	</dependencies>
 </project>

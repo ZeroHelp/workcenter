@@ -9,6 +9,8 @@ public class User {
 
     private String realName;
 
+    private String password;
+
     private Date lastLogin;
 
     private Integer status;
@@ -35,6 +37,14 @@ public class User {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Date getLastLogin() {

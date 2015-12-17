@@ -1,5 +1,12 @@
 package cn.workcenter.common;
 
-public abstract class WorkcenterApplication implements Constant {
+import cn.workcenter.common.constant.WebConstant;
 
+public abstract class WorkcenterApplication implements WebConstant {
+	
+	protected ThreadLocal<String> sidThreadLocal = new ThreadLocal<String>(){
+		protected String initialValue() {
+			return "";
+		}
+	};
 }
