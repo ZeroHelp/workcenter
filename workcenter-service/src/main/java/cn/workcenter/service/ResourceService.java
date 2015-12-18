@@ -8,4 +8,6 @@ public interface ResourceService {
 
 	List<Resource> getResourcesByUserName(String username);
 
+	List<Resource> getUserModule();
+
 }

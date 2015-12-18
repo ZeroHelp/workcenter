@@ -1,32 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.workcenter.xml.ResourceMapper">
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.Resource">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
-    <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="create_userid" jdbcType="BIGINT" property="createUserid" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.workcenter.dao.ResourceMapper" >
+  <resultMap id="BaseResultMap" type="cn.workcenter.model.Resource" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="resource_name" property="resourceName" jdbcType="VARCHAR" />
+    <result column="resource_url" property="resourceUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_userid" property="createUserid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, parent_id, resource_name, resource_url, create_time, create_userid, status
   </sql>
   <sql id="Re_Base_Column_List">
-    re.id, re.parent_id, re.resource_name, re.resource_url, re.create_time, re.create_userid, re.status
+    re.id as id, re.parent_id as parentId, re.resource_name as resourceName , re.resource_url as resourceUrl, re.create_time as createTime, re.create_userid as createUserid, re.status as status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from base_resource
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from base_resource
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.Resource">
+  <insert id="insert" parameterType="cn.workcenter.model.Resource" >
     insert into base_resource (id, parent_id, resource_name, 
       resource_url, create_time, create_userid, 
       status)
@@ -34,80 +34,80 @@
       #{resourceUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUserid,jdbcType=BIGINT}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.Resource">
+  <insert id="insertSelective" parameterType="cn.workcenter.model.Resource" >
     insert into base_resource
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="parentId != null">
+      <if test="parentId != null" >
         parent_id,
       </if>
-      <if test="resourceName != null">
+      <if test="resourceName != null" >
         resource_name,
       </if>
-      <if test="resourceUrl != null">
+      <if test="resourceUrl != null" >
         resource_url,
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time,
       </if>
-      <if test="createUserid != null">
+      <if test="createUserid != null" >
         create_userid,
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="parentId != null">
+      <if test="parentId != null" >
         #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="resourceName != null">
+      <if test="resourceName != null" >
         #{resourceName,jdbcType=VARCHAR},
       </if>
-      <if test="resourceUrl != null">
+      <if test="resourceUrl != null" >
         #{resourceUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createUserid != null">
+      <if test="createUserid != null" >
         #{createUserid,jdbcType=BIGINT},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.Resource">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.Resource" >
     update base_resource
-    <set>
-      <if test="parentId != null">
+    <set >
+      <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="resourceName != null">
+      <if test="resourceName != null" >
         resource_name = #{resourceName,jdbcType=VARCHAR},
       </if>
-      <if test="resourceUrl != null">
+      <if test="resourceUrl != null" >
         resource_url = #{resourceUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createUserid != null">
+      <if test="createUserid != null" >
         create_userid = #{createUserid,jdbcType=BIGINT},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.Resource">
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.Resource" >
     update base_resource
     set parent_id = #{parentId,jdbcType=BIGINT},
       resource_name = #{resourceName,jdbcType=VARCHAR},
@@ -117,135 +117,16 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.Resource">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
-    <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="create_userid" jdbcType="BIGINT" property="createUserid" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, parent_id, resource_name, resource_url, create_time, create_userid, status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from base_resource
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from base_resource
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.Resource">
-    insert into base_resource (id, parent_id, resource_name, 
-      resource_url, create_time, create_userid, 
-      status)
-    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{resourceName,jdbcType=VARCHAR}, 
-      #{resourceUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUserid,jdbcType=BIGINT}, 
-      #{status,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.Resource">
-    insert into base_resource
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="parentId != null">
-        parent_id,
-      </if>
-      <if test="resourceName != null">
-        resource_name,
-      </if>
-      <if test="resourceUrl != null">
-        resource_url,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="createUserid != null">
-        create_userid,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=BIGINT},
-      </if>
-      <if test="resourceName != null">
-        #{resourceName,jdbcType=VARCHAR},
-      </if>
-      <if test="resourceUrl != null">
-        #{resourceUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUserid != null">
-        #{createUserid,jdbcType=BIGINT},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.Resource">
-    update base_resource
-    <set>
-      <if test="parentId != null">
-        parent_id = #{parentId,jdbcType=BIGINT},
-      </if>
-      <if test="resourceName != null">
-        resource_name = #{resourceName,jdbcType=VARCHAR},
-      </if>
-      <if test="resourceUrl != null">
-        resource_url = #{resourceUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUserid != null">
-        create_userid = #{createUserid,jdbcType=BIGINT},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.Resource">
-    update base_resource
-    set parent_id = #{parentId,jdbcType=BIGINT},
-      resource_name = #{resourceName,jdbcType=VARCHAR},
-      resource_url = #{resourceUrl,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_userid = #{createUserid,jdbcType=BIGINT},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <!-- no auto -->
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from base_resource
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="getResourcesByRoleName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getResourcesByRolename" parameterType="java.lang.String" resultType="cn.workcenter.model.Resource">
   	select
   	<include refid="Re_Base_Column_List" />
   	from base_resource re
   	left join base_role_resource rr on rr.resource_id = re.id
   	left join base_role ro on rr.role_id = ro.id
   	where ro.role_name = #{rolename}
+  	and re.status = 1 and rr .status = 1 and ro.status = 1
   </select>
-  <select id="getResourcesByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="getResourcesByUsername" parameterType="java.lang.String" resultType="cn.workcenter.model.Resource">
   	select
   	<include refid="Re_Base_Column_List" />
   	from base_resource re
@@ -254,7 +135,17 @@
   	left join base_user_role ur on ur.role_id = ro.id
   	left join base_user ue on ue.id = ur.user_id
   	where ue.user_name = #{username}
+  	and re.status = 1 and rr .status = 1 and ro.status = 1 and ur.status = 1 and ue.status = 1
   </select>
-  
-  
+  <select id="getRootResourcesByUsername" parameterType="java.lang.String" resultType="cn.workcenter.model.Resource">
+  	select
+  	<include refid="Re_Base_Column_List" />
+  	from base_resource re
+  	left join base_role_resource rr on rr.resource_id = re.id
+  	left join base_role ro on rr.role_id = ro.id
+  	left join base_user_role ur on ur.role_id = ro.id
+  	left join base_user ue on ue.id = ur.user_id
+  	where ue.user_name = #{username} and re.parent_id = 0
+  	and re.status = 1 and rr .status = 1 and ro.status = 1 and ur.status = 1 and ue.status = 1
+  </select>
 </mapper>

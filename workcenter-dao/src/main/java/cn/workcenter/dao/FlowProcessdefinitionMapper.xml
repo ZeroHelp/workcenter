@@ -1,177 +1,88 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.workcenter.xml.FlowProcessdefinitionMapper">
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowProcessdefinition">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="startnode_id" jdbcType="BIGINT" property="startnodeId" />
-    <result column="version" jdbcType="VARCHAR" property="version" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.workcenter.dao.FlowProcessdefinitionMapper" >
+  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowProcessdefinition" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="startnode_id" property="startnodeId" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, name, startnode_id, version, status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from base_flow_processdefinition
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from base_flow_processdefinition
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.FlowProcessdefinition">
+  <insert id="insert" parameterType="cn.workcenter.model.FlowProcessdefinition" >
     insert into base_flow_processdefinition (id, name, startnode_id, 
       version, status)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{startnodeId,jdbcType=BIGINT}, 
       #{version,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowProcessdefinition">
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowProcessdefinition" >
     insert into base_flow_processdefinition
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         name,
       </if>
-      <if test="startnodeId != null">
+      <if test="startnodeId != null" >
         startnode_id,
       </if>
-      <if test="version != null">
+      <if test="version != null" >
         version,
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="startnodeId != null">
+      <if test="startnodeId != null" >
         #{startnodeId,jdbcType=BIGINT},
       </if>
-      <if test="version != null">
+      <if test="version != null" >
         #{version,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowProcessdefinition">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowProcessdefinition" >
     update base_flow_processdefinition
-    <set>
-      <if test="name != null">
+    <set >
+      <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="startnodeId != null">
+      <if test="startnodeId != null" >
         startnode_id = #{startnodeId,jdbcType=BIGINT},
       </if>
-      <if test="version != null">
+      <if test="version != null" >
         version = #{version,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowProcessdefinition">
-    update base_flow_processdefinition
-    set name = #{name,jdbcType=VARCHAR},
-      startnode_id = #{startnodeId,jdbcType=BIGINT},
-      version = #{version,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowProcessdefinition">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="startnode_id" jdbcType="BIGINT" property="startnodeId" />
-    <result column="version" jdbcType="VARCHAR" property="version" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, name, startnode_id, version, status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from base_flow_processdefinition
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from base_flow_processdefinition
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.FlowProcessdefinition">
-    insert into base_flow_processdefinition (id, name, startnode_id, 
-      version, status)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{startnodeId,jdbcType=BIGINT}, 
-      #{version,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowProcessdefinition">
-    insert into base_flow_processdefinition
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="startnodeId != null">
-        startnode_id,
-      </if>
-      <if test="version != null">
-        version,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="startnodeId != null">
-        #{startnodeId,jdbcType=BIGINT},
-      </if>
-      <if test="version != null">
-        #{version,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowProcessdefinition">
-    update base_flow_processdefinition
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="startnodeId != null">
-        startnode_id = #{startnodeId,jdbcType=BIGINT},
-      </if>
-      <if test="version != null">
-        version = #{version,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowProcessdefinition">
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowProcessdefinition" >
     update base_flow_processdefinition
     set name = #{name,jdbcType=VARCHAR},
       startnode_id = #{startnodeId,jdbcType=BIGINT},

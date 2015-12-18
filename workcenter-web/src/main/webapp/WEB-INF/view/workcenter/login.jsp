@@ -2,6 +2,7 @@
 <%
 	String basePath = request.getContextPath();
 %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +12,9 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="<%=basePath%>/favicon.ico">
+<link rel="icon" href="<%=basePath%>/img/logo.ico">
 <title>宜信财富在线</title>
-<!-- Bootstrap core CSS -->
 <link href="<%=basePath%>/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Custom styles for this template -->
 <link href="<%=basePath%>/css/signin.css" rel="stylesheet">
 </head>
 
@@ -67,7 +66,7 @@
 	
 	<script src="<%=basePath%>/js/jquery.min.js"></script>
 	<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
-	<script src="/${basePath}/js/md5.js"></script>
+	<script src="<%=basePath%>/js/md5.js"></script>
 	<script type="text/javascript">
 		//回车按键登录
 		//document.getElementById('shadow_box').onkeydown=keyDownSearch;  
@@ -112,19 +111,19 @@
 			password = hex_md5(password);
 			$.ajax({
 				type: "post",
-				url: '/<%=basePath%>/workcenter/sid',
+				url: '<%=basePath%>/workcenter/sid',
 				data : {
 					username : username,
 					password : password,
 				},
 				dataType : "json",
 				success : function(data) {
-					if (data.returnmsg == "SUCCESS") {
+					if (data.returncode == "200") {
 						var sid = data.data;
-						window.location.href = '/<%=basePath%>/' + sid+ '/workcenter/home';
+						window.location.href = '<%=basePath%>/' + sid+ '/workcenter/home';
 					} else {
-						$("#model_title").text("*警告");
-						$("#model_content").text("*密码为空");
+						$("#model_title").text(data.returnmsg);
+						$("#model_content").text(data.returnmemo);
 						$('#myModal').modal();
 					}
 				}

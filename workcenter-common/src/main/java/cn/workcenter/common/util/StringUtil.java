@@ -64,6 +64,6 @@ public class StringUtil {
 		if(isEmpty(value)) {
 			throw new ParameterEmptyException(key + "-empty is invalid!");
 		}
-		return null;
+		return value;
 	}
 }

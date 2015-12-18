@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cn.workcenter.common.WorkcenterApplication;
 import cn.workcenter.common.WorkcenterCodeEnum;
@@ -13,12 +14,13 @@ import cn.workcenter.common.cache.RedisCache;
 import cn.workcenter.common.constant.CacheConstant;
 import cn.workcenter.common.constant.SecurityConstant;
 import cn.workcenter.common.util.StringUtil;
+import cn.workcenter.dao.UserMapper;
 import cn.workcenter.model.Resource;
 import cn.workcenter.model.User;
 import cn.workcenter.service.ResourceService;
 import cn.workcenter.service.UserService;
-import cn.workcenter.xml.UserMapper;
 
+@Service("userService")
 public class UserServiceImpl extends WorkcenterApplication implements UserService , SecurityConstant, CacheConstant {
 
 	@Autowired
@@ -47,6 +49,7 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		authorization(URIApartMap.get("sid"), URIApartMap.get("modelname"), URIApartMap.get("callmethod"));
 		
 		sidThreadLocal.set(URIApartMap.get("sid"));
+		System.out.println("sidThreadLocal"+sidThreadLocal.get());
 		return true;
 	}
 	
@@ -55,29 +58,26 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		int sidstart = requestURI.indexOf("/", 1);
 		if(sidstart <0)
 			throw new cn.workcenter.common.exception.SecurityException("url is wrong! url :" + requestURI);
-		int sidend = requestURI.indexOf("/", sidstart);
+		int sidend = requestURI.indexOf("/", sidstart+1);
 		if(sidend <0)
 			throw new cn.workcenter.common.exception.SecurityException("url is wrong! url :" + requestURI);
 		String sid = requestURI.substring(sidstart+1, sidend);
 		URIApartMap.put("sid", sid);
 		
 		int modelnamestart = sidend;
-		int modelnameend = requestURI.indexOf("/", modelnamestart);
+		int modelnameend = requestURI.indexOf("/", modelnamestart+1);
 		if(modelnameend <0)
 			throw new cn.workcenter.common.exception.SecurityException("url is wrong! url :" + requestURI);
 		String modelname = requestURI.substring(modelnamestart + 1, modelnameend);
 		URIApartMap.put("modelname", modelname);
 		
 		int callmethodstart = modelnameend;
-		int callmethodend = requestURI.indexOf("/", callmethodstart);
-		if(callmethodend <0)
-			throw new cn.workcenter.common.exception.SecurityException("url is wrong! url :" + requestURI);
-		String callmethod = requestURI.substring(callmethodstart + 1, callmethodend);
+		String callmethod = requestURI.substring(callmethodstart + 1);
 		URIApartMap.put("callmethod", callmethod);
 	}
 
 	private void authorization(String sid, String modelname, String callmethod) {
-		String username = redisCache.get(sid);
+		String username = redisCache.get(USERNAME_PREFIX+sid);
 		List<Resource> resources = resourceService.getResourcesByUserName(username);
 		String url = modelname + "/" + callmethod;
 		for(Resource resource: resources) {
@@ -97,9 +97,13 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 	}
 	
 	private boolean isAnnonymousPath(String requestURI) {
-		String lastPath = requestURI.substring(requestURI.lastIndexOf("/")==-1?0:requestURI.lastIndexOf("/"));
-		if(auth_escapepage.contains(lastPath)) 
+		String afterFirstPath = requestURI.substring(requestURI.indexOf("/", 1)==-1?0:requestURI.indexOf("/", 1)+1);
+		if(auth_escapepage.contains(afterFirstPath)) 
 			return true;
+		for(String staticPath: static_page) {
+			if(afterFirstPath.startsWith(staticPath))
+				return true;
+		}
 		return false;
 	}
 
@@ -119,13 +123,33 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		if(!password.equals(user.getPassword())) {
 			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_WRONGPASSWORD)).build();
 		}
-		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_LOGIN)).build();
+		
+		//initial sid
+		String newsid = StringUtil.getRandom(8);
+		initialSid(newsid, username);
+		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_LOGIN), getSid()).build();
+	}
+
+	private void initialSid(String newsid, String username) {
+		sidThreadLocal.set(newsid);
+		redisCache.set(USERNAME_PREFIX+newsid, username);
+	}
+
+	public String getSid() {
+		return sidThreadLocal.get();
 	}
 
 	@Override
 	public WorkcenterResult doLogout(String sid) {
 		redisCache.delete(USERNAME_PREFIX + sid);
 		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_LOGOUT)).build();
+	}
+
+	@Override
+	public String getUsername() {
+		String sid = getSid();
+		String username = redisCache.get(USERNAME_PREFIX+sid);
+		return username;
 	}
 
 }

@@ -1,4 +1,4 @@
-package cn.workcenter.xml;
+package cn.workcenter.dao;
 
 import java.util.List;
 
@@ -16,8 +16,10 @@ public interface ResourceMapper {
     int updateByPrimaryKeySelective(Resource record);
 
     int updateByPrimaryKey(Resource record);
+    
+	List<Resource> getResourcesByRolename(String rolename);
 
-	List<Resource> getResourcesByRoleName(String rolename);
+	List<Resource> getResourcesByUsername(String username);
 
-	List<Resource> getResourcesByUserName(String username);
+	List<Resource> getRootResourcesByUsername(String username);
 }

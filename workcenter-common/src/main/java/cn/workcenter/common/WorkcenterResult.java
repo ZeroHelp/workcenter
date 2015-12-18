@@ -4,7 +4,7 @@ import cn.workcenter.common.constant.WebConstant;
 
 public class WorkcenterResult implements WebConstant{
 	
-	private String resultCode; //200 成功    500服务器错误
+	private String resultCode; //200 成功    500服务器错误   600执行业务异常
 	
 	private String resultMsg;  //说明
 	
@@ -49,7 +49,7 @@ public class WorkcenterResult implements WebConstant{
 	
 	public static class Builder {
 		
-		private String resultCode; //200 成功  SUCCESS200    500服务器错误  ERROR500  600exception  EXCEPTION600
+		private String resultCode; //200 成功  SUCCESS200    500服务器错误  ERROR500  600执行业务异常  BUSINESSEXCEPTION600
 		
 		private String resultMsg;  //说明
 		
@@ -64,7 +64,7 @@ public class WorkcenterResult implements WebConstant{
 			codeEnum = WorkcenterCodeEnum.valueOf(OK_SUCCESS);
 		}
 		
-		public Builder setOK(Object data, WorkcenterCodeEnum codeEnum) {
+		public Builder setOK(WorkcenterCodeEnum codeEnum, Object data) {
 			resultCode = SUCCESS200;
 			resultMsg = "请求成功";
 			this.data=data;
@@ -75,25 +75,22 @@ public class WorkcenterResult implements WebConstant{
 		public Builder setOK(WorkcenterCodeEnum codeEnum) {
 			resultCode = SUCCESS200;
 			resultMsg = "请求成功";
-			this.data=data;
+			this.data=null;
 			this.codeEnum = codeEnum;
 			return this;
 		}
 		
 		public Builder setNO(WorkcenterCodeEnum codeEnum) {
 			resultCode = EXCEPTION600;
-			resultMsg = "请求出现问题";
-			this.data=data;
+			resultMsg = "执行业务异常";
+			this.data=null;
 			this.codeEnum = codeEnum;
 			return this;
 		}
 		
-		
 		public WorkcenterResult build() {
 			return new WorkcenterResult(resultCode, resultMsg, data, codeEnum);
 		}
-		
-		
 		
 	}
 }

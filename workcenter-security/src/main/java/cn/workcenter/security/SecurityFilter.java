@@ -2,7 +2,8 @@ package cn.workcenter.security;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -43,6 +44,10 @@ public class SecurityFilter implements Filter ,SecurityConstant {
 		userService = (UserService)applicationContext.getBean("userService");
 		List<String> escapePageList = securityService.getAuthenEscapePage();
 		auth_escapepage.addAll(escapePageList);
+		static_page.add("css");
+		static_page.add("dist");
+		static_page.add("img");
+		static_page.add("js");
 	}
 
 	@Override
@@ -54,7 +59,6 @@ public class SecurityFilter implements Filter ,SecurityConstant {
 		String requestURI = req.getRequestURI();
 		
 		boolean authenflag = userService.authAndInitSession(requestURI);
-		
 		chain.doFilter(request, response);
 		userService.destroyThreadLocal();
 	}

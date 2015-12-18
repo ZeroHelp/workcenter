@@ -20,7 +20,7 @@
 	<context:annotation-config />
 	<!-- 把标记了@Controller注解的类转换为bean -->
 	<context:component-scan base-package="cn.workcenter" >
-		<context:exclude-filter type="regex" expression="cn.workcenter.*.*.controller.*"/>
+		<context:exclude-filter type="regex" expression="cn.workcenter.controller.*"/>
 	</context:component-scan>
 	
 	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true" />
@@ -46,11 +46,12 @@
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
-		p:mapperLocations="cn\\workcenter\\*\\dao\\*Mapper.xml"
+		p:mapperLocations="classpath*:cn\\workcenter\\**\\dao\\*Mapper.xml"
 	/>
-	         
+	<!-- p:mapperLocations="classpath*:cn/workcenter/**/xml/*Mapper.xml" -->
+	<!--    **表示可以表示任意多级目录  *表示多个任意字符        -->
 	<bean id="mapperScanerConfig" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="cn.workcenter.*.*.dao" />
+		<property name="basePackage" value="cn.workcenter.**.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	

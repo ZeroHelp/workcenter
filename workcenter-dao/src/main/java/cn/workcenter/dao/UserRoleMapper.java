@@ -1,4 +1,4 @@
-package cn.workcenter.xml;
+package cn.workcenter.dao;
 
 import cn.workcenter.model.UserRole;
 

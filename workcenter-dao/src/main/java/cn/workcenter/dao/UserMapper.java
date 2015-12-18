@@ -1,4 +1,4 @@
-package cn.workcenter.xml;
+package cn.workcenter.dao;
 
 import cn.workcenter.model.User;
 
@@ -14,6 +14,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
+    
 	User getUserByUsername(String username);
 }

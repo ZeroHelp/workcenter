@@ -22,4 +22,8 @@ public interface UserService {
 
 	WorkcenterResult doLogout(String sid);
 
+	String getUsername();
+
+	Object getSid();
+
 }

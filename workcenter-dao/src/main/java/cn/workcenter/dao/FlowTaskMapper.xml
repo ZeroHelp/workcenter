@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.workcenter.xml.FlowTaskMapper">
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowTask">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="processdefinition" jdbcType="BIGINT" property="processdefinition" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="actor_type" jdbcType="INTEGER" property="actorType" />
-    <result column="swimlane_id" jdbcType="BIGINT" property="swimlaneId" />
-    <result column="node_id" jdbcType="BIGINT" property="nodeId" />
-    <result column="start_node_id" jdbcType="BIGINT" property="startNodeId" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.workcenter.dao.FlowTaskMapper" >
+  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowTask" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="processdefinition" property="processdefinition" jdbcType="BIGINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="actor_type" property="actorType" jdbcType="INTEGER" />
+    <result column="swimlane_id" property="swimlaneId" jdbcType="BIGINT" />
+    <result column="node_id" property="nodeId" jdbcType="BIGINT" />
+    <result column="start_node_id" property="startNodeId" jdbcType="BIGINT" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, name, processdefinition, description, actor_type, swimlane_id, node_id, start_node_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from base_flow_task
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from base_flow_task
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.FlowTask">
+  <insert id="insert" parameterType="cn.workcenter.model.FlowTask" >
     insert into base_flow_task (id, name, processdefinition, 
       description, actor_type, swimlane_id, 
       node_id, start_node_id)
@@ -32,213 +32,89 @@
       #{description,jdbcType=VARCHAR}, #{actorType,jdbcType=INTEGER}, #{swimlaneId,jdbcType=BIGINT}, 
       #{nodeId,jdbcType=BIGINT}, #{startNodeId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTask">
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTask" >
     insert into base_flow_task
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         name,
       </if>
-      <if test="processdefinition != null">
+      <if test="processdefinition != null" >
         processdefinition,
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         description,
       </if>
-      <if test="actorType != null">
+      <if test="actorType != null" >
         actor_type,
       </if>
-      <if test="swimlaneId != null">
+      <if test="swimlaneId != null" >
         swimlane_id,
       </if>
-      <if test="nodeId != null">
+      <if test="nodeId != null" >
         node_id,
       </if>
-      <if test="startNodeId != null">
+      <if test="startNodeId != null" >
         start_node_id,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="processdefinition != null">
+      <if test="processdefinition != null" >
         #{processdefinition,jdbcType=BIGINT},
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="actorType != null">
+      <if test="actorType != null" >
         #{actorType,jdbcType=INTEGER},
       </if>
-      <if test="swimlaneId != null">
+      <if test="swimlaneId != null" >
         #{swimlaneId,jdbcType=BIGINT},
       </if>
-      <if test="nodeId != null">
+      <if test="nodeId != null" >
         #{nodeId,jdbcType=BIGINT},
       </if>
-      <if test="startNodeId != null">
+      <if test="startNodeId != null" >
         #{startNodeId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowTask">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowTask" >
     update base_flow_task
-    <set>
-      <if test="name != null">
+    <set >
+      <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="processdefinition != null">
+      <if test="processdefinition != null" >
         processdefinition = #{processdefinition,jdbcType=BIGINT},
       </if>
-      <if test="description != null">
+      <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="actorType != null">
+      <if test="actorType != null" >
         actor_type = #{actorType,jdbcType=INTEGER},
       </if>
-      <if test="swimlaneId != null">
+      <if test="swimlaneId != null" >
         swimlane_id = #{swimlaneId,jdbcType=BIGINT},
       </if>
-      <if test="nodeId != null">
+      <if test="nodeId != null" >
         node_id = #{nodeId,jdbcType=BIGINT},
       </if>
-      <if test="startNodeId != null">
+      <if test="startNodeId != null" >
         start_node_id = #{startNodeId,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowTask">
-    update base_flow_task
-    set name = #{name,jdbcType=VARCHAR},
-      processdefinition = #{processdefinition,jdbcType=BIGINT},
-      description = #{description,jdbcType=VARCHAR},
-      actor_type = #{actorType,jdbcType=INTEGER},
-      swimlane_id = #{swimlaneId,jdbcType=BIGINT},
-      node_id = #{nodeId,jdbcType=BIGINT},
-      start_node_id = #{startNodeId,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowTask">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="processdefinition" jdbcType="BIGINT" property="processdefinition" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="actor_type" jdbcType="INTEGER" property="actorType" />
-    <result column="swimlane_id" jdbcType="BIGINT" property="swimlaneId" />
-    <result column="node_id" jdbcType="BIGINT" property="nodeId" />
-    <result column="start_node_id" jdbcType="BIGINT" property="startNodeId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, name, processdefinition, description, actor_type, swimlane_id, node_id, start_node_id
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from base_flow_task
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from base_flow_task
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.FlowTask">
-    insert into base_flow_task (id, name, processdefinition, 
-      description, actor_type, swimlane_id, 
-      node_id, start_node_id)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{processdefinition,jdbcType=BIGINT}, 
-      #{description,jdbcType=VARCHAR}, #{actorType,jdbcType=INTEGER}, #{swimlaneId,jdbcType=BIGINT}, 
-      #{nodeId,jdbcType=BIGINT}, #{startNodeId,jdbcType=BIGINT})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTask">
-    insert into base_flow_task
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="processdefinition != null">
-        processdefinition,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="actorType != null">
-        actor_type,
-      </if>
-      <if test="swimlaneId != null">
-        swimlane_id,
-      </if>
-      <if test="nodeId != null">
-        node_id,
-      </if>
-      <if test="startNodeId != null">
-        start_node_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="processdefinition != null">
-        #{processdefinition,jdbcType=BIGINT},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="actorType != null">
-        #{actorType,jdbcType=INTEGER},
-      </if>
-      <if test="swimlaneId != null">
-        #{swimlaneId,jdbcType=BIGINT},
-      </if>
-      <if test="nodeId != null">
-        #{nodeId,jdbcType=BIGINT},
-      </if>
-      <if test="startNodeId != null">
-        #{startNodeId,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowTask">
-    update base_flow_task
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="processdefinition != null">
-        processdefinition = #{processdefinition,jdbcType=BIGINT},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="actorType != null">
-        actor_type = #{actorType,jdbcType=INTEGER},
-      </if>
-      <if test="swimlaneId != null">
-        swimlane_id = #{swimlaneId,jdbcType=BIGINT},
-      </if>
-      <if test="nodeId != null">
-        node_id = #{nodeId,jdbcType=BIGINT},
-      </if>
-      <if test="startNodeId != null">
-        start_node_id = #{startNodeId,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowTask">
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowTask" >
     update base_flow_task
     set name = #{name,jdbcType=VARCHAR},
       processdefinition = #{processdefinition,jdbcType=BIGINT},

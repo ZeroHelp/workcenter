@@ -13,8 +13,8 @@ import cn.workcenter.common.exception.ParameterEmptyException;
 
 public class WorkcenterResponseBodyJson implements ResponseBody , WebConstant{
 	
-	public final String returncode; //200 成功    500服务器错误
-	public final String returnmsg; //错误信息
+	public final String returncode; //200 成功    500服务器错误 600执行业务异常
+	public final String returnmsg; //请求成功        服务器错误     执行业务异常
 	public final String returnmemo;//{SUCCESS/FAILURE}:{errorcode}:{errormsg}
 	public final Object data;//附加传送到web端值
 	public final String operator;
@@ -49,7 +49,7 @@ public class WorkcenterResponseBodyJson implements ResponseBody , WebConstant{
 		Builder() {
 			super();
 			this.returncode = "200";
-			this.returnmsg = "详细信息";
+			this.returnmsg = "请求成功";
 			this.returnmemo = "SUCCESS:200000:请求成功";
 			this.operator = "nothing";
 			this.data = "附加信息";
@@ -75,26 +75,18 @@ public class WorkcenterResponseBodyJson implements ResponseBody , WebConstant{
 			return this;
 		}
 		
-		/*public ResponseBodyJson.Builder setAll(BusinessException e, String operator) {
-			this.returncode = e.getErrorCode();
-			this.returnmsg = e.getStatus();
-			this.returnmemo = e.getErrorMsg();
-			this.operator = operator;
-			this.data = null;
-			return this;
-		}*/
 		public Builder setAll(ParameterEmptyException e) {
 			this.returncode = "500";
-			this.returnmsg = e.getMessage();
-			this.returnmemo = "FAILURE:10010000:RuntimeException";
+			this.returnmsg = "服务器错误";
+			this.returnmemo = "FAILURE:10010000:ParameterEmptyException" + COLON + e.getMessage();
 			this.operator = null;
 			this.data = null;
 			return this;
 		}
 		public WorkcenterResponseBodyJson.Builder setAll(RuntimeException e, String operator) {
 			this.returncode = "500";
-			this.returnmsg = e.getMessage();
-			this.returnmemo = "FAILURE:10010000:RuntimeException";
+			this.returnmsg = "服务器错误";
+			this.returnmemo = "FAILURE:10010000:RuntimeException" + COLON + e.getMessage();
 			this.operator = operator;
 			this.data = null;
 			return this;
@@ -109,7 +101,7 @@ public class WorkcenterResponseBodyJson implements ResponseBody , WebConstant{
 			return this;
 		}
 		
-		public WorkcenterResponseBodyJson.Builder setAll(WorkcenterResult result, Object data, String operator) {
+		public WorkcenterResponseBodyJson.Builder setAll(WorkcenterResult result,  String operator, Object data) {
 			this.returncode = result.getResultCode();
 			this.returnmsg = result.getResultMsg();
 			this.returnmemo = result.getCodeEnum().getStatus() + COLON+result.getCodeEnum().getCode() + COLON+result.getCodeEnum().getMsg();
@@ -118,12 +110,12 @@ public class WorkcenterResponseBodyJson implements ResponseBody , WebConstant{
 			return this;
 		}
 		
-		public WorkcenterResponseBodyJson.Builder setAll(String returncode, String returnmsg, String returnmemo, String operator){
+		public WorkcenterResponseBodyJson.Builder setAll(String returncode, String returnmsg, String returnmemo, String operator , Object data){
 			this.returncode = returncode;
 			this.returnmsg = returnmsg;
 			this.returnmemo = returnmemo;
 			this.operator = operator;
-			this.data = null;
+			this.data = data;
 			return this;
 		}
 

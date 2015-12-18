@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.workcenter.xml.FlowVariableinstanceMapper">
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowVariableinstance">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="processinstance_id" jdbcType="BIGINT" property="processinstanceId" />
-    <result column="var_type" jdbcType="VARCHAR" property="varType" />
-    <result column="var_value" jdbcType="VARCHAR" property="varValue" />
-    <result column="index_num" jdbcType="INTEGER" property="indexNum" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.workcenter.dao.FlowVariableinstanceMapper" >
+  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowVariableinstance" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="processinstance_id" property="processinstanceId" jdbcType="BIGINT" />
+    <result column="var_type" property="varType" jdbcType="VARCHAR" />
+    <result column="var_value" property="varValue" jdbcType="VARCHAR" />
+    <result column="index_num" property="indexNum" jdbcType="INTEGER" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.workcenter.model.FlowVariableinstance">
-    <result column="var_name" jdbcType="LONGVARCHAR" property="varName" />
+  <resultMap id="ResultMapWithBLOBs" type="cn.workcenter.model.FlowVariableinstance" extends="BaseResultMap" >
+    <result column="var_name" property="varName" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, processinstance_id, var_type, var_value, index_num
   </sql>
-  <sql id="Blob_Column_List">
+  <sql id="Blob_Column_List" >
     var_name
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     ,
@@ -25,11 +25,11 @@
     from base_flow_variableinstance
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from base_flow_variableinstance
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.FlowVariableinstance">
+  <insert id="insert" parameterType="cn.workcenter.model.FlowVariableinstance" >
     insert into base_flow_variableinstance (id, processinstance_id, var_type, 
       var_value, index_num, var_name
       )
@@ -37,71 +37,71 @@
       #{varValue,jdbcType=VARCHAR}, #{indexNum,jdbcType=INTEGER}, #{varName,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowVariableinstance">
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowVariableinstance" >
     insert into base_flow_variableinstance
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="processinstanceId != null">
+      <if test="processinstanceId != null" >
         processinstance_id,
       </if>
-      <if test="varType != null">
+      <if test="varType != null" >
         var_type,
       </if>
-      <if test="varValue != null">
+      <if test="varValue != null" >
         var_value,
       </if>
-      <if test="indexNum != null">
+      <if test="indexNum != null" >
         index_num,
       </if>
-      <if test="varName != null">
+      <if test="varName != null" >
         var_name,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="processinstanceId != null">
+      <if test="processinstanceId != null" >
         #{processinstanceId,jdbcType=BIGINT},
       </if>
-      <if test="varType != null">
+      <if test="varType != null" >
         #{varType,jdbcType=VARCHAR},
       </if>
-      <if test="varValue != null">
+      <if test="varValue != null" >
         #{varValue,jdbcType=VARCHAR},
       </if>
-      <if test="indexNum != null">
+      <if test="indexNum != null" >
         #{indexNum,jdbcType=INTEGER},
       </if>
-      <if test="varName != null">
+      <if test="varName != null" >
         #{varName,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowVariableinstance">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowVariableinstance" >
     update base_flow_variableinstance
-    <set>
-      <if test="processinstanceId != null">
+    <set >
+      <if test="processinstanceId != null" >
         processinstance_id = #{processinstanceId,jdbcType=BIGINT},
       </if>
-      <if test="varType != null">
+      <if test="varType != null" >
         var_type = #{varType,jdbcType=VARCHAR},
       </if>
-      <if test="varValue != null">
+      <if test="varValue != null" >
         var_value = #{varValue,jdbcType=VARCHAR},
       </if>
-      <if test="indexNum != null">
+      <if test="indexNum != null" >
         index_num = #{indexNum,jdbcType=INTEGER},
       </if>
-      <if test="varName != null">
+      <if test="varName != null" >
         var_name = #{varName,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.workcenter.model.FlowVariableinstance">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.workcenter.model.FlowVariableinstance" >
     update base_flow_variableinstance
     set processinstance_id = #{processinstanceId,jdbcType=BIGINT},
       var_type = #{varType,jdbcType=VARCHAR},
@@ -110,124 +110,7 @@
       var_name = #{varName,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowVariableinstance">
-    update base_flow_variableinstance
-    set processinstance_id = #{processinstanceId,jdbcType=BIGINT},
-      var_type = #{varType,jdbcType=VARCHAR},
-      var_value = #{varValue,jdbcType=VARCHAR},
-      index_num = #{indexNum,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowVariableinstance">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="processinstance_id" jdbcType="BIGINT" property="processinstanceId" />
-    <result column="var_type" jdbcType="VARCHAR" property="varType" />
-    <result column="var_value" jdbcType="VARCHAR" property="varValue" />
-    <result column="index_num" jdbcType="INTEGER" property="indexNum" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.workcenter.model.FlowVariableinstance">
-    <result column="var_name" jdbcType="LONGVARCHAR" property="varName" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, processinstance_id, var_type, var_value, index_num
-  </sql>
-  <sql id="Blob_Column_List">
-    var_name
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from base_flow_variableinstance
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from base_flow_variableinstance
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.FlowVariableinstance">
-    insert into base_flow_variableinstance (id, processinstance_id, var_type, 
-      var_value, index_num, var_name
-      )
-    values (#{id,jdbcType=BIGINT}, #{processinstanceId,jdbcType=BIGINT}, #{varType,jdbcType=VARCHAR}, 
-      #{varValue,jdbcType=VARCHAR}, #{indexNum,jdbcType=INTEGER}, #{varName,jdbcType=LONGVARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowVariableinstance">
-    insert into base_flow_variableinstance
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="processinstanceId != null">
-        processinstance_id,
-      </if>
-      <if test="varType != null">
-        var_type,
-      </if>
-      <if test="varValue != null">
-        var_value,
-      </if>
-      <if test="indexNum != null">
-        index_num,
-      </if>
-      <if test="varName != null">
-        var_name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="processinstanceId != null">
-        #{processinstanceId,jdbcType=BIGINT},
-      </if>
-      <if test="varType != null">
-        #{varType,jdbcType=VARCHAR},
-      </if>
-      <if test="varValue != null">
-        #{varValue,jdbcType=VARCHAR},
-      </if>
-      <if test="indexNum != null">
-        #{indexNum,jdbcType=INTEGER},
-      </if>
-      <if test="varName != null">
-        #{varName,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowVariableinstance">
-    update base_flow_variableinstance
-    <set>
-      <if test="processinstanceId != null">
-        processinstance_id = #{processinstanceId,jdbcType=BIGINT},
-      </if>
-      <if test="varType != null">
-        var_type = #{varType,jdbcType=VARCHAR},
-      </if>
-      <if test="varValue != null">
-        var_value = #{varValue,jdbcType=VARCHAR},
-      </if>
-      <if test="indexNum != null">
-        index_num = #{indexNum,jdbcType=INTEGER},
-      </if>
-      <if test="varName != null">
-        var_name = #{varName,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.workcenter.model.FlowVariableinstance">
-    update base_flow_variableinstance
-    set processinstance_id = #{processinstanceId,jdbcType=BIGINT},
-      var_type = #{varType,jdbcType=VARCHAR},
-      var_value = #{varValue,jdbcType=VARCHAR},
-      index_num = #{indexNum,jdbcType=INTEGER},
-      var_name = #{varName,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowVariableinstance">
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowVariableinstance" >
     update base_flow_variableinstance
     set processinstance_id = #{processinstanceId,jdbcType=BIGINT},
       var_type = #{varType,jdbcType=VARCHAR},
