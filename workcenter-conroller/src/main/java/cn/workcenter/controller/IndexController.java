@@ -47,6 +47,30 @@ public class IndexController extends WorkcenterApplication {
 		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGIN).build();
 	}
 	
+	@RequestMapping(value="{sid}/workcenter/password", method=RequestMethod.GET)
+	@ResponseBody
+	public Object getPassword(HttpServletRequest request, HttpServletResponse response) {
+		
+		String username = StringUtil.getParameterExceptionEmpty(request, "username");
+		String password = StringUtil.getParameterExceptionEmpty(request, "password");
+		
+		WorkcenterResult loginresult = userService.doLogin(username, password);
+		
+		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGIN).build();
+	}
+	
+	@RequestMapping(value="{sid}/workcenter/password", method=RequestMethod.POST)
+	@ResponseBody
+	public Object postPassword(HttpServletRequest request, HttpServletResponse response) {
+		
+		String username = StringUtil.getParameterExceptionEmpty(request, "username");
+		String password = StringUtil.getParameterExceptionEmpty(request, "password");
+		
+		WorkcenterResult loginresult = userService.doLogin(username, password);
+		
+		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGIN).build();
+	}
+	
 	@RequestMapping(value="workcenter/logout", method=RequestMethod.POST)
 	@ResponseBody
 	public Object doLogout(HttpServletRequest request, HttpServletResponse response) {
@@ -61,11 +85,10 @@ public class IndexController extends WorkcenterApplication {
 	@RequestMapping(value="{sid}/workcenter/home", method=RequestMethod.GET)
 	public Object home(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
 		
-		
 		List<Resource> modules = resourceService.getUserModule();
 		
 		//request.setAttribute("sid", userService.getSid());
 		request.setAttribute("modules", modules);
-		return "/workcenter/home";
+		return "/admin/home";
 	}
 }

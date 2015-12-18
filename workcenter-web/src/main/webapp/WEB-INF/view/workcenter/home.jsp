@@ -12,7 +12,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="./favicon.ico">
+<link rel="icon" href="<%=basePath%>/img/logo.ico">
 <title>宜信财富在线</title>
 <link href="<%=basePath%>/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=basePath%>/css/navbar-fixed-top.css" rel="stylesheet">
@@ -36,10 +36,10 @@
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王林 <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 
-							<li><a href="#">修改密码</a></li>
+							<li><a id="changepassword" href="javascript:void(0);">修改密码</a></li>
 							<li role="separator" class="divider"></li>
 						</ul></li>
-					<li><a href="1login.html">退出</a></li>
+					<li><a id="logout" href="javascript:void(0);">退出</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -77,7 +77,26 @@
 		</div>
 	</div>
 	<!-- /container -->
-
+	
+	<!-- dialog -->
+	<div class="modal fade" id="myModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="model_title">model_title</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p id="model_content">model_content</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
 	<script src="<%=basePath%>/js/jquery.min.js"></script>
 	<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
 	<script>
@@ -85,7 +104,31 @@
 			$(".component").on("click", function() {
 				var url = $(this).attr("value1");
 				window.location.href = '<%=basePath%>/'+ url;
-			})
+			});
+			
+			$("#changepassword").on("click", function() {
+				window.location.href = '<%=basePath%>/<%=sid%>/workcenter/password';
+			});
+			
+			$("#logout").on("click", function() {
+				$.ajax({
+					type: "post",
+					url: '<%=basePath%>/workcenter/logout',
+					data: {
+						sid : '<%=sid%>',
+					},
+					dataType: "json",
+					success : function(data) {
+						if(data.returncode == "200") {
+							window.location.href = '<%=basePath%>/workcenter/index';
+						} else {
+							$("#model_title").text(data.returnmsg);
+							$("#model_content").text(data.returnmemo);
+							$('#myModal').modal();
+						}
+					}
+				});
+			});
 		})
 	</script>
 </body>
