@@ -1,5 +1,7 @@
 package cn.workcenter.dao;
 
+import java.util.List;
+
 import cn.workcenter.model.User;
 
 public interface UserMapper {
@@ -16,4 +18,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
     
 	User getUserByUsername(String username);
+
+	List<User> getFlowSwimlaneUsers(Long swimlaneId);
 }

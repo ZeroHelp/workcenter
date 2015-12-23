@@ -23,6 +23,11 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.workcenter</groupId>
+			<artifactId>workcenter-kpi-controller</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.workcenter</groupId>
 			<artifactId>workcenter-security</artifactId>
 			<version>${project.version}</version>
 		</dependency>

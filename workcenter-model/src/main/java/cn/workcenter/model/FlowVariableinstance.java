@@ -11,6 +11,8 @@ public class FlowVariableinstance {
 
     private Integer indexNum;
 
+    private Integer status;
+
     private String varName;
 
     public Long getId() {
@@ -51,6 +53,14 @@ public class FlowVariableinstance {
 
     public void setIndexNum(Integer indexNum) {
         this.indexNum = indexNum;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getVarName() {

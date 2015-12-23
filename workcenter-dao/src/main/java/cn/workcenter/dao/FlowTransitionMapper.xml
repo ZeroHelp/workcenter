@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowTransition" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="processdefinition_id" property="processdefinitionId" jdbcType="BIGINT" />
     <result column="from_node_id" property="fromNodeId" jdbcType="BIGINT" />
     <result column="to_node_id" property="toNodeId" jdbcType="BIGINT" />
     <result column="condition_expression" property="conditionExpression" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, processdefinition_id, from_node_id, to_node_id, condition_expression
+    id, name, type, processdefinition_id, from_node_id, to_node_id, condition_expression
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -23,12 +24,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="cn.workcenter.model.FlowTransition" >
-    insert into base_flow_transition (id, name, processdefinition_id, 
-      from_node_id, to_node_id, condition_expression
-      )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{processdefinitionId,jdbcType=BIGINT}, 
-      #{fromNodeId,jdbcType=BIGINT}, #{toNodeId,jdbcType=BIGINT}, #{conditionExpression,jdbcType=VARCHAR}
-      )
+    insert into base_flow_transition (id, name, type, 
+      processdefinition_id, from_node_id, to_node_id, 
+      condition_expression)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{processdefinitionId,jdbcType=BIGINT}, #{fromNodeId,jdbcType=BIGINT}, #{toNodeId,jdbcType=BIGINT}, 
+      #{conditionExpression,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTransition" >
     insert into base_flow_transition
@@ -38,6 +39,9 @@
       </if>
       <if test="name != null" >
         name,
+      </if>
+      <if test="type != null" >
+        type,
       </if>
       <if test="processdefinitionId != null" >
         processdefinition_id,
@@ -59,6 +63,9 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
       <if test="processdefinitionId != null" >
         #{processdefinitionId,jdbcType=BIGINT},
       </if>
@@ -79,6 +86,9 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
       <if test="processdefinitionId != null" >
         processdefinition_id = #{processdefinitionId,jdbcType=BIGINT},
       </if>
@@ -97,6 +107,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowTransition" >
     update base_flow_transition
     set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       processdefinition_id = #{processdefinitionId,jdbcType=BIGINT},
       from_node_id = #{fromNodeId,jdbcType=BIGINT},
       to_node_id = #{toNodeId,jdbcType=BIGINT},

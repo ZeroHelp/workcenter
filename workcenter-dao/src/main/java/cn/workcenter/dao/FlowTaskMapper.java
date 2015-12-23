@@ -1,8 +1,11 @@
 package cn.workcenter.dao;
 
+import java.util.Map;
+
 import cn.workcenter.model.FlowTask;
 
 public interface FlowTaskMapper {
+	
     int deleteByPrimaryKey(Long id);
 
     int insert(FlowTask record);
@@ -14,4 +17,6 @@ public interface FlowTaskMapper {
     int updateByPrimaryKeySelective(FlowTask record);
 
     int updateByPrimaryKey(FlowTask record);
+
+	FlowTask getFlowTaskByProcessinstanceidandNodeid(Map<String, Long> parameterMap);
 }

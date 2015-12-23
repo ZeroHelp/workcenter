@@ -7,12 +7,13 @@
     <result column="var_type" property="varType" jdbcType="VARCHAR" />
     <result column="var_value" property="varValue" jdbcType="VARCHAR" />
     <result column="index_num" property="indexNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="cn.workcenter.model.FlowVariableinstance" extends="BaseResultMap" >
     <result column="var_name" property="varName" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, processinstance_id, var_type, var_value, index_num
+    id, processinstance_id, var_type, var_value, index_num, status
   </sql>
   <sql id="Blob_Column_List" >
     var_name
@@ -31,11 +32,11 @@
   </delete>
   <insert id="insert" parameterType="cn.workcenter.model.FlowVariableinstance" >
     insert into base_flow_variableinstance (id, processinstance_id, var_type, 
-      var_value, index_num, var_name
-      )
+      var_value, index_num, status, 
+      var_name)
     values (#{id,jdbcType=BIGINT}, #{processinstanceId,jdbcType=BIGINT}, #{varType,jdbcType=VARCHAR}, 
-      #{varValue,jdbcType=VARCHAR}, #{indexNum,jdbcType=INTEGER}, #{varName,jdbcType=LONGVARCHAR}
-      )
+      #{varValue,jdbcType=VARCHAR}, #{indexNum,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{varName,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.workcenter.model.FlowVariableinstance" >
     insert into base_flow_variableinstance
@@ -54,6 +55,9 @@
       </if>
       <if test="indexNum != null" >
         index_num,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
       <if test="varName != null" >
         var_name,
@@ -75,6 +79,9 @@
       <if test="indexNum != null" >
         #{indexNum,jdbcType=INTEGER},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="varName != null" >
         #{varName,jdbcType=LONGVARCHAR},
       </if>
@@ -95,6 +102,9 @@
       <if test="indexNum != null" >
         index_num = #{indexNum,jdbcType=INTEGER},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
       <if test="varName != null" >
         var_name = #{varName,jdbcType=LONGVARCHAR},
       </if>
@@ -107,6 +117,7 @@
       var_type = #{varType,jdbcType=VARCHAR},
       var_value = #{varValue,jdbcType=VARCHAR},
       index_num = #{indexNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       var_name = #{varName,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -115,7 +126,8 @@
     set processinstance_id = #{processinstanceId,jdbcType=BIGINT},
       var_type = #{varType,jdbcType=VARCHAR},
       var_value = #{varValue,jdbcType=VARCHAR},
-      index_num = #{indexNum,jdbcType=INTEGER}
+      index_num = #{indexNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

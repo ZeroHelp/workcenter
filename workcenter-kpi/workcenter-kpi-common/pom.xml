@@ -16,7 +16,17 @@
 		<!-- workcenter  -->
 		<dependency>
 			<groupId>cn.workcenter</groupId>
+			<artifactId>workcenter-kpi-service-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.workcenter</groupId>
 			<artifactId>workcenter-kpi-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.workcenter</groupId>
+			<artifactId>workcenter-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

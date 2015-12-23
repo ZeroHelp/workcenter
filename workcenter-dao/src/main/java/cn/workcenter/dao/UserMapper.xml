@@ -12,6 +12,9 @@
   <sql id="Base_Column_List" >
     id, user_name, real_name, password, last_login, status
   </sql>
+  <sql id="us_Base_Column_List" >
+    us.id as id , us.user_name as userName, us.real_name as realName, us.password password, us.last_login as lastLogin, us.status as status
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -108,5 +111,13 @@
   	<include refid="Base_Column_List" />
   	from base_user
   	where user_name = #{usernmae}
+  </select>
+  <select id="getFlowSwimlaneUsers" parameterType="java.lang.Long" resultType="cn.workcenter.model.User">
+  	select
+  	<include refid="us_Base_Column_List" />
+  	from base_user us
+  	inner join base_flow_swimlane_user fwu on fwu.user_id = us.id
+  	inner join base_flow_swimlane fsw on fsw.id = fwu.swimlance_id
+  	where fsw.id = #{swimlaneId}
   </select>
 </mapper>

@@ -26,6 +26,11 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>cn.workcenter</groupId>
+			<artifactId>workcenter-service-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
 		</dependency>

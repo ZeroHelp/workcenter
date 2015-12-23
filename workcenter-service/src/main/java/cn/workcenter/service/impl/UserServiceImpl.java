@@ -14,7 +14,11 @@ import cn.workcenter.common.cache.RedisCache;
 import cn.workcenter.common.constant.CacheConstant;
 import cn.workcenter.common.constant.SecurityConstant;
 import cn.workcenter.common.util.StringUtil;
+import cn.workcenter.dao.FlowProcessinstanceMapper;
+import cn.workcenter.dao.FlowTaskMapper;
 import cn.workcenter.dao.UserMapper;
+import cn.workcenter.model.FlowProcessinstance;
+import cn.workcenter.model.FlowTask;
 import cn.workcenter.model.Resource;
 import cn.workcenter.model.User;
 import cn.workcenter.service.ResourceService;
@@ -29,6 +33,10 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 	private UserMapper userMapper;
 	@Autowired
 	private ResourceService resourceService;
+	@Autowired
+	private FlowProcessinstanceMapper flowProcessinstanceMapper;
+	@Autowired
+	private FlowTaskMapper flowTaskMapper;
 	
 	//登录 redisCache.save(USERNAME_PREFIX + sid, username).expired(7 * 24 * 60 * 60 * 1000l);
 	//登录redisCache.save(RESOURCES_PREFIX + username, json(resourcelist));
@@ -150,6 +158,23 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		String sid = getSid();
 		String username = redisCache.get(USERNAME_PREFIX+sid);
 		return username;
+	}
+
+	@Override
+	public List<User> getFlowRelatedUsers(Long processinstance_id) {
+		FlowProcessinstance flowProcessinstance = flowProcessinstanceMapper.selectByPrimaryKey(processinstance_id);
+		List<User> userlist = userMapper.getFlowSwimlaneUsers(flowProcessinstance.getSwimlaneId());
+		return userlist;
+	}
+
+	@Override
+	public List<User> getNodeRelatedUsers(Long processinstance_id, Long node_id) {
+		Map<String, Long> parameterMap = new HashMap<String, Long>();
+		parameterMap.put("processinstance_id", processinstance_id);
+		parameterMap.put("node_id", node_id);
+		FlowTask flowTask = flowTaskMapper.getFlowTaskByProcessinstanceidandNodeid(parameterMap);
+		List<User> userlist = userMapper.getFlowSwimlaneUsers(flowTask.getSwimlaneId());
+		return userlist;
 	}
 
 }

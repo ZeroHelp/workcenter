@@ -42,7 +42,7 @@ public class IndexController extends WorkcenterApplication {
 		String username = StringUtil.getParameterExceptionEmpty(request, "username");
 		String password = StringUtil.getParameterExceptionEmpty(request, "password");
 		
-		WorkcenterResult loginresult = userService.doLogin(username, password);
+		WorkcenterResult loginresult = (WorkcenterResult)userService.doLogin(username, password);
 		
 		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGIN).build();
 	}
@@ -54,7 +54,7 @@ public class IndexController extends WorkcenterApplication {
 		String username = StringUtil.getParameterExceptionEmpty(request, "username");
 		String password = StringUtil.getParameterExceptionEmpty(request, "password");
 		
-		WorkcenterResult loginresult = userService.doLogin(username, password);
+		WorkcenterResult loginresult = (WorkcenterResult)userService.doLogin(username, password);
 		
 		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGIN).build();
 	}
@@ -66,7 +66,7 @@ public class IndexController extends WorkcenterApplication {
 		String username = StringUtil.getParameterExceptionEmpty(request, "username");
 		String password = StringUtil.getParameterExceptionEmpty(request, "password");
 		
-		WorkcenterResult loginresult = userService.doLogin(username, password);
+		WorkcenterResult loginresult = (WorkcenterResult)userService.doLogin(username, password);
 		
 		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGIN).build();
 	}
@@ -77,7 +77,7 @@ public class IndexController extends WorkcenterApplication {
 		
 		String sid = StringUtil.getParameterExceptionEmpty(request, "sid");
 		
-		WorkcenterResult loginresult = userService.doLogout(sid);
+		WorkcenterResult loginresult = (WorkcenterResult)userService.doLogout(sid);
 		
 		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGOUT).build();
 	}
@@ -89,6 +89,6 @@ public class IndexController extends WorkcenterApplication {
 		
 		//request.setAttribute("sid", userService.getSid());
 		request.setAttribute("modules", modules);
-		return "/admin/home";
+		return "/workcenter/home";
 	}
 }

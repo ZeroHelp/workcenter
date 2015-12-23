@@ -17,6 +17,7 @@
 	<modules>
 		<module>workcenter-model</module>
 		<module>workcenter-dao</module>
+		<module>workcenter-service-api</module>
 		<module>workcenter-common</module>
 		<module>workcenter-service</module>
 		<module>workcenter-conroller</module>

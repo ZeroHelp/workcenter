@@ -16,8 +16,11 @@
 	<modules>
 		<module>workcenter-kpi-model</module>
 		<module>workcenter-kpi-dao</module>
+		<module>workcenter-kpi-service-api</module>
 		<module>workcenter-kpi-common</module>
 		<module>workcenter-kpi-service</module>
 		<module>workcenter-kpi-conroller</module>
 	</modules>
+	
+	
 </project>

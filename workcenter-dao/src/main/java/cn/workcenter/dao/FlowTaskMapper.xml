@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowTask" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="processdefinition" property="processdefinition" jdbcType="BIGINT" />
+    <result column="processdefinition_id" property="processdefinitionId" jdbcType="BIGINT" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="actor_type" property="actorType" jdbcType="INTEGER" />
     <result column="swimlane_id" property="swimlaneId" jdbcType="BIGINT" />
@@ -12,7 +12,10 @@
     <result column="start_node_id" property="startNodeId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, processdefinition, description, actor_type, swimlane_id, node_id, start_node_id
+    id, name, processdefinition_id, description, actor_type, swimlane_id, node_id, start_node_id
+  </sql>
+  <sql id="fta_Base_Column_List">
+  	fta.id, fta.name, fta.processdefinition_id as processdefinitionId, fta.description, fta.actor_type as actorType, fta.swimlane_id as swimlaneId, fta.node_id as nodeId, fta.start_node_id as startNodeId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -25,10 +28,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="cn.workcenter.model.FlowTask" >
-    insert into base_flow_task (id, name, processdefinition, 
+    insert into base_flow_task (id, name, processdefinition_id, 
       description, actor_type, swimlane_id, 
       node_id, start_node_id)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{processdefinition,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{processdefinitionId,jdbcType=BIGINT}, 
       #{description,jdbcType=VARCHAR}, #{actorType,jdbcType=INTEGER}, #{swimlaneId,jdbcType=BIGINT}, 
       #{nodeId,jdbcType=BIGINT}, #{startNodeId,jdbcType=BIGINT})
   </insert>
@@ -41,8 +44,8 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="processdefinition != null" >
-        processdefinition,
+      <if test="processdefinitionId != null" >
+        processdefinition_id,
       </if>
       <if test="description != null" >
         description,
@@ -67,8 +70,8 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="processdefinition != null" >
-        #{processdefinition,jdbcType=BIGINT},
+      <if test="processdefinitionId != null" >
+        #{processdefinition_id,jdbcType=BIGINT},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
@@ -93,8 +96,8 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="processdefinition != null" >
-        processdefinition = #{processdefinition,jdbcType=BIGINT},
+      <if test="processdefinitionId != null" >
+        processdefinition_id = #{processdefinitionId,jdbcType=BIGINT},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
@@ -117,7 +120,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowTask" >
     update base_flow_task
     set name = #{name,jdbcType=VARCHAR},
-      processdefinition = #{processdefinition,jdbcType=BIGINT},
+      processdefinition_id = #{processdefinition_id,jdbcType=BIGINT},
       description = #{description,jdbcType=VARCHAR},
       actor_type = #{actorType,jdbcType=INTEGER},
       swimlane_id = #{swimlaneId,jdbcType=BIGINT},
@@ -125,4 +128,11 @@
       start_node_id = #{startNodeId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getFlowTaskByProcessinstanceidandNodeid" parameterType="java.util.Map" resultType="cn.workcenter.model.FlowTask">
+  	select
+  	<include refid="fta_Base_Column_List" />
+  	from base_flow_task fta
+  	inner join base_flow_processinstance fpr on fpr.processdefinition_id = fta.processdefinition_id
+  	where fpr.id = #{processinstance_id} and fta.node_id = #{node_id}
+  </select>
 </mapper>

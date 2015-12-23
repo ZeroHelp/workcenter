@@ -13,4 +13,9 @@ public class SecurityException extends RuntimeException {
 		super(msg);
 	}
 	
+	public SecurityException(String msg, String code) {
+		errormsg = msg;
+		errorcode = code;
+	}
+	
 }

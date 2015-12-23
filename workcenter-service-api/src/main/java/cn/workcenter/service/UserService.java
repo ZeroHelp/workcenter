@@ -1,6 +1,8 @@
 package cn.workcenter.service;
 
-import cn.workcenter.common.WorkcenterResult;
+import java.util.List;
+
+import cn.workcenter.model.User;
 
 public interface UserService {
 
@@ -18,12 +20,16 @@ public interface UserService {
 	 */
 	void destroyThreadLocal();
 
-	WorkcenterResult doLogin(String username, String password);
+	Object doLogin(String username, String password);
 
-	WorkcenterResult doLogout(String sid);
+	Object doLogout(String sid);
 
 	String getUsername();
 
 	Object getSid();
+
+	List<User> getFlowRelatedUsers(Long processinstance_id);
+
+	List<User> getNodeRelatedUsers(Long processinstance_id, Long node_id);
 
 }
