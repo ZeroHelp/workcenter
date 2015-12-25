@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.workcenter.kpi.dao.EnactmentSelfMapper" >
+  <resultMap id="BaseResultMap" type="cn.workcenter.kpi.model.EnactmentSelf" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="kpi_main_id" property="kpiMainId" jdbcType="BIGINT" />
+    <result column="index_num" property="indexNum" jdbcType="INTEGER" />
+    <result column="self_direction" property="selfDirection" jdbcType="VARCHAR" />
+    <result column="self_weight" property="selfWeight" jdbcType="DECIMAL" />
+    <result column="self_score" property="selfScore" jdbcType="DECIMAL" />
+    <result column="leader_score" property="leaderScore" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.workcenter.kpi.model.EnactmentSelfWithBLOBs" extends="BaseResultMap" >
+    <result column="self_goal" property="selfGoal" jdbcType="LONGVARCHAR" />
+    <result column="self_evaluate" property="selfEvaluate" jdbcType="LONGVARCHAR" />
+    <result column="leader_evaluation" property="leaderEvaluation" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, kpi_main_id, index_num, self_direction, self_weight, self_score, leader_score, 
+    status
+  </sql>
+  <sql id="Blob_Column_List" >
+    self_goal, self_evaluate, leader_evaluation
+  </sql>
+  <sql id="kes_Base_Column_List_all">
+  	kes.id, kes.kpi_main_id as kpiMainId, kes.index_num as indeexNum, kes.self_direction as selfDirection, kes.self_weight as selfWeight, kes.self_score as selfScore, kes.leader_score as leaderScore, 
+    kes.status, kes.self_goal as selfGoal, kes.self_evaluate as selfEvaluate, kes.leader_evaluation as leaderEvaluation
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from kpi_enactment_self
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from kpi_enactment_self
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.workcenter.kpi.model.EnactmentSelfWithBLOBs" >
+    insert into kpi_enactment_self (id, kpi_main_id, index_num, 
+      self_direction, self_weight, self_score, 
+      leader_score, status, self_goal, 
+      self_evaluate, leader_evaluation)
+    values (#{id,jdbcType=BIGINT}, #{kpiMainId,jdbcType=BIGINT}, #{indexNum,jdbcType=INTEGER}, 
+      #{selfDirection,jdbcType=VARCHAR}, #{selfWeight,jdbcType=DECIMAL}, #{selfScore,jdbcType=DECIMAL}, 
+      #{leaderScore,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{selfGoal,jdbcType=LONGVARCHAR}, 
+      #{selfEvaluate,jdbcType=LONGVARCHAR}, #{leaderEvaluation,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.workcenter.kpi.model.EnactmentSelfWithBLOBs" >
+    insert into kpi_enactment_self
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="kpiMainId != null" >
+        kpi_main_id,
+      </if>
+      <if test="indexNum != null" >
+        index_num,
+      </if>
+      <if test="selfDirection != null" >
+        self_direction,
+      </if>
+      <if test="selfWeight != null" >
+        self_weight,
+      </if>
+      <if test="selfScore != null" >
+        self_score,
+      </if>
+      <if test="leaderScore != null" >
+        leader_score,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="selfGoal != null" >
+        self_goal,
+      </if>
+      <if test="selfEvaluate != null" >
+        self_evaluate,
+      </if>
+      <if test="leaderEvaluation != null" >
+        leader_evaluation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="kpiMainId != null" >
+        #{kpiMainId,jdbcType=BIGINT},
+      </if>
+      <if test="indexNum != null" >
+        #{indexNum,jdbcType=INTEGER},
+      </if>
+      <if test="selfDirection != null" >
+        #{selfDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="selfWeight != null" >
+        #{selfWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="selfScore != null" >
+        #{selfScore,jdbcType=DECIMAL},
+      </if>
+      <if test="leaderScore != null" >
+        #{leaderScore,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="selfGoal != null" >
+        #{selfGoal,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selfEvaluate != null" >
+        #{selfEvaluate,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="leaderEvaluation != null" >
+        #{leaderEvaluation,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.kpi.model.EnactmentSelfWithBLOBs" >
+    update kpi_enactment_self
+    <set >
+      <if test="kpiMainId != null" >
+        kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
+      </if>
+      <if test="indexNum != null" >
+        index_num = #{indexNum,jdbcType=INTEGER},
+      </if>
+      <if test="selfDirection != null" >
+        self_direction = #{selfDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="selfWeight != null" >
+        self_weight = #{selfWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="selfScore != null" >
+        self_score = #{selfScore,jdbcType=DECIMAL},
+      </if>
+      <if test="leaderScore != null" >
+        leader_score = #{leaderScore,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="selfGoal != null" >
+        self_goal = #{selfGoal,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selfEvaluate != null" >
+        self_evaluate = #{selfEvaluate,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="leaderEvaluation != null" >
+        leader_evaluation = #{leaderEvaluation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.workcenter.kpi.model.EnactmentSelfWithBLOBs" >
+    update kpi_enactment_self
+    set kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
+      index_num = #{indexNum,jdbcType=INTEGER},
+      self_direction = #{selfDirection,jdbcType=VARCHAR},
+      self_weight = #{selfWeight,jdbcType=DECIMAL},
+      self_score = #{selfScore,jdbcType=DECIMAL},
+      leader_score = #{leaderScore,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      self_goal = #{selfGoal,jdbcType=LONGVARCHAR},
+      self_evaluate = #{selfEvaluate,jdbcType=LONGVARCHAR},
+      leader_evaluation = #{leaderEvaluation,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.kpi.model.EnactmentSelf" >
+    update kpi_enactment_self
+    set kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
+      index_num = #{indexNum,jdbcType=INTEGER},
+      self_direction = #{selfDirection,jdbcType=VARCHAR},
+      self_weight = #{selfWeight,jdbcType=DECIMAL},
+      self_score = #{selfScore,jdbcType=DECIMAL},
+      leader_score = #{leaderScore,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getEnactmentSelfsByProcessinstanceid" parameterType="java.lang.Long" resultType="cn.workcenter.kpi.model.EnactmentCultural">
+  	select 
+  	<include refid="kes_Base_Column_List_all" />
+  	from kpi_enactment_self kes 
+  	left join kpi_main kma on kma.id = kes.kpi_main_id
+  	where kma.processinstance_id = #{processinstance_id}
+  </select>
+</mapper>

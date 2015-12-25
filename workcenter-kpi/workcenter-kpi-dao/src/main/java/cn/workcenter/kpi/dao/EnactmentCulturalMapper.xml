@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.workcenter.kpi.dao.EnactmentCulturalMapper" >
+  <resultMap id="BaseResultMap" type="cn.workcenter.kpi.model.EnactmentCultural" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="kpi_main_id" property="kpiMainId" jdbcType="BIGINT" />
+    <result column="index_num" property="indexNum" jdbcType="INTEGER" />
+    <result column="task_direction" property="taskDirection" jdbcType="VARCHAR" />
+    <result column="task_weight" property="taskWeight" jdbcType="DECIMAL" />
+    <result column="task_score" property="taskScore" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.workcenter.kpi.model.EnactmentCultural" extends="BaseResultMap" >
+    <result column="task_content" property="taskContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, kpi_main_id, index_num, task_direction, task_weight, task_score, status
+  </sql>
+  <sql id="Blob_Column_List" >
+    task_content
+  </sql>
+  <sql id="kec_Base_Column_List_all">
+  	kec.id, kec.kpi_main_id as kpiMainId, kec.index_num as indexNum, kec.task_direction as taskDirection, kec.task_weight as taskWeight, kec.task_score as taskScore, kec.status, kec.task_content as taskContent
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from kpi_enactment_cultural
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from kpi_enactment_cultural
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.workcenter.kpi.model.EnactmentCultural" >
+    insert into kpi_enactment_cultural (id, kpi_main_id, index_num, 
+      task_direction, task_weight, task_score, 
+      status, task_content)
+    values (#{id,jdbcType=BIGINT}, #{kpiMainId,jdbcType=BIGINT}, #{indexNum,jdbcType=INTEGER}, 
+      #{taskDirection,jdbcType=VARCHAR}, #{taskWeight,jdbcType=DECIMAL}, #{taskScore,jdbcType=DECIMAL}, 
+      #{status,jdbcType=INTEGER}, #{taskContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.workcenter.kpi.model.EnactmentCultural" >
+    insert into kpi_enactment_cultural
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="kpiMainId != null" >
+        kpi_main_id,
+      </if>
+      <if test="indexNum != null" >
+        index_num,
+      </if>
+      <if test="taskDirection != null" >
+        task_direction,
+      </if>
+      <if test="taskWeight != null" >
+        task_weight,
+      </if>
+      <if test="taskScore != null" >
+        task_score,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="taskContent != null" >
+        task_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="kpiMainId != null" >
+        #{kpiMainId,jdbcType=BIGINT},
+      </if>
+      <if test="indexNum != null" >
+        #{indexNum,jdbcType=INTEGER},
+      </if>
+      <if test="taskDirection != null" >
+        #{taskDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="taskWeight != null" >
+        #{taskWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="taskScore != null" >
+        #{taskScore,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="taskContent != null" >
+        #{taskContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.kpi.model.EnactmentCultural" >
+    update kpi_enactment_cultural
+    <set >
+      <if test="kpiMainId != null" >
+        kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
+      </if>
+      <if test="indexNum != null" >
+        index_num = #{indexNum,jdbcType=INTEGER},
+      </if>
+      <if test="taskDirection != null" >
+        task_direction = #{taskDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="taskWeight != null" >
+        task_weight = #{taskWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="taskScore != null" >
+        task_score = #{taskScore,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="taskContent != null" >
+        task_content = #{taskContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.workcenter.kpi.model.EnactmentCultural" >
+    update kpi_enactment_cultural
+    set kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
+      index_num = #{indexNum,jdbcType=INTEGER},
+      task_direction = #{taskDirection,jdbcType=VARCHAR},
+      task_weight = #{taskWeight,jdbcType=DECIMAL},
+      task_score = #{taskScore,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      task_content = #{taskContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.kpi.model.EnactmentCultural" >
+    update kpi_enactment_cultural
+    set kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
+      index_num = #{indexNum,jdbcType=INTEGER},
+      task_direction = #{taskDirection,jdbcType=VARCHAR},
+      task_weight = #{taskWeight,jdbcType=DECIMAL},
+      task_score = #{taskScore,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getEnactmentCulturalsByProcessinstanceid" parameterType="java.lang.Long" resultType="cn.workcenter.kpi.model.EnactmentCultural">
+  	select 
+  	<include refid="kec_Base_Column_List_all" />
+  	from kpi_enactment_cultural kec 
+  	left join kpi_main kma on kma.id = kec.kpi_main_id
+  	where kma.processinstance_id = #{processinstance_id}
+  </select>
+</mapper>

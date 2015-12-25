@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.workcenter.kpi.dao.MainMapper" >
+  <resultMap id="BaseResultMap" type="cn.workcenter.kpi.model.Main" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="processinstance_id" property="processinstanceId" jdbcType="BIGINT" />
+    <result column="root_token_id" property="rootTokenId" jdbcType="BIGINT" />
+    <result column="wait_assessment_person_id" property="waitAssessmentPersonId" jdbcType="BIGINT" />
+    <result column="assessment_person_id" property="assessmentPersonId" jdbcType="BIGINT" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="assess_status" property="assessStatus" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="total_score" property="totalScore" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, processinstance_id, root_token_id, wait_assessment_person_id, assessment_person_id, 
+    year, remark, assess_status, grade, total_score, status
+  </sql>
+  <sql id="main_Base_Column_List">
+  	main.id, main.processinstanceId, main.rootTokenId, main.waitAssessmentPersonId, main.assessmentPersonId, 
+    main.year, main.remark, main.assessStatus, main.grade, main.totalScore, main.status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from kpi_main
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from kpi_main
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.workcenter.kpi.model.Main" >
+    insert into kpi_main (id, processinstance_id, root_token_id, 
+      wait_assessment_person_id, assessment_person_id, 
+      year, remark, assess_status, 
+      grade, total_score, status
+      )
+    values (#{id,jdbcType=BIGINT}, #{processinstanceId,jdbcType=BIGINT}, #{rootTokenId,jdbcType=BIGINT}, 
+      #{waitAssessmentPersonId,jdbcType=BIGINT}, #{assessmentPersonId,jdbcType=BIGINT}, 
+      #{year,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{assessStatus,jdbcType=INTEGER}, 
+      #{grade,jdbcType=VARCHAR}, #{totalScore,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.workcenter.kpi.model.Main" >
+    insert into kpi_main
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="processinstanceId != null" >
+        processinstance_id,
+      </if>
+      <if test="rootTokenId != null" >
+        root_token_id,
+      </if>
+      <if test="waitAssessmentPersonId != null" >
+        wait_assessment_person_id,
+      </if>
+      <if test="assessmentPersonId != null" >
+        assessment_person_id,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="assessStatus != null" >
+        assess_status,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="totalScore != null" >
+        total_score,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="processinstanceId != null" >
+        #{processinstanceId,jdbcType=BIGINT},
+      </if>
+      <if test="rootTokenId != null" >
+        #{rootTokenId,jdbcType=BIGINT},
+      </if>
+      <if test="waitAssessmentPersonId != null" >
+        #{waitAssessmentPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="assessmentPersonId != null" >
+        #{assessmentPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="assessStatus != null" >
+        #{assessStatus,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null" >
+        #{totalScore,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.kpi.model.Main" >
+    update kpi_main
+    <set >
+      <if test="processinstanceId != null" >
+        processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+      </if>
+      <if test="rootTokenId != null" >
+        root_token_id = #{rootTokenId,jdbcType=BIGINT},
+      </if>
+      <if test="waitAssessmentPersonId != null" >
+        wait_assessment_person_id = #{waitAssessmentPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="assessmentPersonId != null" >
+        assessment_person_id = #{assessmentPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="assessStatus != null" >
+        assess_status = #{assessStatus,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null" >
+        total_score = #{totalScore,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.workcenter.kpi.model.Main" >
+    update kpi_main
+    set processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+      root_token_id = #{rootTokenId,jdbcType=BIGINT},
+      wait_assessment_person_id = #{waitAssessmentPersonId,jdbcType=BIGINT},
+      assessment_person_id = #{assessmentPersonId,jdbcType=BIGINT},
+      year = #{year,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      assess_status = #{assessStatus,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=VARCHAR},
+      total_score = #{totalScore,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getMainByProcessinstanceid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from kpi_main 
+  	where processinstance_id = #{processinstance_id}
+  </select>
+  
+  <select id="findAssosiateKpisByUsername" parameterType="java.lang.String" resultType="cn.workcenter.kpi.model.Main">
+  	select 
+  	<include refid="main_Base_Column_List" />
+  	from kpi_main main
+  	left join base_flow_processinstance fpr on fpr.id = main.processinstance_id
+  	left join base_flow_swimlane_user fsu on fsu.swimlane_id = fpr.swimlane_id
+  	left join base_user user on user.id = fsu.user_id
+  	where user.user_name = #{username} 
+  </select>
+  
+</mapper>

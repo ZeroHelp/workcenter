@@ -11,6 +11,10 @@
   <sql id="Base_Column_List" >
     id, node_id, variableinstance_id, variablename, access
   </sql>
+  <sql id="Base_Column_List_fva" >
+    fva.id, fva.node_id as nodeId, fva.variableinstance_id as variableinstanceId, fva.variablename, fva.access
+  </sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -90,7 +94,7 @@
       access = #{access,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getVariableaccess">
+  <select id="getVariableaccess" parameterType="java.lang.String" resultType="cn.workcenter.model.FlowVariableaccess">
   	select 
     <include refid="Base_Column_List_fva" />
     from base_flow_variableaccess fva 

@@ -9,7 +9,6 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="<%=basePath%>/img/logo.ico">
@@ -107,7 +106,7 @@
 			});
 			
 			$("#changepassword").on("click", function() {
-				window.location.href = '<%=basePath%>/<%=sid%>/workcenter/password';
+				window.location.href = '<%=basePath%>/${sid}/workcenter/password';
 			});
 			
 			$("#logout").on("click", function() {
@@ -115,7 +114,7 @@
 					type: "post",
 					url: '<%=basePath%>/workcenter/logout',
 					data: {
-						sid : '<%=sid%>',
+						sid : '${sid}',
 					},
 					dataType: "json",
 					success : function(data) {

@@ -15,7 +15,7 @@ public class FlowNode {
 
     private String leaveClassName;
 
-    private Long taskid;
+    private Long taskId;
 
     private Long decisionDelegationId;
 
@@ -77,15 +77,15 @@ public class FlowNode {
         this.leaveClassName = leaveClassName;
     }
 
-    public Long getTaskid() {
-        return taskid;
-    }
+    public Long getTaskId() {
+		return taskId;
+	}
 
-    public void setTaskid(Long taskid) {
-        this.taskid = taskid;
-    }
+	public void setTaskId(Long taskId) {
+		this.taskId = taskId;
+	}
 
-    public Long getDecisionDelegationId() {
+	public Long getDecisionDelegationId() {
         return decisionDelegationId;
     }
 

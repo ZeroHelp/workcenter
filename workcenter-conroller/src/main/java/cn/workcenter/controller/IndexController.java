@@ -20,7 +20,7 @@ import cn.workcenter.model.Resource;
 import cn.workcenter.service.ResourceService;
 import cn.workcenter.service.UserService;
 
-@Controller
+@Controller("workcenterIndexController")
 public class IndexController extends WorkcenterApplication {
 	
 	@Autowired
@@ -87,7 +87,7 @@ public class IndexController extends WorkcenterApplication {
 		
 		List<Resource> modules = resourceService.getUserModule();
 		
-		//request.setAttribute("sid", userService.getSid());
+		request.setAttribute("sid", sid);
 		request.setAttribute("modules", modules);
 		return "/workcenter/home";
 	}

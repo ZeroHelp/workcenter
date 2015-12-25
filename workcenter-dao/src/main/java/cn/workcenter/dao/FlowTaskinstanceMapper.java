@@ -1,5 +1,7 @@
 package cn.workcenter.dao;
 
+import java.util.Map;
+
 import cn.workcenter.model.FlowTaskinstance;
 
 public interface FlowTaskinstanceMapper {
@@ -14,4 +16,6 @@ public interface FlowTaskinstanceMapper {
     int updateByPrimaryKeySelective(FlowTaskinstance record);
 
     int updateByPrimaryKey(FlowTaskinstance record);
+
+	FlowTaskinstance findTaskinstanceByTokenidAndUsername(Map<String, Object> parameterMap);
 }

@@ -9,13 +9,13 @@
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="enter_class_name" property="enterClassName" jdbcType="VARCHAR" />
     <result column="leave_class_name" property="leaveClassName" jdbcType="VARCHAR" />
-    <result column="taskid" property="taskid" jdbcType="BIGINT" />
+    <result column="task_id" property="taskId" jdbcType="BIGINT" />
     <result column="decision_delegation_id" property="decisionDelegationId" jdbcType="BIGINT" />
     <result column="decision_expression" property="decisionExpression" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, processdefinition_id, index_num, name, type, enter_class_name, leave_class_name, 
-    taskid, decision_delegation_id, decision_expression
+    task_id, decision_delegation_id, decision_expression
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -30,11 +30,11 @@
   <insert id="insert" parameterType="cn.workcenter.model.FlowNode" >
     insert into base_flow_node (id, processdefinition_id, index_num, 
       name, type, enter_class_name, 
-      leave_class_name, taskid, decision_delegation_id, 
+      leave_class_name, task_id, decision_delegation_id, 
       decision_expression)
     values (#{id,jdbcType=BIGINT}, #{processdefinitionId,jdbcType=BIGINT}, #{indexNum,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{enterClassName,jdbcType=VARCHAR}, 
-      #{leaveClassName,jdbcType=VARCHAR}, #{taskid,jdbcType=BIGINT}, #{decisionDelegationId,jdbcType=BIGINT}, 
+      #{leaveClassName,jdbcType=VARCHAR}, #{taskId,jdbcType=BIGINT}, #{decisionDelegationId,jdbcType=BIGINT}, 
       #{decisionExpression,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.workcenter.model.FlowNode" >
@@ -61,8 +61,8 @@
       <if test="leaveClassName != null" >
         leave_class_name,
       </if>
-      <if test="taskid != null" >
-        taskid,
+      <if test="taskId != null" >
+        task_id,
       </if>
       <if test="decisionDelegationId != null" >
         decision_delegation_id,
@@ -93,8 +93,8 @@
       <if test="leaveClassName != null" >
         #{leaveClassName,jdbcType=VARCHAR},
       </if>
-      <if test="taskid != null" >
-        #{taskid,jdbcType=BIGINT},
+      <if test="taskId != null" >
+        #{task_id,jdbcType=BIGINT},
       </if>
       <if test="decisionDelegationId != null" >
         #{decisionDelegationId,jdbcType=BIGINT},
@@ -125,8 +125,8 @@
       <if test="leaveClassName != null" >
         leave_class_name = #{leaveClassName,jdbcType=VARCHAR},
       </if>
-      <if test="taskid != null" >
-        taskid = #{taskid,jdbcType=BIGINT},
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=BIGINT},
       </if>
       <if test="decisionDelegationId != null" >
         decision_delegation_id = #{decisionDelegationId,jdbcType=BIGINT},
@@ -145,7 +145,7 @@
       type = #{type,jdbcType=VARCHAR},
       enter_class_name = #{enterClassName,jdbcType=VARCHAR},
       leave_class_name = #{leaveClassName,jdbcType=VARCHAR},
-      taskid = #{taskid,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
       decision_delegation_id = #{decisionDelegationId,jdbcType=BIGINT},
       decision_expression = #{decisionExpression,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}

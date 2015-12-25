@@ -177,4 +177,11 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		return userlist;
 	}
 
+	@Override
+	public String getUsernameByUserid(Long waitAssessmentPersonId) {
+		User user = userMapper.selectByPrimaryKey(waitAssessmentPersonId);
+		
+		return user.getUserName();
+	}
+
 }

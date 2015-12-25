@@ -5,7 +5,7 @@ public class FlowSwimlaneUser {
 
     private Long userId;
 
-    private Long swimlanceId;
+    private Long swimlaneId;
 
     private Integer status;
 
@@ -25,15 +25,15 @@ public class FlowSwimlaneUser {
         this.userId = userId;
     }
 
-    public Long getSwimlanceId() {
-        return swimlanceId;
-    }
+    public Long getSwimlaneId() {
+		return swimlaneId;
+	}
 
-    public void setSwimlanceId(Long swimlanceId) {
-        this.swimlanceId = swimlanceId;
-    }
+	public void setSwimlaneId(Long swimlaneId) {
+		this.swimlaneId = swimlaneId;
+	}
 
-    public Integer getStatus() {
+	public Integer getStatus() {
         return status;
     }
 

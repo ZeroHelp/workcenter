@@ -22,6 +22,10 @@
     id, swimlane_id, processinstance_id, task_id, name, description, create_time, start_time, 
     end_time, duedate, priority, is_cancelled, is_suspended, is_open, is_blocking
   </sql>
+  <sql id="Base_Column_List_fta" >
+    fta.id, fta.swimlane_id as swimlaneId, fta.processinstance_id as processinstanceId, fta.task_id as taskId, fta.name, fta.description, fta.create_time as createTime, fta.start_time as startTime, 
+    fta.end_time as endTime, fta.duedate, fta.priority, fta.is_cancelled as isCancelled, fta.is_suspended as isSuspended, fta.is_open as isOpen, fta.is_blocking as isBlocking
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -209,4 +213,17 @@
       is_blocking = #{isBlocking,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="findTaskinstanceByTokenidAndUsername" parameterType="java.util.Map" resultType="cn.workcenter.model.FlowTaskinstance">
+  	select 
+  	<include refid="Base_Column_List_fta" />
+  	from base_flow_task fta
+  	left join base_flow_node fno on fno.task_id = fta.id
+  	left join base_flow_token fto on fto.node_id = tno.id
+  	
+  	left join base_flow_swimlane_user fsu on fsu.swimlane_id = on fsw.id
+  	left join base_user us on us.id = fsu.user_id
+  	where fto.id = #{tokenId} and us.user_name = #{username}
+  	
+  </select>
 </mapper>

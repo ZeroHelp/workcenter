@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface FlowService {
 
-	Map<String, Integer> getVariableaccess(Long node_id);
+	Map<String, Object> getVariableaccess(Long node_id);
 
 }

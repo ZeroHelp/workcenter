@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cn.workcenter.common.flow.DefaultFlow;
+import cn.workcenter.kpi.common.KpiApplication;
 import cn.workcenter.kpi.service.KpiService;
 import cn.workcenter.model.User;
 import cn.workcenter.service.FlowService;
@@ -28,11 +29,42 @@ public class KpiFlow extends DefaultFlow {
 		checkRelatedRight(processinstance_id);
 		checkCurrentNodeRight(processinstance_id, node_id);
 		
-		Map<String, Integer> attributesAccess = flowService.getVariableaccess(node_id);
-		List<Map<String, String>> selfAttributes = kpiService.getSelfAttributes();
-		List<Map<String, String>> cultureAttributes = kpiService.getCultureAttributes();
+		Map<String, Object> attributesAccess = flowService.getVariableaccess(node_id);
+		Map<String, Object> main = kpiService.getMain(processinstance_id);
+		List<Map<String, Object>> selfAttributes = kpiService.getSelfAttributes(processinstance_id);
+		List<Map<String, Object>> culturalAttributes = kpiService.getCulturalAttributes(processinstance_id);
 		
+		readFilterAttributes(selfAttributes, attributesAccess);
+		readFilterAttributes(culturalAttributes, attributesAccess);
+		
+		KpiApplication.requestThreadLocal.get().setAttribute("main", main);
+		KpiApplication.requestThreadLocal.get().setAttribute("selfAttributes", selfAttributes);
+		KpiApplication.requestThreadLocal.get().setAttribute("culturalAttributes", culturalAttributes);
+		
+		KpiApplication.requestThreadLocal.setALLAccesses(attributesAccess);
 		return null;
+	}
+
+	private void readFilterAttributes(List<Map<String, Object>> attributes, Map<String, Object> attributesAccess) {
+		for(Map<String, Object> attibuteMap: attributes) {
+			for(String key: attibuteMap.keySet()) {
+				int access = (Integer)attributesAccess.get(key);
+				if(access <= 0) {
+					attibuteMap.remove(key);
+				}
+			}
+		}
+	}
+	
+	private void writeFilterAttributes(List<Map<String, Object>> attributes, Map<String, Object> attributesAccess) {
+		for(Map<String, Object> attibuteMap: attributes) {
+			for(String key: attibuteMap.keySet()) {
+				int access = (Integer)attributesAccess.get(key);
+				if(access < 2) {
+					attibuteMap.remove(key);
+				}
+			}
+		}
 	}
 
 	private void checkCurrentNodeRight(Long processinstance_id, Long node_id) {

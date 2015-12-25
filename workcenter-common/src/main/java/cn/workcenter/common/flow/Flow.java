@@ -1,5 +1,7 @@
 package cn.workcenter.common.flow;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface Flow {
 	
 	/**
