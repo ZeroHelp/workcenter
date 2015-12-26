@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.workcenter</groupId>
+		<artifactId>workcenter-parent</artifactId>
+		<version>0.0.1.Alpha1-SNAPSHOT</version>
+	</parent>
+	<artifactId>workcenter-admin</artifactId>
+	<packaging>pom</packaging>
+	<name>${project.artifactId}</name>
+	<description>The config module of dubbo project</description>
+	<properties>
+		<skip_maven_deploy>true</skip_maven_deploy>
+	</properties>
+	<modules>
+		<module>workcenter-admin-model</module>
+		<module>workcenter-admin-dao</module>
+		<module>workcenter-admin-service-api</module>
+		<module>workcenter-admin-common</module>
+		<module>workcenter-admin-service</module>
+		<module>workcenter-admin-conroller</module>
+	</modules>
+	
+	
+</project>

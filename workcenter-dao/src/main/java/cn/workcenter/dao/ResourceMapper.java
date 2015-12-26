@@ -22,4 +22,6 @@ public interface ResourceMapper {
 	List<Resource> getResourcesByUsername(String username);
 
 	List<Resource> getRootResourcesByUsername(String username);
+
+	List<Resource> getResoucesByParentid(String parentId);
 }

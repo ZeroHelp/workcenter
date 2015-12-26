@@ -11,7 +11,7 @@
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, parent_id, resource_name, resource_url, create_time, create_userid, status
+    id, parent_id as parentId, resource_name as resourceName, resource_url as resourceUrl, create_time as createTime, create_userid as createUserid, status
   </sql>
   <sql id="Re_Base_Column_List">
     re.id as id, re.parent_id as parentId, re.resource_name as resourceName , re.resource_url as resourceUrl, re.create_time as createTime, re.create_userid as createUserid, re.status as status
@@ -147,5 +147,12 @@
   	left join base_user ue on ue.id = ur.user_id
   	where ue.user_name = #{username} and re.parent_id = 0
   	and re.status = 1 and rr .status = 1 and ro.status = 1 and ur.status = 1 and ue.status = 1
+  </select>
+  <select id="getResoucesByParentid" parameterType="java.lang.String" resultType="cn.workcenter.model.Resource">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from base_resource
+  	where parent_id = #{parentId}
+  	and status = 1
   </select>
 </mapper>

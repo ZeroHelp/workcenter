@@ -3,21 +3,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.workcenter</groupId>
-		<artifactId>workcenter-kpi</artifactId>
+		<artifactId>workcenter-admin</artifactId>
 		<version>0.0.1.Alpha1-SNAPSHOT</version>
 	</parent>
-	<artifactId>workcenter-kpi-service-api</artifactId>
+	<artifactId>workcenter-admin-model</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
-	<description>The spring config module of dubbo project</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>cn.workcenter</groupId>
-			<artifactId>workcenter-kpi-model</artifactId>
-			<version>${project.version}</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -31,18 +31,29 @@ public class ResourceServiceImpl implements ResourceService , CacheConstant{
 		String resourcesJson = redisCache.get(RESOURCES_PREFIX + username);
 		List<Resource> resources = JSON.parseArray(resourcesJson, Resource.class);
 		if(resources==null ||resources.size()==0) {
-			resources = resourceMapper.getResourcesByUsername(username);
-			redisCache.set(RESOURCES_PREFIX + username,JSON.toJSONString(resources));
+			resources =  initRedisResource(username);
 		}
 		return resources;
 	}
 
+	public List<Resource> initRedisResource(String username) {
+		List<Resource> resources = resourceMapper.getResourcesByUsername(username);
+		redisCache.set(RESOURCES_PREFIX + username,JSON.toJSONString(resources));
+		return resources;
+	}
+	
 	@Override
 	public List<Resource> getUserModule() {
 		String username = userService.getUsername();
 		List<Resource> modules = resourceMapper.getRootResourcesByUsername(username);
 		
 		return modules;
+	}
+
+	@Override
+	public List<Resource> getResoucesByParentid(String parentId) {
+		List<Resource> resources = resourceMapper.getResoucesByParentid(parentId);
+		return resources;
 	}
 
 }

@@ -20,7 +20,7 @@
 	<context:annotation-config />
 	<!-- 把标记了@Controller注解的类转换为bean -->
 	<context:component-scan base-package="cn.workcenter" >
-		<context:exclude-filter type="regex" expression="cn.workcenter.controller.*"/>
+		<context:exclude-filter type="regex" expression="cn.workcenter.controller.*,cn.workcenter.controller.*.*"/>
 	</context:component-scan>
 	
 	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true" />

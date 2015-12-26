@@ -23,6 +23,7 @@
 		<module>workcenter-conroller</module>
 		<module>workcenter-security</module>
 		<module>workcenter-kpi</module>
+		<module>workcenter-admin</module>
 		<module>workcenter-web</module>
 	</modules>
 	<properties>

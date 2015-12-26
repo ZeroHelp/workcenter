@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.workcenter.common.WorkcenterApplication;
 import cn.workcenter.common.WorkcenterCodeEnum;
 import cn.workcenter.common.WorkcenterResult;
@@ -134,13 +136,23 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		
 		//initial sid
 		String newsid = StringUtil.getRandom(8);
-		initialSid(newsid, username);
+		initialCache(newsid, username);
+		
 		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_LOGIN), getSid()).build();
+	}
+
+	private void initialCache(String newsid, String username) {
+		//init sercurity
+		resourceService.initRedisResource(username);
+		
+		initialSid(newsid, username);
 	}
 
 	private void initialSid(String newsid, String username) {
 		sidThreadLocal.set(newsid);
 		redisCache.set(USERNAME_PREFIX+newsid, username);
+		
+		
 	}
 
 	public String getSid() {

@@ -26,7 +26,7 @@ public class WorkcenterExceptionFilter implements Filter, WebConstant {
 		try {
 			chain.doFilter(request, response);
 		} catch(cn.workcenter.common.exception.SecurityException authenEx) {
-			((HttpServletResponse)response).sendRedirect("/"+BASE_PATH);
+			((HttpServletResponse)response).sendRedirect(BASE_PATH + LOGIN_PATH);
 			return;
 		} catch(ParameterEmptyException paramEx) {
 			((HttpServletResponse)response).getWriter().write(WorkcenterResponseBodyJson.custom().setAll(paramEx).build().toString());
