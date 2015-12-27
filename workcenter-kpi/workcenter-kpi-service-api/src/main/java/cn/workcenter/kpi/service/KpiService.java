@@ -11,9 +11,9 @@ public interface KpiService {
 
 	Map<String, Object> getMain(Long processinstance_id);
 
-	void doFlowGet(String method, Long main_id);
+	void doFlowGet(String method, Long main_id, Long taskinstance_id);
 	
-	Object doFlowPost(String method, Long main_id);
+	Object doFlowPost(String method, Long main_id, Long taskinstance_id);
 
 	List<Map<String, Object>> getAssosiateKpis();
 

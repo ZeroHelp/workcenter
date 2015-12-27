@@ -6,12 +6,13 @@
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="is_suspended" property="isSuspended" jdbcType="INTEGER" />
+    <result column="is_filed" property="isFiled" jdbcType="INTEGER" />
     <result column="processdefinition_id" property="processdefinitionId" jdbcType="BIGINT" />
     <result column="root_token_id" property="rootTokenId" jdbcType="BIGINT" />
     <result column="swimlane_id" property="swimlaneId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, start_time, end_time, is_suspended, processdefinition_id, root_token_id, swimlane_id
+    id, start_time, end_time, is_suspended, is_filed, processdefinition_id, root_token_id, swimlane_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -25,10 +26,10 @@
   </delete>
   <insert id="insert" parameterType="cn.workcenter.model.FlowProcessinstance" >
     insert into base_flow_processinstance (id, start_time, end_time, 
-      is_suspended, processdefinition_id, root_token_id, 
+      is_suspended, is_filed, processdefinition_id, root_token_id, 
       swimlane_id)
     values (#{id,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{isSuspended,jdbcType=INTEGER}, #{processdefinitionId,jdbcType=BIGINT}, #{rootTokenId,jdbcType=BIGINT}, 
+      #{isSuspended,jdbcType=INTEGER}, #{isFiled,jdbcType=INTEGER}, #{processdefinitionId,jdbcType=BIGINT}, #{rootTokenId,jdbcType=BIGINT}, 
       #{swimlaneId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="cn.workcenter.model.FlowProcessinstance" >
@@ -45,6 +46,9 @@
       </if>
       <if test="isSuspended != null" >
         is_suspended,
+      </if>
+      <if test="isFiled != null" >
+        is_filed,
       </if>
       <if test="processdefinitionId != null" >
         processdefinition_id,
@@ -69,6 +73,9 @@
       <if test="isSuspended != null" >
         #{isSuspended,jdbcType=INTEGER},
       </if>
+      <if test="isFiled != null" >
+        #{isFiled,jdbcType=INTEGER},
+      </if>
       <if test="processdefinitionId != null" >
         #{processdefinitionId,jdbcType=BIGINT},
       </if>
@@ -92,6 +99,9 @@
       <if test="isSuspended != null" >
         is_suspended = #{isSuspended,jdbcType=INTEGER},
       </if>
+      <if test="isFiled != null" >
+        is_filed = #{isFiled,jdbcType=INTEGER},
+      </if>
       <if test="processdefinitionId != null" >
         processdefinition_id = #{processdefinitionId,jdbcType=BIGINT},
       </if>
@@ -109,6 +119,7 @@
     set start_time = #{startTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       is_suspended = #{isSuspended,jdbcType=INTEGER},
+      is_filed = #{isFiled,jdbcType=INTEGER},
       processdefinition_id = #{processdefinitionId,jdbcType=BIGINT},
       root_token_id = #{rootTokenId,jdbcType=BIGINT},
       swimlane_id = #{swimlaneId,jdbcType=BIGINT}

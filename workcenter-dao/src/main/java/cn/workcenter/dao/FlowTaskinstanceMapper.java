@@ -17,5 +17,7 @@ public interface FlowTaskinstanceMapper {
 
     int updateByPrimaryKey(FlowTaskinstance record);
 
-	FlowTaskinstance findTaskinstanceByTokenidAndUsername(Map<String, Object> parameterMap);
+	FlowTaskinstance findTaskinstanceByProcessinstanceIdAndUsername(Map<String, Object> parameterMap);
+
+	FlowTaskinstance getFlowTaskinstanceByProcessinstanceidandNodeid(Map<String, Long> parameterMap);
 }

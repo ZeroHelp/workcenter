@@ -44,4 +44,36 @@ public enum KpiOperatorEnum {
 		}
 		return null;
 	}
+	public static String getOperatorByAssessStatus(Integer assessStatus) {
+		switch(assessStatus){
+		case 1:
+			return "起草";
+		case 2:
+			return "审批";
+		case 3:
+			return "自评";
+		case 4:
+			return "审评";
+			
+		case 6:
+			return "查看";
+		}
+		return "";
+	}
+	public static String getassessStatusByAssessStatus(Integer assessStatus) {
+		switch(assessStatus){
+		case 1:
+			return "起草";
+		case 2:
+			return "审批";
+		case 3:
+			return "自评";
+		case 4:
+			return "审评";
+			
+		case 6:
+			return "完成";
+		}
+		return "";
+	}
 }

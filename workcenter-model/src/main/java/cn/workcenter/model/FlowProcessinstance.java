@@ -10,14 +10,24 @@ public class FlowProcessinstance {
     private Date endTime;
 
     private Integer isSuspended;
+    
+    private Integer isFiled;
 
     private Long processdefinitionId;
 
     private Long rootTokenId;
 
     private Long swimlaneId;
+    
+    public Integer getIsFiled() {
+		return isFiled;
+	}
 
-    public Long getId() {
+	public void setIsFiled(Integer isFiled) {
+		this.isFiled = isFiled;
+	}
+
+	public Long getId() {
         return id;
     }
 

@@ -19,8 +19,8 @@
     year, remark, assess_status, grade, total_score, status
   </sql>
   <sql id="main_Base_Column_List">
-  	main.id, main.processinstanceId, main.rootTokenId, main.waitAssessmentPersonId, main.assessmentPersonId, 
-    main.year, main.remark, main.assessStatus, main.grade, main.totalScore, main.status
+  	main.id, main.processinstance_id as processinstanceId, main.root_token_id as rootTokenId, main.wait_assessment_person_id as waitAssessmentPersonId, main.assessment_person_id as assessmentPersonId, 
+    main.year, main.remark, main.assess_status as assessStatus, main.grade, main.total_score as totalScore, main.status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -175,14 +175,26 @@
   	where processinstance_id = #{processinstance_id}
   </select>
   
-  <select id="findAssosiateKpisByUsername" parameterType="java.lang.String" resultType="cn.workcenter.kpi.model.Main">
+  <select id="findFiledKpisByUsernameAndIsfiled" parameterType="java.util.Map" resultType="cn.workcenter.kpi.model.Main">
   	select 
-  	<include refid="main_Base_Column_List" />
+  	<include refid="main_Base_Column_List" /> 
   	from kpi_main main
   	left join base_flow_processinstance fpr on fpr.id = main.processinstance_id
   	left join base_flow_swimlane_user fsu on fsu.swimlane_id = fpr.swimlane_id
   	left join base_user user on user.id = fsu.user_id
-  	where user.user_name = #{username} 
+  	where user.user_name = #{username} and fpr.is_filed = #{is_filed}
+  	and main.status = 1
   </select>
   
+  <select id="findFiledKpisByUsernameAndNotfiledAndIsopentask" parameterType="java.util.Map" resultType="cn.workcenter.kpi.model.Main">
+  	select 
+  	<include refid="main_Base_Column_List" />, fti.id as taskinstanceId
+  	from kpi_main main
+  	left join base_flow_processinstance pro on pro.id = main.processinstance_id
+  	left join base_flow_taskinstance fti on fti.processinstance_id = main.processinstance_id
+  	left join base_flow_swimlane_user fsu on fsu.swimlane_id = fti.swimlane_id
+  	left join base_user user on user.id = fsu.user_id
+  	where pro.is_filed = #{is_filed} and fti.is_open = #{is_open} and user.user_name = #{username}
+  	and main.status = 1
+  </select>
 </mapper>

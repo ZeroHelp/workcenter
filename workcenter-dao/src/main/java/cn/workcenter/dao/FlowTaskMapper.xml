@@ -7,15 +7,16 @@
     <result column="processdefinition_id" property="processdefinitionId" jdbcType="BIGINT" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="actor_type" property="actorType" jdbcType="INTEGER" />
-    <result column="swimlane_id" property="swimlaneId" jdbcType="BIGINT" />
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="group_id" property="groupId" jdbcType="BIGINT" />
     <result column="node_id" property="nodeId" jdbcType="BIGINT" />
     <result column="start_node_id" property="startNodeId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, processdefinition_id, description, actor_type, swimlane_id, node_id, start_node_id
+    id, name, processdefinition_id, description, actor_type, role_id, group_id, node_id, start_node_id
   </sql>
   <sql id="fta_Base_Column_List">
-  	fta.id, fta.name, fta.processdefinition_id as processdefinitionId, fta.description, fta.actor_type as actorType, fta.swimlane_id as swimlaneId, fta.node_id as nodeId, fta.start_node_id as startNodeId
+  	fta.id, fta.name, fta.processdefinition_id as processdefinitionId, fta.description, fta.actor_type as actorType, fta.role_id as roleId, fta.group_id as groupId, fta.node_id as nodeId, fta.start_node_id as startNodeId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -29,10 +30,10 @@
   </delete>
   <insert id="insert" parameterType="cn.workcenter.model.FlowTask" >
     insert into base_flow_task (id, name, processdefinition_id, 
-      description, actor_type, swimlane_id, 
+      description, actor_type, role_id, group_id,
       node_id, start_node_id)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{processdefinitionId,jdbcType=BIGINT}, 
-      #{description,jdbcType=VARCHAR}, #{actorType,jdbcType=INTEGER}, #{swimlaneId,jdbcType=BIGINT}, 
+      #{description,jdbcType=VARCHAR}, #{actorType,jdbcType=INTEGER}, #{roleId,jdbcType=BIGINT}, #{groupId,jdbcType=BIGINT}, 
       #{nodeId,jdbcType=BIGINT}, #{startNodeId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTask" >
@@ -53,8 +54,11 @@
       <if test="actorType != null" >
         actor_type,
       </if>
-      <if test="swimlaneId != null" >
-        swimlane_id,
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
       </if>
       <if test="nodeId != null" >
         node_id,
@@ -79,8 +83,11 @@
       <if test="actorType != null" >
         #{actorType,jdbcType=INTEGER},
       </if>
-      <if test="swimlaneId != null" >
-        #{swimlaneId,jdbcType=BIGINT},
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=BIGINT},
       </if>
       <if test="nodeId != null" >
         #{nodeId,jdbcType=BIGINT},
@@ -105,8 +112,11 @@
       <if test="actorType != null" >
         actor_type = #{actorType,jdbcType=INTEGER},
       </if>
-      <if test="swimlaneId != null" >
-        swimlane_id = #{swimlaneId,jdbcType=BIGINT},
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=BIGINT},
       </if>
       <if test="nodeId != null" >
         node_id = #{nodeId,jdbcType=BIGINT},
@@ -123,7 +133,8 @@
       processdefinition_id = #{processdefinition_id,jdbcType=BIGINT},
       description = #{description,jdbcType=VARCHAR},
       actor_type = #{actorType,jdbcType=INTEGER},
-      swimlane_id = #{swimlaneId,jdbcType=BIGINT},
+      role_id = #{roleId,jdbcType=BIGINT},
+      group_id = #{groupId,jdbcType=BIGINT},
       node_id = #{nodeId,jdbcType=BIGINT},
       start_node_id = #{startNodeId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

@@ -1,6 +1,7 @@
 package cn.workcenter.kpi.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.workcenter.kpi.model.Main;
 
@@ -18,6 +19,9 @@ public interface MainMapper {
     int updateByPrimaryKey(Main record);
 
 	Main getMainByProcessinstanceid(Long processinstance_id);
+	
+	List<Main> findFiledKpisByUsernameAndIsfiled(Map<String, Object> parameterMap);
 
-	List<Main> findAssosiateKpisByUsername(String username);
+	List<Main> findFiledKpisByUsernameAndNotfiledAndIsopentask(Map<String, Object> parameterMap);
+	
 }

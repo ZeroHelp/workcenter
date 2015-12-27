@@ -32,6 +32,6 @@ public interface UserService {
 
 	List<User> getNodeRelatedUsers(Long processinstance_id, Long node_id);
 
-	String getUsernameByUserid(Long waitAssessmentPersonId);
+	String getUserRealnameByUserid(Long waitAssessmentPersonId);
 
 }

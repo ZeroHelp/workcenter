@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import cn.workcenter.common.util.StringUtil;
 import cn.workcenter.dao.FlowTaskinstanceMapper;
-import cn.workcenter.dao.FlowTokenMapper;
+import cn.workcenter.kpi.common.KpiConstant;
 import cn.workcenter.kpi.common.KpiOperatorEnum;
 import cn.workcenter.kpi.common.flow.KpiFlow;
 import cn.workcenter.kpi.dao.EnactmentCulturalMapper;
@@ -21,11 +21,10 @@ import cn.workcenter.kpi.model.EnactmentSelfWithBLOBs;
 import cn.workcenter.kpi.model.Main;
 import cn.workcenter.kpi.service.KpiService;
 import cn.workcenter.model.FlowTaskinstance;
-import cn.workcenter.model.FlowToken;
 import cn.workcenter.service.UserService;
 
 @Service("kpiService")
-public class KpiServiceImpl implements KpiService {
+public class KpiServiceImpl implements KpiService, KpiConstant {
 
 	@Autowired
 	private EnactmentSelfMapper enactmentSelfMapper;
@@ -36,8 +35,6 @@ public class KpiServiceImpl implements KpiService {
 	@Autowired
 	private KpiFlow kpiFlow;
 	@Autowired
-	private FlowTokenMapper flowTokenMapper;
-	@Autowired
 	private FlowTaskinstanceMapper flowTaskinstanceMapper;
 	@Autowired
 	private UserService userService;
@@ -46,15 +43,61 @@ public class KpiServiceImpl implements KpiService {
 	public List<Map<String, Object>> getAssosiateKpis() {
 		
 		String username = userService.getUsername();
-		List<Main> mains = mainMapper.findAssosiateKpisByUsername(username);
+		List<Main> filedMains = getKpisByUsernameAndIsfiled(username, FILED);
+		setOperatorByIsFiled(filedMains, FILED);
 		
-		setOperator(mains);
+		List<Main> notfiledMains = getKpisByUsernameAndIsfiled(username, NOT_FILED);
+		setOperatorByIsFiled(notfiledMains, NOT_FILED);
+		
+		List<Main> mains = new ArrayList<Main>();
+		mains.addAll(filedMains);
+		mains.addAll(notfiledMains);
 		
 		List<Map<String, Object>> kpilist = new ArrayList<Map<String, Object>>();
 		spellPageAttributes(kpilist, mains);
+		
 		return kpilist;
 	}
 	
+	private void setOperatorByIsFiled(List<Main> mains, int isFiled) {
+		for(Main main: mains) {
+			String username = userService.getUsername();
+			Map<String, Object> parameterMap = new HashMap<String, Object>();
+			parameterMap.put("username", username);
+			parameterMap.put("processinstanceId", main.getProcessinstanceId());
+			String waitAssessmentPersonName = userService.getUserRealnameByUserid(main.getWaitAssessmentPersonId());
+			String assessmentPersonName = userService.getUserRealnameByUserid(main.getAssessmentPersonId());
+			main.setWaitAssessmentPersonName(waitAssessmentPersonName);
+			main.setAssessmentPersonName(assessmentPersonName);
+			if(FILED == isFiled) {
+				//历史归档 绩效
+				main.setOperator(KpiOperatorEnum.view.getOperator());
+				main.setMethod("view");
+			} else if(NOT_FILED == isFiled) {
+				//用户所属任务 操作
+				main.setOperator(KpiOperatorEnum.getOperatorByAssessStatus(main.getAssessStatus()));
+				main.setMethod("enter");
+			} 
+			
+		}
+	}
+
+	private List<Main> getKpisByUsernameAndIsfiled(String username, int isFiled) {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("username", username);
+		parameterMap.put("is_filed", isFiled);
+		List<Main> mains = null;
+		if(FILED == isFiled) {
+			mains =mainMapper.findFiledKpisByUsernameAndIsfiled(parameterMap);
+		} else {
+			//NOT_FILED
+			parameterMap.put("is_open", OPENED);
+			mains =mainMapper.findFiledKpisByUsernameAndNotfiledAndIsopentask(parameterMap);
+		}
+				
+		return mains;
+	}
+
 	private void spellPageAttributes(List<Map<String, Object>> kpilist, List<Main> mains) {
 		for(int i=1;i<=mains.size();i++) {
 			Main main = mains.get(i-1);
@@ -65,42 +108,24 @@ public class KpiServiceImpl implements KpiService {
 			tempMap.put("waitAssessmentPerson", main.getWaitAssessmentPersonName());
 			tempMap.put("assessmentPerson", main.getAssessmentPersonName());
 			tempMap.put("grade" , StringUtil.isEmpty(main.getGrade()) ?"未评出": main.getGrade());
-			tempMap.put("assessStatus", KpiOperatorEnum.getByAssessStatus(main.getAssessStatus()).getOperator());
+			tempMap.put("assessStatus", main.getAssessStatus());
+			tempMap.put("assessStatusName", KpiOperatorEnum.getassessStatusByAssessStatus(main.getAssessStatus()));
+			tempMap.put("method", main.getMethod());
 			tempMap.put("operator", main.getOperator());
-		}
-	}
-
-	private void setOperator(List<Main> mains) {
-		
-		for(Main main: mains) {
-			String username = userService.getUsername();
-			Map<String, Object> parameterMap = new HashMap<String, Object>();
-			parameterMap.put("username", username);
-			parameterMap.put("tokenId", main.getRootTokenId());
-			FlowTaskinstance taskInstance = flowTaskinstanceMapper.findTaskinstanceByTokenidAndUsername(parameterMap);
-			String waitAssessmentPersonName = userService.getUsernameByUserid(main.getWaitAssessmentPersonId());
-			String assessmentPersonName = userService.getUsernameByUserid(main.getAssessmentPersonId());
-			main.setWaitAssessmentPersonName(waitAssessmentPersonName);
-			main.setAssessmentPersonName(assessmentPersonName);
-			
-			if(taskInstance==null) {
-				//当前节点非当前用户操作
-				main.setOperator(KpiOperatorEnum.view.getOperator());
-			} else {
-				//当前节点为当前用户操作节点
-				main.setOperator(KpiOperatorEnum.getByAssessStatus(main.getAssessStatus()).getOperator());
-			}
+			tempMap.put("taskinstanceId", main.getTaskinstanceId());
+			tempMap.put("mainId", main.getId());
+			kpilist.add(tempMap);
 		}
 	}
 
 	@Override
-	public void doFlowGet(String method, Long main_id) {
+	public void doFlowGet(String method, Long main_id, Long taskinstance_id) {
 		switch (method) {
 		case "enter":
-			enter(main_id);
+			enter(main_id, taskinstance_id);
 			break;
 		case "view":
-			view(main_id);
+			view(main_id, taskinstance_id);
 			break;
 		default:
 			throw new RuntimeException("go away please!");
@@ -108,19 +133,19 @@ public class KpiServiceImpl implements KpiService {
 	}
 	
 	@Override
-	public Object doFlowPost(String method, Long main_id) {
+	public Object doFlowPost(String method, Long main_id, Long taskinstance_id) {
 		switch (method) {
 		case "save":
-			save(main_id);
+			save(main_id, taskinstance_id);
 			break;
 		case "submit":
-			submit(main_id);
+			submit(main_id, taskinstance_id);
 			break;
 		case "reject":
-			reject(main_id);
+			reject(main_id, taskinstance_id);
 			break;
 		case "pass":
-			pass(main_id);
+			pass(main_id, taskinstance_id);
 			break;
 		default:
 			throw new RuntimeException("go away please!");
@@ -128,31 +153,28 @@ public class KpiServiceImpl implements KpiService {
 		return null;
 	}
 
-	private void enter(Long main_id) {
+	private void enter(Long main_id, Long taskinstance_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
-		Long tokenId = main.getRootTokenId();
-		FlowToken flowToken = flowTokenMapper.selectByPrimaryKey(tokenId);
-		Long nodeId = flowToken.getNodeId();
-		kpiFlow.enter(main.getProcessinstanceId(), nodeId);
+		kpiFlow.enter(main.getProcessinstanceId(), taskinstance_id);
 	}
 
-	private void view(Long main_id) {
+	private void view(Long main_id, Long taskinstance_id) {
 
 	}
 
-	private void pass(Long main_id) {
+	private void pass(Long main_id, Long taskinstance_id) {
 
 	}
 
-	private void save(Long main_id) {
+	private void save(Long main_id, Long taskinstance_id) {
 
 	}
 
-	private void submit(Long main_id) {
+	private void submit(Long main_id, Long taskinstance_id) {
 
 	}
 
-	private void reject(Long main_id) {
+	private void reject(Long main_id, Long taskinstance_id) {
 
 	}
 

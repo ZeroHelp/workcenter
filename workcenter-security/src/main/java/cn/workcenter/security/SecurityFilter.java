@@ -59,6 +59,7 @@ public class SecurityFilter implements Filter ,SecurityConstant {
 		String requestURI = req.getRequestURI();
 		
 		boolean authenflag = userService.authAndInitSession(requestURI);
+		if(authenflag);
 		chain.doFilter(request, response);
 		userService.destroyThreadLocal();
 	}

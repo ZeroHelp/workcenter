@@ -74,29 +74,21 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${kpiList}" var="kpi">
-						
-						
+						<tr>
+							<th scope="row">${kpi.index }</th>
+							<td>${kpi.year }</td>
+							<td>${kpi.remark }</td>
+							<td>${kpi.waitAssessmentPerson }</td>
+							<td>${kpi.assessmentPerson }</td>
+							<td>${kpi.grade }</td>
+							<td>${kpi.assessStatusName }</td>
+							<td>
+								<button type="button" 
+									value1= "${kpi.mainId}" value2="${kpi.method}" value3="${kpi.taskinstanceId}" 
+									class="get_btn btn btn-sm btn-default">${kpi.operator }</button>
+							</td>
+						</tr>
 					</c:forEach>
-					<tr>
-						<th scope="row">1</th>
-						<td>2015</td>
-						<td>年末考评</td>
-						<td>王林</td>
-						<td>刘宝剑</td>
-						<td>未评出</td>
-						<td>起草</td>
-						<td><button id="write" type="button" class="btn btn-sm btn-default">起草</button></td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>2015</td>
-						<td>年中考评</td>
-						<td>王林</td>
-						<td>刘宝剑</td>
-						<td>A</td>
-						<td>完成</td>
-						<td><button id="view" type="button" class="btn btn-sm btn-default">查看</button></td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -109,11 +101,11 @@
 
 	<script>
 		$(document).ready(function() {
-			$("#write").on("click", function() {
-				window.location.href = './4write_task.html';
-			});
-			$("#view").on("click", function() {
-				window.location.href = './9viewkpi.html';
+			$(".get_btn").on("click", function() {
+				var main_id = $(this).attr("value1");
+				var method = $(this).attr("value2");
+				var taskinstanceId = $(this).attr("value3");
+				window.location.href = '<%=basePath%>/${sid}/kpi/assessment/' + main_id + '?method=' + method + '&taskinstanceId=' + taskinstanceId ;
 			});
 		})
 	</script>

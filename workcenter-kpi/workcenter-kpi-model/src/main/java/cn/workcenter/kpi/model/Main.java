@@ -46,7 +46,22 @@ public class Main {
      * 6.查看
      */
     private String operator;
+    /**
+     * kpilist:enter
+     * kpilist:view
+     */
+    private String method;
     
+    private String taskinstanceId;
+    
+	public String getTaskinstanceId() {
+		return taskinstanceId;
+	}
+
+	public void setTaskinstanceId(String taskinstanceId) {
+		this.taskinstanceId = taskinstanceId;
+	}
+
 	public String getWaitAssessmentPersonName() {
 		return waitAssessmentPersonName;
 	}
@@ -158,4 +173,13 @@ public class Main {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
 }

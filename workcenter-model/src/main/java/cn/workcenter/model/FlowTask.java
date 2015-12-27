@@ -11,13 +11,31 @@ public class FlowTask {
 
     private Integer actorType;
 
-    private Long swimlaneId;
+    private Long roleId;
+    
+    private Long groupId;
 
     private Long nodeId;
 
     private Long startNodeId;
 
-    public Long getId() {
+    public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	public Long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -55,14 +73,6 @@ public class FlowTask {
 
     public void setActorType(Integer actorType) {
         this.actorType = actorType;
-    }
-
-    public Long getSwimlaneId() {
-        return swimlaneId;
-    }
-
-    public void setSwimlaneId(Long swimlaneId) {
-        this.swimlaneId = swimlaneId;
     }
 
     public Long getNodeId() {

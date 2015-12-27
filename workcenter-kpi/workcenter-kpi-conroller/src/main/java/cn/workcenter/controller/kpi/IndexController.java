@@ -31,18 +31,22 @@ public class IndexController extends KpiApplication {
 	}
 	
 	@RequestMapping(value="{sid}/kpi/assessment/{main_id}", method=RequestMethod.GET)
-	public Object kpiPage(@PathVariable String sid, @PathVariable Long main_id, @RequestParam String method, HttpServletRequest request, HttpServletResponse response) {
+	public Object kpiPage(@PathVariable String sid, @PathVariable Long main_id, 
+			@RequestParam String method,
+			@RequestParam Long taskinstanceId, HttpServletRequest request, HttpServletResponse response) {
 		
-		kpiService.doFlowGet(method, main_id); 
+		kpiService.doFlowGet(method, main_id, taskinstanceId); 
 		
 		return "kpi/detail";
 	}
 	
 	@RequestMapping(value="{sid}/kpi/assessment/{main_id}", method=RequestMethod.POST)
 	@ResponseBody
-	public Object kpiPost(@PathVariable String sid, @PathVariable Long main_id, @RequestParam String method, HttpServletRequest request, HttpServletResponse response) {
+	public Object kpiPost(@PathVariable String sid, @PathVariable Long main_id,
+			@RequestParam String method,
+			@RequestParam Long taskinstanceId, HttpServletRequest request, HttpServletResponse response) {
 		
-		kpiService.doFlowPost(method, main_id); 
+		kpiService.doFlowPost(method, main_id, taskinstanceId); 
 		
 		return null;
 	}
