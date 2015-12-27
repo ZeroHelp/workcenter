@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.workcenter.kpi.common.KpiApplication;
 import cn.workcenter.kpi.service.KpiService;
 
-@Controller("kpiCenterIndexController")
+@Controller("kpiIndexController")
 public class IndexController extends KpiApplication {
 	
 	@Autowired
@@ -25,8 +25,8 @@ public class IndexController extends KpiApplication {
 	
 	@RequestMapping(value="{sid}/kpi/home", method=RequestMethod.GET)
 	public Object loginPage1(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("basePath", BASE_PATH);
-		
+		List<Map<String, Object>> kpiList = kpiService.getAssosiateKpis();
+		request.setAttribute("kpiList", kpiList);
 		return "/kpi/list";
 	}
 	
@@ -44,15 +44,6 @@ public class IndexController extends KpiApplication {
 		
 		kpiService.doFlowPost(method, main_id); 
 		
-		return null;
-	}
-	
-	@RequestMapping(value="{sid}/kpi/assessments", method=RequestMethod.GET)
-	public Object kpiList(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
-		
-		List<Map<String, Object>> kpiList = kpiService.getAssosiateKpis();
-		
-		request.setAttribute("kpiList", kpiList);
 		return null;
 	}
 	

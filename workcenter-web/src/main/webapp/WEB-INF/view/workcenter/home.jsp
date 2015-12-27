@@ -102,7 +102,7 @@
 		$(document).ready(function() {
 			$(".component").on("click", function() {
 				var url = $(this).attr("value1");
-				window.location.href = '<%=basePath%>/'+ url;
+				window.location.href = '<%=basePath%>/${sid}/'+ url;
 			});
 			
 			$("#changepassword").on("click", function() {

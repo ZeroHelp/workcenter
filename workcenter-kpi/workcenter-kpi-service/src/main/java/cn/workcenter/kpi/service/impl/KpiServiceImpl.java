@@ -52,7 +52,7 @@ public class KpiServiceImpl implements KpiService {
 		
 		List<Map<String, Object>> kpilist = new ArrayList<Map<String, Object>>();
 		spellPageAttributes(kpilist, mains);
-		return null;
+		return kpilist;
 	}
 	
 	private void spellPageAttributes(List<Map<String, Object>> kpilist, List<Main> mains) {
