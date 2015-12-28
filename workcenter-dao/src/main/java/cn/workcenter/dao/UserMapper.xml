@@ -116,8 +116,8 @@
   	select
   	<include refid="us_Base_Column_List" />
   	from base_user us
-  	inner join base_flow_swimlane_user fwu on fwu.user_id = us.id
-  	inner join base_flow_swimlane fsw on fsw.id = fwu.swimlance_id
-  	where fsw.id = #{swimlaneId}
+  	inner join base_flow_swimlane_user fsu on fsu.user_id = us.id
+  	where fsu.swimlane_id = #{swimlaneId} 
+  	and fsu.status = 1
   </select>
 </mapper>

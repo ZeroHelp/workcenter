@@ -5,7 +5,7 @@ public class FlowTask {
 
     private String name;
 
-    private Long processdefinition;
+    private Long processdefinitionId;
 
     private String description;
 
@@ -51,15 +51,15 @@ public class FlowTask {
         this.name = name;
     }
 
-    public Long getProcessdefinition() {
-        return processdefinition;
-    }
+	public Long getProcessdefinitionId() {
+		return processdefinitionId;
+	}
 
-    public void setProcessdefinition(Long processdefinition) {
-        this.processdefinition = processdefinition;
-    }
+	public void setProcessdefinitionId(Long processdefinitionId) {
+		this.processdefinitionId = processdefinitionId;
+	}
 
-    public String getDescription() {
+	public String getDescription() {
         return description;
     }
 

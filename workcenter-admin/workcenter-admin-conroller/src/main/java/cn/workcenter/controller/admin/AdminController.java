@@ -43,6 +43,16 @@ public class AdminController implements Constant {
 		return "admin/main";
 	}
 	
-	
+	@RequestMapping(value="{sid}/admin/user/listpage", method=RequestMethod.GET)
+	public Object listpage(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
+		
+		List<Menu> menus = menuService.getMenuTree(MENU_RESOURCE_FLAG);
+		
+		request.setAttribute("menus", menus);
+		request.setAttribute("viewPage", "user/list.jsp");
+		
+		
+		return "admin/main";
+	}
 	
 }

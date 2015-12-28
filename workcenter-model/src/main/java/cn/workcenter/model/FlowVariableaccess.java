@@ -8,7 +8,9 @@ public class FlowVariableaccess {
     private Long variableinstanceId;
 
     private String variablename;
-
+    /**
+     * 流程变量访问方式：1read ,2write,3readwrite
+     */
     private Integer access;
 
     public Long getId() {

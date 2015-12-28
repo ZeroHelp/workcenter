@@ -35,9 +35,11 @@ public class IndexController extends KpiApplication {
 			@RequestParam String method,
 			@RequestParam Long taskinstanceId, HttpServletRequest request, HttpServletResponse response) {
 		
-		kpiService.doFlowGet(method, main_id, taskinstanceId); 
+		KpiApplication.requestThreadLocal.set(request);
 		
-		return "kpi/detail";
+		Object obj = kpiService.doFlowGet(method, main_id, taskinstanceId); 
+		
+		return obj;
 	}
 	
 	@RequestMapping(value="{sid}/kpi/assessment/{main_id}", method=RequestMethod.POST)
@@ -46,9 +48,9 @@ public class IndexController extends KpiApplication {
 			@RequestParam String method,
 			@RequestParam Long taskinstanceId, HttpServletRequest request, HttpServletResponse response) {
 		
-		kpiService.doFlowPost(method, main_id, taskinstanceId); 
+		Object obj = kpiService.doFlowPost(method, main_id, taskinstanceId); 
 		
-		return null;
+		return obj;
 	}
 	
 }

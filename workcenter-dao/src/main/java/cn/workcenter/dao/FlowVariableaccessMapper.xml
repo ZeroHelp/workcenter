@@ -94,7 +94,7 @@
       access = #{access,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getVariableaccess" parameterType="java.lang.String" resultType="cn.workcenter.model.FlowVariableaccess">
+  <select id="getVariableaccess" parameterType="java.lang.Long" resultType="cn.workcenter.model.FlowVariableaccess">
   	select 
     <include refid="Base_Column_List_fva" />
     from base_flow_variableaccess fva 

@@ -20,7 +20,6 @@ import cn.workcenter.kpi.model.EnactmentCultural;
 import cn.workcenter.kpi.model.EnactmentSelfWithBLOBs;
 import cn.workcenter.kpi.model.Main;
 import cn.workcenter.kpi.service.KpiService;
-import cn.workcenter.model.FlowTaskinstance;
 import cn.workcenter.service.UserService;
 
 @Service("kpiService")
@@ -119,33 +118,36 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 	}
 
 	@Override
-	public void doFlowGet(String method, Long main_id, Long taskinstance_id) {
+	public Object doFlowGet(String method, Long main_id, Long taskinstance_id) {
+		Object obj = null;
 		switch (method) {
 		case "enter":
-			enter(main_id, taskinstance_id);
+			obj = enter(main_id, taskinstance_id);
 			break;
 		case "view":
-			view(main_id, taskinstance_id);
+			obj = view(main_id, taskinstance_id);
 			break;
 		default:
 			throw new RuntimeException("go away please!");
 		}
+		return obj;
 	}
 	
 	@Override
 	public Object doFlowPost(String method, Long main_id, Long taskinstance_id) {
+		Object obj = null;
 		switch (method) {
 		case "save":
-			save(main_id, taskinstance_id);
+			obj = save(main_id, taskinstance_id);
 			break;
 		case "submit":
-			submit(main_id, taskinstance_id);
+			obj = submit(main_id, taskinstance_id);
 			break;
 		case "reject":
-			reject(main_id, taskinstance_id);
+			obj = reject(main_id, taskinstance_id);
 			break;
 		case "pass":
-			pass(main_id, taskinstance_id);
+			obj = pass(main_id, taskinstance_id);
 			break;
 		default:
 			throw new RuntimeException("go away please!");
@@ -153,29 +155,30 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 		return null;
 	}
 
-	private void enter(Long main_id, Long taskinstance_id) {
+	private Object enter(Long main_id, Long taskinstance_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
-		kpiFlow.enter(main.getProcessinstanceId(), taskinstance_id);
+		return kpiFlow.enter(main.getProcessinstanceId(), taskinstance_id);
 	}
 
-	private void view(Long main_id, Long taskinstance_id) {
-
+	private Object view(Long main_id, Long taskinstance_id) {
+		
+		return null;
 	}
 
-	private void pass(Long main_id, Long taskinstance_id) {
-
+	private Object pass(Long main_id, Long taskinstance_id) {
+		return null;
 	}
 
-	private void save(Long main_id, Long taskinstance_id) {
-
+	private Object save(Long main_id, Long taskinstance_id) {
+		return null;
 	}
 
-	private void submit(Long main_id, Long taskinstance_id) {
-
+	private Object submit(Long main_id, Long taskinstance_id) {
+		return null;
 	}
 
-	private void reject(Long main_id, Long taskinstance_id) {
-
+	private Object reject(Long main_id, Long taskinstance_id) {
+		return null;
 	}
 
 	@Override

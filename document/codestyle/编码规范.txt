@@ -1,0 +1,7 @@
+1.英文命名
+2.不写注释(service,model,jsp,constant)
+3.只能有常量，不能有字符串
+4.代码精简
+5.controller获取request参数，service写业务逻辑
+6.jsp 请求页面用window.location.href 提交请求jquery.ajax.post
+7.{sid}/{module}/XX

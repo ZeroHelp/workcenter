@@ -53,7 +53,11 @@ public class KpiFlow extends DefaultFlow {
 		KpiApplication.requestThreadLocal.get().setAttribute("culturalAttributes", culturalAttributes);
 		
 		KpiApplication.requestThreadLocal.setALLAccesses(attributesAccess);
-		return null;
+		if(2 == task.getNodeId()){//起草节点
+			return "kpi/drawup.jsp";
+		} else {
+			return "kpi/detail.jsp";
+		}
 	}
 
 	private void readFilterAttributes(List<Map<String, Object>> attributes, Map<String, Object> attributesAccess) {
