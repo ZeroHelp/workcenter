@@ -231,4 +231,5 @@
   	left join base_flow_task fta on fta.id = fti.task_id
   	where fti.processinstance_id = #{processinstance_id} and fta.node_id = #{node_id}
   </select>
+  
 </mapper>

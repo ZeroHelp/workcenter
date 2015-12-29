@@ -1,9 +1,16 @@
 package cn.workcenter.common.flow;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
+import cn.workcenter.model.FlowNode;
+import cn.workcenter.model.FlowTask;
+import cn.workcenter.model.FlowTaskinstance;
+import cn.workcenter.model.FlowVariableinstance;
+
 
 public class DefaultFlow extends AbstractFlow {
 
+	
 	@Override
 	public Object enter(Long processinstance_id, Long taskinstance_id) {
 		

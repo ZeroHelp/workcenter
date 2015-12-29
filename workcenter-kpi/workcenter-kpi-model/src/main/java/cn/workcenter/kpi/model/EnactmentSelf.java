@@ -19,8 +19,13 @@ public class EnactmentSelf {
 
     private Integer status;
 
+    
     public Long getId() {
         return id;
+    }
+    
+    public void setSelfId(Long id) {
+    	this.id = id;
     }
 
     public void setId(Long id) {

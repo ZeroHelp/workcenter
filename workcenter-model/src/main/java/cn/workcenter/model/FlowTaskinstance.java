@@ -29,6 +29,11 @@ public class FlowTaskinstance {
 
     private Integer isSuspended;
 
+    /**
+     * 0.未开始
+     * 1.正在进行
+     * 2.执行完毕
+     */
     private Integer isOpen;
 
     private Integer isBlocking;
@@ -151,5 +156,14 @@ public class FlowTaskinstance {
 
     public void setIsBlocking(Integer isBlocking) {
         this.isBlocking = isBlocking;
+    }
+    
+    public FlowTaskinstance clone() {
+    	try {
+			return (FlowTaskinstance)super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
     }
 }

@@ -9,6 +9,16 @@ public class FlowNode {
 
     private String name;
 
+    /**
+     * 节点类型 
+     * D:  	Decision 
+     * E:  	EndState
+     * F:  	Fork  
+     * J:	Join
+     * K:	TaskNode
+     * N:	Node
+     * R:	StartState
+     */
     private String type;
 
     private String enterClassName;
@@ -99,5 +109,14 @@ public class FlowNode {
 
     public void setDecisionExpression(String decisionExpression) {
         this.decisionExpression = decisionExpression;
+    }
+    
+    public FlowNode clone(){
+    	try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
     }
 }

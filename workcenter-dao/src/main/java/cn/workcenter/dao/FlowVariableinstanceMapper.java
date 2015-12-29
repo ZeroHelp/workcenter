@@ -1,5 +1,7 @@
 package cn.workcenter.dao;
 
+import java.util.List;
+
 import cn.workcenter.model.FlowVariableinstance;
 
 public interface FlowVariableinstanceMapper {
@@ -16,4 +18,6 @@ public interface FlowVariableinstanceMapper {
     int updateByPrimaryKeyWithBLOBs(FlowVariableinstance record);
 
     int updateByPrimaryKey(FlowVariableinstance record);
+
+	List<FlowVariableinstance> getVariable(Long processinstance_id);
 }

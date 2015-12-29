@@ -18,6 +18,9 @@
   <sql id="Blob_Column_List" >
     var_name
   </sql>
+  <sql id="fvi_Base_Column_List" >
+    fvi.id, fvi.processinstance_id as processinstanceId, fvi.var_type as varType, fvi.var_value as varValue, fvi.index_num as indexNum, fvi.status,fvi.var_name as varName
+  </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -130,4 +133,10 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getVariable" parameterType="java.lang.Long" resultType="cn.workcenter.model.FlowVariableinstance">
+  	select 
+  	<include refid="fvi_Base_Column_List" />
+  	from base_flow_variableinstance fvi
+  	where fvi.processinstance_id = #{processinstanceId}
+  </select>
 </mapper>

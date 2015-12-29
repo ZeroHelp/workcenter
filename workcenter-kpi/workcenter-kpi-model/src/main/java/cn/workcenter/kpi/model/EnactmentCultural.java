@@ -23,6 +23,10 @@ public class EnactmentCultural {
         return id;
     }
 
+    public void setCulturalId(Long id) {
+    	this.id = id;
+    }
+    
     public void setId(Long id) {
         this.id = id;
     }

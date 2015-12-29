@@ -30,4 +30,5 @@ public class EnactmentSelfWithBLOBs extends EnactmentSelf {
     public void setLeaderEvaluation(String leaderEvaluation) {
         this.leaderEvaluation = leaderEvaluation;
     }
+
 }

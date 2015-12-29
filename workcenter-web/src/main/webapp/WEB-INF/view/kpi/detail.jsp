@@ -57,22 +57,22 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">KPI->&nbsp;
 				<c:choose>
-					<c:when test="selfDirection == 3">
+					<c:when test="${selfDirection_access == 3}">
 						<!-- 起草 -->
 						起草任务
 					</c:when>
 
-					<c:when test="selfEvaluate == 3">
+					<c:when test="${selfEvaluate_access == 3}">
 						<!-- 任务自评 -->
 						任务自评
 					</c:when>
 
-					<c:when test="leaderEvaluation == 3">
+					<c:when test="${leaderEvaluation_access == 3}">
 						<!-- 领导审评 -->
 						领导审评
 					</c:when>
 
-					<c:when test="method == view">
+					<c:when test="${method == 'view'}">
 						<!-- 查看 -->
 						查看详情
 					</c:when>
@@ -95,14 +95,18 @@
 }
 </style>
 		<form id="kpiForm">
+		
+			<input type="hidden" name="taskinstanceId" value="${taskinstanceId }" />
+			
 			<span class="label label-info">个人设定</span>
-			<table class="table">
+			<table class="table" id="selfset">
 				<tbody>
 					<c:forEach items="${selfAttributes}" var="self">
 						<tr>
 							<td>
-								<!-- selfDirection start --> 
-								<c:if test="selfDirection_access == 1">
+								<input type="hidden" name="selfId" value="${self.id }" />
+ 								<!-- selfDirection start --> 
+								<c:if test="${selfDirection_access == 1}">
 
 									<div class="row">
 										<div class="col-lg-12">
@@ -114,7 +118,7 @@
 									<!-- /.row -->
 
 								</c:if> 
-								<c:if test="selfDirection_access == 3">
+								<c:if test="${selfDirection_access == 3}">
 
 									<div class="row">
 										<div class="col-lg-12">
@@ -135,8 +139,12 @@
 
 								</c:if> <!-- selfDirection end -->
 								
+								<div class="col-sm-12">
+									<br>
+								</div> <!-- 空行 -->
+								
 								<!-- selfGoal start -->
-								 <c:if test="selfGoal_access == 1">
+								 <c:if test="${selfGoal_access == 1}">
 									<div class="row">
 										<span class="col-sm-1 control-label text-right label_text">个人设定目标:</span>
 										<div class="form-group col-sm-11">
@@ -144,7 +152,7 @@
 										</div>
 									</div>
 								</c:if>
-								<c:if test="selfGoal_access == 3">
+								<c:if test="${selfGoal_access == 3}">
 									<div class="row">
 										<span class="col-sm-1 control-label text-right label_text">个人设定目标:</span>
 										<div class="form-group col-sm-11">
@@ -154,7 +162,7 @@
 								</c:if><!-- selfGoal end -->
 								
 								<!-- selfWeight start -->
-								<c:if test="selfGoal_access == 1">
+								<c:if test="${selfGoal_access == 1}">
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
@@ -163,7 +171,7 @@
 										</div>
 									</div> <!-- /.row -->
 								</c:if>
-								<c:if test="selfGoal_access == 3">
+								<c:if test="${selfGoal_access == 3}">
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
@@ -173,9 +181,12 @@
 									</div> <!-- /.row -->
 								</c:if> <!-- selfWeight end -->
 								
+								<div class="col-sm-12">
+									<br>
+								</div> <!-- 空行 -->
 								
 								<!-- selfEvaluate start -->
-								<c:if test="selfEvaluate_access == 1">
+								<c:if test="${selfEvaluate_access == 1}">
 									<div class="row">
 										<span class="col-sm-1 control-label text-right">自我评价:</span>
 										<div class="form-group col-sm-11">
@@ -183,7 +194,7 @@
 										</div>
 									</div>
 								</c:if>
-								<c:if test="selfEvaluate_access == 3">
+								<c:if test="${selfEvaluate_access == 3}">
 									<div class="row">
 										<span class="col-sm-1 control-label text-right">自我评价:</span>
 										<div class="form-group col-sm-11">
@@ -194,7 +205,7 @@
 
 
 								<!-- selfScore start -->
-								<c:if test="selfScore_access == 1">
+								<c:if test="${selfScore_access == 1}">
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
@@ -205,7 +216,7 @@
 									</div> <!-- /.row -->
 								</c:if>
 								
-								<c:if test="selfScore_access == 3">
+								<c:if test="${selfScore_access == 3}">
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
@@ -234,8 +245,12 @@
 								</c:if>
 								<!-- selfScore end -->
 								
+								<div class="col-sm-12">
+									<br>
+								</div> <!-- 空行 -->
+								
 								<!-- leaderEvaluation start -->
-								<c:if test="leaderEvaluation_access == 1">
+								<c:if test="${leaderEvaluation_access == 1}">
 									<div class="row">
 										<span class="col-sm-1 control-label text-right">领导评价:</span>
 										<div class="form-group col-sm-11">
@@ -243,7 +258,7 @@
 										</div>
 									</div> <!-- /.row -->
 								</c:if>
-								<c:if test="leaderEvaluation_access == 3">
+								<c:if test="${leaderEvaluation_access == 3}">
 									<div class="row">
 										<span class="col-sm-1 control-label text-right">领导评价:</span>
 										<div class="form-group col-sm-11">
@@ -254,7 +269,7 @@
 								<!-- leaderEvaluation end -->
 								
 								<!-- leaderScore start -->
-								<c:if test="leaderScore_access == 1">
+								<c:if test="${leaderScore_access == 1}">
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
@@ -263,7 +278,7 @@
 										</div>
 									</div> <!-- /.row -->
 								</c:if>
-								<c:if test="leaderScore_access == 3">
+								<c:if test="${leaderScore_access == 3}">
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
@@ -296,23 +311,29 @@
 					</c:forEach>
 					
 					<!-- 如果起草阶段，接一个空的 个人目标  -->
-					<c:if test="selfDirection == 3">
+					<c:if test="${selfDirection_access == 3}">
 						<tr> 
 							<td>
+								<input type="hidden" name="selfId" value="" />
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="input-group">
-											<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control" placeholder="填写方向..."> <span class="input-group-btn">
-												<button class="btn btn-default" type="button">
+											<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control" placeholder="填写方向...">
+											<span class="input-group-btn">
+												<button class="plus_btn btn btn-default" type="button">
 													<span class="glyphicon glyphicon-plus" />
 												</button>
-												<button class="btn btn-default" type="button">
+												<button class="minus_btn btn btn-default" type="button">
 													<span class="glyphicon glyphicon-minus" />
 												</button>
 											</span>
 										</div>
 									</div>
 								</div> <!-- /.row -->
+								
+								<div class="col-sm-12">
+									<br>
+								</div> <!-- 空行 -->
 
 								<div class="row">
 									<span class="col-sm-1 control-label text-right label_text">个人设定目标:</span>
@@ -328,6 +349,10 @@
 										</div>
 									</div>
 								</div> <!-- /.row -->
+								
+								<div class="col-sm-12">
+									<br>
+								</div> <!-- 空行 -->
 
 								<div class="row">
 									<span class="col-sm-1 control-label text-right">自我评价:</span>
@@ -343,6 +368,10 @@
 										</div>
 									</div>
 								</div> <!-- /.row -->
+								
+								<div class="col-sm-12">
+									<br>
+								</div> <!-- 空行 -->
 
 								<div class="row">
 									<span class="col-sm-1 control-label text-right">领导评价:</span>
@@ -378,7 +407,11 @@
 									</div>
 								</div>
 							</div> <!-- /.row -->
-
+							
+							<div class="col-sm-12">
+								<br>
+							</div> <!-- 空行 -->
+							
 							<div class="row">
 								<div class="col-sm-2 col-sm-offset-10">
 									<div class="input-group">
@@ -398,6 +431,10 @@
 								</div>
 							</div> <!-- /.row -->
 
+							<div class="col-sm-12">
+								<br>
+							</div> <!-- 空行 -->
+							
 							<div class="row">
 								<div class="col-sm-2 col-sm-offset-10">
 									<div class="input-group">
@@ -412,25 +449,30 @@
 						
 						<tr>
 							<td>
-								<c:if test="taskDirection == 1">
+								<input type="hidden" name="culturalId" value="${cultural.id }" />
+								<c:if test="${taskDirection_access == 1}">
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<span class="input-group-addon" >能力素质</span> <input name="taskDirection" value="${cultural.taskDirection}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)">
+												<span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)">
 											</div>
 										</div>
 									</div> <!-- /.row -->
 								</c:if>
 								
-								<c:if test="taskDirection == 3">
+								<c:if test="${taskDirection_access == 3}">
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<span class="input-group-addon" >能力素质</span> <input name="taskDirection" value="${cultural.taskDirection}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)">
+												<span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)">
 											</div>
 										</div>
 									</div> <!-- /.row -->
 								</c:if>
+								
+								<div class="col-sm-12">
+									<br>
+								</div> <!-- 空行 -->
 								
 								<div class="row">
 									<div class="col-sm-2 col-sm-offset-10">
@@ -472,7 +514,7 @@
 			</tbody>
 		</table>
 		<c:choose>
-			<c:when test="selfDirection == 3">
+			<c:when test="${selfDirection_access == 3}">
 			<!-- 起草 -->
 				<div class="span7 text-center">
 					<button id="save_btn" type="button" class="btn btn-primary btn-lg">保存草稿</button>
@@ -481,7 +523,7 @@
 				</div>
 			</c:when>
 		
-			<c:when test="selfEvaluate == 3">
+			<c:when test="${selfEvaluate_access == 3}">
 			<!-- 任务自评 -->
 				<div class="span7 text-center">
 					<button id="save" type="button" class="btn btn-primary btn-lg">保存自评</button>
@@ -490,7 +532,7 @@
 				</div>
 			</c:when>
 			
-			<c:when test="leaderEvaluation == 3">
+			<c:when test="${leaderEvaluation_access == 3}">
 			<!-- 领导审评 -->
 				<div class="span7 text-center">
 					<button id="self_rating" type="button" class="btn btn-primary btn-lg">驳回</button>
@@ -499,7 +541,7 @@
 				</div>
 			</c:when>
 			
-			<c:when test="method == view">
+			<c:when test="${method == view}">
 			<!-- 查看 -->
 				<div class="span7 text-center">
 					<button id="back_btn" type="button" class="btn btn-primary btn-lg">返回</button>
@@ -518,8 +560,9 @@
 
 	</div>
 	<!-- /container -->
-
-	<script src="<%=basePath%>/js/jquery.min.js"></script>
+	
+	<script src="<%=basePath%>/js/jquery.min.js"></script> 
+	<%--<script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>--%>
 	<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
 	<script src="<%=basePath%>/js/jquery.form.js"></script>
 	
@@ -527,42 +570,67 @@
 		$(document).ready(
 				function() {
 
-					//减少行 第6个parent 是 tr
-					$(".plus_btn").on(
-							"click",
-							function() {
-								$(this).parent().parent().parent().parent()
-										.parent().parent().remove();
-							});
-
 					//自评分 选择框  第四个是 input-group div
 					$(".selfScore_a").on("click", function() {
 						var score = $(this).attr("value1");
 						$(this).parent().parent().parent().parent().find("input").value(score);
 					});
+					
+					/* 保存草稿 */
 					$("#save_btn").on("click", function() {
-						window.location.href = './3kpi.html';
+						var formParam = $("#kpiForm").formSerialize();
+						alert(formParam);
+						$.ajax({
+							type:"post",
+							url: "<%=basePath%>/${sid}/kpi/assessment/${main_id}",
+							dataType: "json",
+							data: formParam + '&method=save' ,
+							success: function(data) {
+								window.location.href = './3kpi.html';
+							}
+						});
+						
 					});
+					/* 提交审批 */
 					$("#submit_btn").on("click", function() {
-						window.location.href = './5verify_task.html';
+						var formParam = $("#kpiForm").formSerialize();
+						alert(formParam);
+						$.ajax({
+							type: "post",
+							url: "<%=basePath%>/${sid}/kpi/assessment/${main_id}",
+							dataType: "json",
+							data: formParam + '&method=submit' ,
+							success: function(data) {
+								window.location.href = './5verify_task.html';
+							}
+						})
+						
 					});
 					$("#back_btn").on("click", function() {
 						window.location.href = '<%=basePath%>/${sid}/kpi/home';;
 					});
 					
+					//减少行 第6个parent 是 tr
+					$("#selfset").on(
+							"click", '.minus_btn',
+							function() {
+								$(this).parent().parent().parent().parent()
+										.parent().parent().remove();
+							});
+					
 					//添加行  第6个parent 是 tr
-					$(".plus_btn").on(
-							"click",
+					$("#selfset").on(
+							"click", '.plus_btn',
 							function() {
 								var tr_html = '<tr><td>' + 
 								'<div class="row">' + 
 									'<div class="col-lg-12">' + 
 										'<div class="input-group">' + 
 											'<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" type="text" class="form-control" placeholder="填写方向..."> <span class="input-group-btn">' + 
-												'<button class="btn btn-default" type="button">' + 
+												'<button class="plus_btn btn btn-default" type="button">' + 
 													'<span class="glyphicon glyphicon-plus" />' + 
 												'</button>' + 
-												'<button class="btn btn-default" type="button">' + 
+												'<button class="minus_btn btn btn-default" type="button">' + 
 													'<span class="glyphicon glyphicon-minus" />' + 
 												'</button>' + 
 											'</span>' + 
@@ -570,6 +638,10 @@
 									'</div>' + 
 								'</div> <!-- /.row -->' + 
 
+								'<div class="col-sm-12">' + 
+									'<br>' + 
+								'</div> <!-- 空行 -->' + 
+							
 								'<div class="row">' + 
 									'<span class="col-sm-1 control-label text-right label_text">个人设定目标:</span>' + 
 									'<div class="form-group col-sm-11">' + 
@@ -586,6 +658,10 @@
 									'</div>' + 
 								'</div> <!-- /.row -->' + 
 
+								'<div class="col-sm-12">' + 
+									'<br>' + 
+								'</div> <!-- 空行 -->' + 
+								
 								'<div class="row">' + 
 									'<span class="col-sm-1 control-label text-right">自我评价:</span>' + 
 									'<div class="form-group col-sm-11">' + 
@@ -600,7 +676,11 @@
 										'</div>' + 
 									'</div>' + 
 								'</div> <!-- /.row -->' + 
-
+								
+								'<div class="col-sm-12">' + 
+									'<br>' + 
+								'</div> <!-- 空行 -->' + 
+								
 								'<div class="row">' + 
 									'<span class="col-sm-1 control-label text-right">领导评价:</span>' + 
 									'<div class="form-group col-sm-11">' + 
@@ -620,7 +700,7 @@
 							
 								var tbody = $(this).parent().parent().parent()
 										.parent().parent().parent().parent();
-								$(tbody).append(tr_html);
+								tbody.append(tr_html);
 							});
 
 				})

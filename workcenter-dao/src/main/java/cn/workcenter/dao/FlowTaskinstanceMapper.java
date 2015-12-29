@@ -19,5 +19,5 @@ public interface FlowTaskinstanceMapper {
 
 	FlowTaskinstance findTaskinstanceByProcessinstanceIdAndUsername(Map<String, Object> parameterMap);
 
-	FlowTaskinstance getFlowTaskinstanceByProcessinstanceidandNodeid(Map<String, Long> parameterMap);
+	FlowTaskinstance getFlowTaskinstanceByProcessinstanceidandNodeid(Map<String, Object> parameterMap);
 }

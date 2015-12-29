@@ -1,5 +1,8 @@
 package cn.workcenter.kpi.common;
 
+import java.util.List;
+import java.util.Map;
+
 public interface KpiConstant {
 	
 	String BASE_PATH = "workcenter-web";

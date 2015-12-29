@@ -7,9 +7,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import cn.workcenter.common.util.StringUtil;
 import cn.workcenter.dao.FlowTaskinstanceMapper;
+import cn.workcenter.kpi.common.ClassHelper;
+import cn.workcenter.kpi.common.KpiApplication;
 import cn.workcenter.kpi.common.KpiConstant;
 import cn.workcenter.kpi.common.KpiOperatorEnum;
 import cn.workcenter.kpi.common.flow.KpiFlow;
@@ -20,6 +23,7 @@ import cn.workcenter.kpi.model.EnactmentCultural;
 import cn.workcenter.kpi.model.EnactmentSelfWithBLOBs;
 import cn.workcenter.kpi.model.Main;
 import cn.workcenter.kpi.service.KpiService;
+import cn.workcenter.model.FlowTaskinstance;
 import cn.workcenter.service.UserService;
 
 @Service("kpiService")
@@ -146,9 +150,6 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 		case "reject":
 			obj = reject(main_id, taskinstance_id);
 			break;
-		case "pass":
-			obj = pass(main_id, taskinstance_id);
-			break;
 		default:
 			throw new RuntimeException("go away please!");
 		}
@@ -165,16 +166,14 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 		return null;
 	}
 
-	private Object pass(Long main_id, Long taskinstance_id) {
-		return null;
-	}
-
 	private Object save(Long main_id, Long taskinstance_id) {
 		return null;
 	}
-
+	
 	private Object submit(Long main_id, Long taskinstance_id) {
-		return null;
+		Main main = mainMapper.selectByPrimaryKey(main_id);
+		return kpiFlow.doNext(main.getProcessinstanceId(), taskinstance_id);
+		//return null;
 	}
 
 	private Object reject(Long main_id, Long taskinstance_id) {
@@ -226,6 +225,53 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 		mainMap.put("grade", main.getGrade());
 		mainMap.put("totalScore", main.getTotalScore());
 		return mainMap;
+	}
+
+	@Override
+	public boolean saveSelfList(List<Map<String, Object>> parameterSelfMapList) {
+		for(Map<String, Object> parameterSelfMap: parameterSelfMapList) {
+			if(StringUtils.isEmpty(parameterSelfMap.get(KpiApplication.requestThreadLocal.getSelfIdKey()))) {
+				EnactmentSelfWithBLOBs enactSelf = new EnactmentSelfWithBLOBs();
+				ClassHelper.setAttributes(enactSelf, parameterSelfMap);
+				enactmentSelfMapper.insert(enactSelf);
+			} else {
+				EnactmentSelfWithBLOBs enactSelf = new EnactmentSelfWithBLOBs();
+				ClassHelper.setAttributes(enactSelf, parameterSelfMap);
+				enactmentSelfMapper.updateByPrimaryKeyWithBLOBs(enactSelf);
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean saveCulturalList(List<Map<String, Object>> parameterSelfMapList) {
+		for(Map<String, Object> parameterSelfMap: parameterSelfMapList) {
+			if(StringUtils.isEmpty(parameterSelfMap.get(KpiApplication.requestThreadLocal.getSelfIdKey()))) {
+				EnactmentCultural enactCultural = new EnactmentCultural();
+				ClassHelper.setAttributes(enactCultural, parameterSelfMap);
+				enactmentCulturalMapper.insert(enactCultural);
+			} else {
+				EnactmentCultural enactCultural = new EnactmentCultural();
+				ClassHelper.setAttributes(enactCultural, parameterSelfMap);
+				enactmentCulturalMapper.updateByPrimaryKeyWithBLOBs(enactCultural);
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public FlowTaskinstance findTaskinstance(Long processinstance_id, Long nextNodeid) {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("processinstance_id", processinstance_id);
+		parameterMap.put("nextNodeid", nextNodeid);
+		FlowTaskinstance flowTaskinstance = flowTaskinstanceMapper.getFlowTaskinstanceByProcessinstanceidandNodeid(parameterMap);
+		
+		return flowTaskinstance;
+	}
+
+	@Override
+	public void updateTaskinstance(FlowTaskinstance taskinstance) {
+		flowTaskinstanceMapper.updateByPrimaryKeySelective(taskinstance);
 	}
 
 }

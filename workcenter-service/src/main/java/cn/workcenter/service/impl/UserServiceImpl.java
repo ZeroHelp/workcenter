@@ -183,7 +183,7 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 
 	@Override
 	public List<User> getNodeRelatedUsers(Long processinstance_id, Long node_id) {
-		Map<String, Long> parameterMap = new HashMap<String, Long>();
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("processinstance_id", processinstance_id);
 		parameterMap.put("node_id", node_id);
 		FlowTaskinstance FlowTaskinstance = flowTaskinstanceMapper.getFlowTaskinstanceByProcessinstanceidandNodeid(parameterMap);

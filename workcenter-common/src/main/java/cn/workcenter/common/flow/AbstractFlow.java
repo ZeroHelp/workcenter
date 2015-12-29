@@ -1,6 +1,5 @@
 package cn.workcenter.common.flow;
 
-import javax.servlet.http.HttpServletRequest;
 
 public abstract class AbstractFlow implements Flow {
 	
