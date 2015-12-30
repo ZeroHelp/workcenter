@@ -11,7 +11,7 @@ public class EnactmentSelf {
 
     private String selfDirection;
 
-    private BigDecimal selfWeight;
+    private Integer selfWeight;
 
     private BigDecimal selfScore;
 
@@ -56,15 +56,15 @@ public class EnactmentSelf {
         this.selfDirection = selfDirection;
     }
 
-    public BigDecimal getSelfWeight() {
-        return selfWeight;
-    }
+    public Integer getSelfWeight() {
+		return selfWeight;
+	}
 
-    public void setSelfWeight(BigDecimal selfWeight) {
-        this.selfWeight = selfWeight;
-    }
+	public void setSelfWeight(Integer selfWeight) {
+		this.selfWeight = selfWeight;
+	}
 
-    public BigDecimal getSelfScore() {
+	public BigDecimal getSelfScore() {
         return selfScore;
     }
 

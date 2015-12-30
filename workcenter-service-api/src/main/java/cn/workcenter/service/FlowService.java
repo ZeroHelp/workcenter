@@ -22,6 +22,9 @@ public interface FlowService {
 	FlowNode getFlowNodeById(Long nodeId);
 
 	FlowTransition getFlowTransitionByFromNodeidAndProcessdefinationid(Long processdefinitionId, Long id);
+	
+	FlowTransition getFlowTransitionByToNodeidAndProcessdefinationid(Long processdefinitionId, Long id);
 
+	void doEndNodeLogic(Long processinstance_id);
 
 }

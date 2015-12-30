@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.workcenter.common.response.WorkcenterResponseBodyJson;
 import cn.workcenter.kpi.common.KpiApplication;
 import cn.workcenter.kpi.service.KpiService;
 
@@ -40,6 +41,7 @@ public class IndexController extends KpiApplication {
 		Object obj = kpiService.doFlowGet(method, main_id, taskinstanceId); 
 		
 		request.setAttribute("taskinstanceId", taskinstanceId);
+		request.setAttribute("method", method);
 		return "kpi/detail";
 	}
 	
@@ -53,8 +55,7 @@ public class IndexController extends KpiApplication {
 		
 		Object obj = kpiService.doFlowPost(method, main_id, taskinstanceId); 
 		
-		request.setAttribute("taskinstanceId", taskinstanceId);
-		return obj;
+		return WorkcenterResponseBodyJson.custom().build();
 	}
 	
 }

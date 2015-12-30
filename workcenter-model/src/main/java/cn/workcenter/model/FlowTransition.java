@@ -4,7 +4,11 @@ public class FlowTransition {
     private Long id;
 
     private String name;
-
+    /**
+     * 类型 
+     * N next 
+     * R reject
+     */
     private String type;
 
     private Long processdefinitionId;

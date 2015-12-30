@@ -2,7 +2,7 @@ package cn.workcenter.kpi.model;
 
 import java.math.BigDecimal;
 
-public class Main {
+public class Main implements Cloneable{
     private Long id;
 
     private Long processinstanceId;
@@ -22,12 +22,12 @@ public class Main {
     private String remark;
 
     /**
-     * 0.发起
-     * 1.起草
-     * 2.审批
-     * 3.自评
-     * 4.审评
-     * 5.完成
+     * 1.发起
+     * 2.起草
+     * 3.审批
+     * 4.自评
+     * 5.审评
+     * 6.完成
      */
     private Integer assessStatus;
 
@@ -180,6 +180,16 @@ public class Main {
 
 	public void setMethod(String method) {
 		this.method = method;
+	}
+	
+	public Main clone() {
+		try {
+			return (Main)super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

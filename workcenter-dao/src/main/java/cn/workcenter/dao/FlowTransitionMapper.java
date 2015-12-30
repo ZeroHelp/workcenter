@@ -20,4 +20,6 @@ public interface FlowTransitionMapper {
     int updateByPrimaryKey(FlowTransition record);
 
 	FlowTransition findFlowTransitionByFromNodeidAndProcessdefinationid(Map<String, Object> parameterMap);
+
+	FlowTransition findFlowTransitionByToNodeidAndProcessdefinationid(Map<String, Object> parameterMap);
 }

@@ -2,10 +2,10 @@ package cn.workcenter.kpi.common;
 
 public enum KpiOperatorEnum {
 	
-	write(1, "起草"),
-	verify(2, "审批"),
-	selfrating(3, "自评"),
-	evaluation(4, "审评"),
+	write(2, "起草"),
+	verify(3, "审批"),
+	selfrating(4, "自评"),
+	evaluation(5, "审评"),
 	
 	view(6, "查看"),
 	;
@@ -44,15 +44,16 @@ public enum KpiOperatorEnum {
 		}
 		return null;
 	}
+
 	public static String getOperatorByAssessStatus(Integer assessStatus) {
 		switch(assessStatus){
-		case 1:
-			return "起草";
 		case 2:
-			return "审批";
+			return "起草";
 		case 3:
-			return "自评";
+			return "审批";
 		case 4:
+			return "自评";
+		case 5:
 			return "审评";
 			
 		case 6:
@@ -62,13 +63,13 @@ public enum KpiOperatorEnum {
 	}
 	public static String getassessStatusByAssessStatus(Integer assessStatus) {
 		switch(assessStatus){
-		case 1:
-			return "起草";
 		case 2:
-			return "审批";
+			return "起草";
 		case 3:
-			return "自评";
+			return "审批";
 		case 4:
+			return "自评";
+		case 5:
 			return "审评";
 			
 		case 6:

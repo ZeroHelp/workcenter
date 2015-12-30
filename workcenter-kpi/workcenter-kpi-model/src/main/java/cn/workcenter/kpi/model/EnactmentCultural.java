@@ -11,7 +11,7 @@ public class EnactmentCultural {
 
     private String taskDirection;
 
-    private BigDecimal taskWeight;
+    private Integer taskWeight;
 
     private BigDecimal taskScore;
 
@@ -55,15 +55,15 @@ public class EnactmentCultural {
         this.taskDirection = taskDirection;
     }
 
-    public BigDecimal getTaskWeight() {
-        return taskWeight;
-    }
+    public Integer getTaskWeight() {
+		return taskWeight;
+	}
 
-    public void setTaskWeight(BigDecimal taskWeight) {
-        this.taskWeight = taskWeight;
-    }
+	public void setTaskWeight(Integer taskWeight) {
+		this.taskWeight = taskWeight;
+	}
 
-    public BigDecimal getTaskScore() {
+	public BigDecimal getTaskScore() {
         return taskScore;
     }
 

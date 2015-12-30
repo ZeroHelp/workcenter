@@ -38,7 +38,7 @@
 							<!-- <li><a href="#">修改密码</a></li> -->
 							<li role="separator" class="divider"></li>
 						</ul></li>
-					<li><a href="1login.html">退出</a></li>
+					<li><a id="logout" href="javascript:void(0);">退出</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -74,7 +74,7 @@
 
 					<c:when test="${method == 'view'}">
 						<!-- 查看 -->
-						查看详情
+						${method}查看详情
 					</c:when>
 					<c:otherwise>
 						<!-- 领导审批 -->
@@ -104,14 +104,14 @@
 					<c:forEach items="${selfAttributes}" var="self">
 						<tr>
 							<td>
-								<input type="hidden" name="selfId" value="${self.id }" />
+								<input type="hidden" name="selfId" value="${self.selfId }" />
  								<!-- selfDirection start --> 
 								<c:if test="${selfDirection_access == 1}">
 
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" type="text" class="form-control" placeholder="填写方向..." value="${self.selfDirection}" readonly>
+												<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" value="${self.selfDirection}" type="text" class="form-control" placeholder="填写方向..."  readonly >
 											</div>
 										</div>
 									</div>
@@ -123,7 +123,7 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" type="text" class="form-control" placeholder="填写方向..." value="${self.selfDirection}" > 
+												<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" value="${self.selfDirection}" type="text" class="form-control" placeholder="填写方向..."  > 
 												<span class="input-group-btn">
 													<button class="plus_btn btn btn-default" type="button">
 														<span class="glyphicon glyphicon-plus" />
@@ -318,7 +318,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="input-group">
-											<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control" placeholder="填写方向...">
+											<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" type="text" class="form-control" placeholder="填写方向...">
 											<span class="input-group-btn">
 												<button class="plus_btn btn btn-default" type="button">
 													<span class="glyphicon glyphicon-plus" />
@@ -338,14 +338,14 @@
 								<div class="row">
 									<span class="col-sm-1 control-label text-right label_text">个人设定目标:</span>
 									<div class="form-group col-sm-11">
-										<textarea class="form-control" rows="3" placeholder="填写个人设定目标..."></textarea>
+										<textarea name="selfGoal" class="form-control" rows="3" placeholder="填写个人设定目标..."></textarea>
 									</div>
 								</div> <!-- /.row -->
 
 								<div class="row">
 									<div class="col-sm-2 col-sm-offset-10">
 										<div class="input-group">
-											<span class="input-group-addon">权重</span> <input type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)"> <span class="input-group-addon">%</span>
+											<span class="input-group-addon">权重</span> <input name="selfWeight" type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)"> <span class="input-group-addon">%</span>
 										</div>
 									</div>
 								</div> <!-- /.row -->
@@ -357,14 +357,14 @@
 								<div class="row">
 									<span class="col-sm-1 control-label text-right">自我评价:</span>
 									<div class="form-group col-sm-11">
-										<textarea class="form-control" rows="3" readonly></textarea>
+										<textarea name="selfEvaluate" class="form-control" rows="3" readonly></textarea>
 									</div>
 								</div> <!-- /.row -->
 								
 								<div class="row">
 									<div class="col-sm-2 col-sm-offset-10">
 										<div class="input-group">
-											<span class="input-group-addon">自评</span> <input type="text" class="form-control text-right" aria-label="..." readonly> <span class="input-group-addon">分</span>
+											<span class="input-group-addon">自评</span> <input name="selfScore" type="text" class="form-control text-right" aria-label="..." readonly> <span class="input-group-addon">分</span>
 										</div>
 									</div>
 								</div> <!-- /.row -->
@@ -376,7 +376,7 @@
 								<div class="row">
 									<span class="col-sm-1 control-label text-right">领导评价:</span>
 									<div class="form-group col-sm-11">
-										<textarea class="form-control" rows="3" readonly></textarea>
+										<textarea name="leaderEvaluation" class="form-control" rows="3" readonly></textarea>
 									</div>
 								</div> <!-- /.row -->
 								
@@ -384,7 +384,7 @@
 
 									<div class="col-sm-2 col-sm-offset-10">
 										<div class="input-group">
-											<span class="input-group-addon">审评</span> <input type="text" class="form-control text-right" aria-label="..." readonly> <span class="input-group-addon">分</span>
+											<span class="input-group-addon">审评</span> <input name="leaderScore" type="text" class="form-control text-right" aria-label="..." readonly> <span class="input-group-addon">分</span>
 										</div>
 									</div>
 								</div> <!-- /.row -->
@@ -449,18 +449,18 @@
 						
 						<tr>
 							<td>
-								<input type="hidden" name="culturalId" value="${cultural.id }" />
-								<c:if test="${taskDirection_access == 1}">
+								<input type="hidden" name="culturalId" value="${cultural.cultualId }" />
+								<c:if test="${taskContent_access == 1}">
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)">
+												<span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)" readonly>
 											</div>
 										</div>
 									</div> <!-- /.row -->
 								</c:if>
 								
-								<c:if test="${taskDirection_access == 3}">
+								<c:if test="${taskContent_access == 3}">
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
@@ -541,10 +541,10 @@
 				</div>
 			</c:when>
 			
-			<c:when test="${method == view}">
+			<c:when test="${method == 'view'}">
 			<!-- 查看 -->
 				<div class="span7 text-center">
-					<button id="back_btn" type="button" class="btn btn-primary btn-lg">返回</button>
+					<button type="button" class="back_btn btn btn-primary btn-lg">返回</button>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -561,6 +561,26 @@
 	</div>
 	<!-- /container -->
 	
+	<!-- dialog -->
+	<div class="modal fade" id="myModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="model_title">model_title</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p id="model_content">model_content</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        <button type="button" class="back_btn btn btn-default" data-dismiss="modal">返回列表</button>
+	        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
 	<script src="<%=basePath%>/js/jquery.min.js"></script> 
 	<%--<script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>--%>
 	<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
@@ -569,7 +589,10 @@
 	<script>
 		$(document).ready(
 				function() {
-
+					$(".back_btn").on("click", function() {
+						window.location.href = '<%=basePath%>/${sid}/kpi/home';
+					});
+					
 					//自评分 选择框  第四个是 input-group div
 					$(".selfScore_a").on("click", function() {
 						var score = $(this).attr("value1");
@@ -579,14 +602,21 @@
 					/* 保存草稿 */
 					$("#save_btn").on("click", function() {
 						var formParam = $("#kpiForm").formSerialize();
-						alert(formParam);
 						$.ajax({
 							type:"post",
 							url: "<%=basePath%>/${sid}/kpi/assessment/${main_id}",
 							dataType: "json",
 							data: formParam + '&method=save' ,
 							success: function(data) {
-								window.location.href = './3kpi.html';
+								if(data.returncode=="200") {
+									$("#model_title").text(data.returnmsg);
+									$("#model_content").text(data.returnmemo);
+									$('#myModal').modal();
+								} else {
+									$("#model_title").text(data.returnmsg);
+									$("#model_content").text(data.returnmemo);
+									$('#myModal').modal();
+								}
 							}
 						});
 						
@@ -601,23 +631,47 @@
 							dataType: "json",
 							data: formParam + '&method=submit' ,
 							success: function(data) {
-								window.location.href = './5verify_task.html';
+								if(data.returncode=="200") {
+									$("#model_title").text(data.returnmsg);
+									$("#model_content").text(data.returnmemo);
+									$('#myModal').modal();
+								} else {
+									$("#model_title").text(data.returnmsg);
+									$("#model_content").text(data.returnmemo);
+									$('#myModal').modal();
+								}
 							}
 						})
 						
 					});
-					$("#back_btn").on("click", function() {
-						window.location.href = '<%=basePath%>/${sid}/kpi/home';;
-					});
 					
+					$("#logout").on("click", function() {
+						$.ajax({
+							type: "post",
+							url: '<%=basePath%>/workcenter/logout',
+							data: {
+								sid : '${sid}',
+							},
+							dataType: "json",
+							success : function(data) {
+								if(data.returncode == "200") {
+									window.location.href = '<%=basePath%>/workcenter/index';
+								} else {
+									$("#model_title").text(data.returnmsg);
+									$("#model_content").text(data.returnmemo);
+									$('#myModal').modal();
+								}
+							}
+						});
+					});
 					//减少行 第6个parent 是 tr
-					$("#selfset").on(
+					/* $("#selfset").on(
 							"click", '.minus_btn',
 							function() {
 								$(this).parent().parent().parent().parent()
 										.parent().parent().remove();
-							});
-					
+							});*/
+					 
 					//添加行  第6个parent 是 tr
 					$("#selfset").on(
 							"click", '.plus_btn',

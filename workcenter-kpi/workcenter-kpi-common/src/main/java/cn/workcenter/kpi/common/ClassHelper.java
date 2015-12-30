@@ -8,7 +8,9 @@ public class ClassHelper {
 	public static void setAttributes(Object obj, Map<String, Object> parameterSelfMap) {
 		Set<String> keySet = parameterSelfMap.keySet();
 		for (String key : keySet) {
-			setValueByAttributename(obj, key, parameterSelfMap.get(key));
+			if(parameterSelfMap.get(key)!=null){
+				setValueByAttributename(obj, key, parameterSelfMap.get(key));
+			}
 		}
 	}
 

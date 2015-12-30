@@ -13,6 +13,9 @@
   <sql id="Base_Column_List" >
     id, name, type, processdefinition_id, from_node_id, to_node_id, condition_expression
   </sql>
+  <sql id="ftr_Base_Column_List" >
+    ftr.id, ftr.name, ftr.type, ftr.processdefinition_id as processdefinitionId, ftr.from_node_id as fromNodeId, ftr.to_node_id as toNodeId, ftr.condition_expression as conditionExpression
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -114,4 +117,19 @@
       condition_expression = #{conditionExpression,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="findFlowTransitionByFromNodeidAndProcessdefinationid" parameterType="java.util.Map" resultType="cn.workcenter.model.FlowTransition">
+  	select 
+  	<include refid="ftr_Base_Column_List" />
+  	from base_flow_transition ftr
+  	where ftr.from_node_id = #{from_node_id} and ftr.processdefinition_id = #{processdefinition_id}
+  </select>
+  
+  <select id="findFlowTransitionByToNodeidAndProcessdefinationid" parameterType="java.util.Map" resultType="cn.workcenter.model.FlowTransition">
+  	select 
+  	<include refid="ftr_Base_Column_List" />
+  	from base_flow_transition ftr
+  	where ftr.to_node_id = #{to_node_id} and ftr.processdefinition_id = #{processdefinition_id}
+  </select>
+  
 </mapper>

@@ -1,6 +1,6 @@
 package cn.workcenter.model;
 
-public class FlowNode {
+public class FlowNode implements Cloneable{
     private Long id;
 
     private Long processdefinitionId;

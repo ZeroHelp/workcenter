@@ -23,5 +23,7 @@ public interface MainMapper {
 	List<Main> findFiledKpisByUsernameAndIsfiled(Map<String, Object> parameterMap);
 
 	List<Main> findFiledKpisByUsernameAndNotfiledAndIsopentask(Map<String, Object> parameterMap);
+
+	List<Main> findFiledKpisByUsernameAndNotfiledAndIsopentaskAndNotcurrentuser(Map<String, Object> parameterMap);
 	
 }

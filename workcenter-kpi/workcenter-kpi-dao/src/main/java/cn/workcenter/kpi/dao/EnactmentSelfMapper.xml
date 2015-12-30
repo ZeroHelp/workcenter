@@ -6,7 +6,7 @@
     <result column="kpi_main_id" property="kpiMainId" jdbcType="BIGINT" />
     <result column="index_num" property="indexNum" jdbcType="INTEGER" />
     <result column="self_direction" property="selfDirection" jdbcType="VARCHAR" />
-    <result column="self_weight" property="selfWeight" jdbcType="DECIMAL" />
+    <result column="self_weight" property="selfWeight" jdbcType="INTEGER" />
     <result column="self_score" property="selfScore" jdbcType="DECIMAL" />
     <result column="leader_score" property="leaderScore" jdbcType="DECIMAL" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -45,7 +45,7 @@
       leader_score, status, self_goal, 
       self_evaluate, leader_evaluation)
     values (#{id,jdbcType=BIGINT}, #{kpiMainId,jdbcType=BIGINT}, #{indexNum,jdbcType=INTEGER}, 
-      #{selfDirection,jdbcType=VARCHAR}, #{selfWeight,jdbcType=DECIMAL}, #{selfScore,jdbcType=DECIMAL}, 
+      #{selfDirection,jdbcType=VARCHAR}, #{selfWeight,jdbcType=INTEGER}, #{selfScore,jdbcType=DECIMAL}, 
       #{leaderScore,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{selfGoal,jdbcType=LONGVARCHAR}, 
       #{selfEvaluate,jdbcType=LONGVARCHAR}, #{leaderEvaluation,jdbcType=LONGVARCHAR})
   </insert>
@@ -100,7 +100,7 @@
         #{selfDirection,jdbcType=VARCHAR},
       </if>
       <if test="selfWeight != null" >
-        #{selfWeight,jdbcType=DECIMAL},
+        #{selfWeight,jdbcType=INTEGER},
       </if>
       <if test="selfScore != null" >
         #{selfScore,jdbcType=DECIMAL},
@@ -135,7 +135,7 @@
         self_direction = #{selfDirection,jdbcType=VARCHAR},
       </if>
       <if test="selfWeight != null" >
-        self_weight = #{selfWeight,jdbcType=DECIMAL},
+        self_weight = #{selfWeight,jdbcType=INTEGER},
       </if>
       <if test="selfScore != null" >
         self_score = #{selfScore,jdbcType=DECIMAL},
@@ -163,7 +163,7 @@
     set kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
       index_num = #{indexNum,jdbcType=INTEGER},
       self_direction = #{selfDirection,jdbcType=VARCHAR},
-      self_weight = #{selfWeight,jdbcType=DECIMAL},
+      self_weight = #{selfWeight,jdbcType=INTEGER},
       self_score = #{selfScore,jdbcType=DECIMAL},
       leader_score = #{leaderScore,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER},
@@ -177,14 +177,14 @@
     set kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
       index_num = #{indexNum,jdbcType=INTEGER},
       self_direction = #{selfDirection,jdbcType=VARCHAR},
-      self_weight = #{selfWeight,jdbcType=DECIMAL},
+      self_weight = #{selfWeight,jdbcType=INTEGER},
       self_score = #{selfScore,jdbcType=DECIMAL},
       leader_score = #{leaderScore,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="getEnactmentSelfsByProcessinstanceid" parameterType="java.lang.Long" resultType="cn.workcenter.kpi.model.EnactmentCultural">
+  <select id="getEnactmentSelfsByProcessinstanceid" parameterType="java.lang.Long" resultType="cn.workcenter.kpi.model.EnactmentSelfWithBLOBs">
   	select 
   	<include refid="kes_Base_Column_List_all" />
   	from kpi_enactment_self kes 

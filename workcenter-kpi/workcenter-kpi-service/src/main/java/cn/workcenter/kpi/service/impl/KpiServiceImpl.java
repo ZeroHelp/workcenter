@@ -1,5 +1,6 @@
 package cn.workcenter.kpi.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import cn.workcenter.common.constant.FlowConstant;
 import cn.workcenter.common.util.StringUtil;
 import cn.workcenter.dao.FlowTaskinstanceMapper;
 import cn.workcenter.kpi.common.ClassHelper;
@@ -27,7 +29,7 @@ import cn.workcenter.model.FlowTaskinstance;
 import cn.workcenter.service.UserService;
 
 @Service("kpiService")
-public class KpiServiceImpl implements KpiService, KpiConstant {
+public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 
 	@Autowired
 	private EnactmentSelfMapper enactmentSelfMapper;
@@ -52,9 +54,13 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 		List<Main> notfiledMains = getKpisByUsernameAndIsfiled(username, NOT_FILED);
 		setOperatorByIsFiled(notfiledMains, NOT_FILED);
 		
+		List<Main> notfiledNotCurrentoperatorMains = getKpisByUsernameAndNotFiledAndNotoperator(username, NOT_FILED);
+		setOperatorByIsFiled(notfiledNotCurrentoperatorMains, -1);
+		
 		List<Main> mains = new ArrayList<Main>();
 		mains.addAll(filedMains);
 		mains.addAll(notfiledMains);
+		mains.addAll(notfiledNotCurrentoperatorMains);
 		
 		List<Map<String, Object>> kpilist = new ArrayList<Map<String, Object>>();
 		spellPageAttributes(kpilist, mains);
@@ -77,12 +83,25 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 				main.setOperator(KpiOperatorEnum.view.getOperator());
 				main.setMethod("view");
 			} else if(NOT_FILED == isFiled) {
-				//用户所属任务 操作
+				//在运行任务 用户所属任务 操作
 				main.setOperator(KpiOperatorEnum.getOperatorByAssessStatus(main.getAssessStatus()));
 				main.setMethod("enter");
-			} 
+			} else {
+				//在运行任务 用户关联任务 可查看
+				main.setOperator(KpiOperatorEnum.view.getOperator());
+				main.setMethod("view");
+			}	
 			
 		}
+	}
+	
+	private List<Main> getKpisByUsernameAndNotFiledAndNotoperator(String username, int notFiled) {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("username", username);
+		parameterMap.put("is_filed", notFiled);
+		parameterMap.put("is_open", OPENED);
+		List<Main> mains = mainMapper.findFiledKpisByUsernameAndNotfiledAndIsopentaskAndNotcurrentuser(parameterMap);
+		return mains;
 	}
 
 	private List<Main> getKpisByUsernameAndIsfiled(String username, int isFiled) {
@@ -96,7 +115,7 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 			//NOT_FILED
 			parameterMap.put("is_open", OPENED);
 			mains =mainMapper.findFiledKpisByUsernameAndNotfiledAndIsopentask(parameterMap);
-		}
+		} 
 				
 		return mains;
 	}
@@ -162,22 +181,23 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 	}
 
 	private Object view(Long main_id, Long taskinstance_id) {
-		
-		return null;
+		Main main = mainMapper.selectByPrimaryKey(main_id);
+		return kpiFlow.view(main.getProcessinstanceId(), taskinstance_id);
 	}
 
 	private Object save(Long main_id, Long taskinstance_id) {
-		return null;
+		Main main = mainMapper.selectByPrimaryKey(main_id);
+		return kpiFlow.save(main.getProcessinstanceId(), taskinstance_id);
 	}
 	
 	private Object submit(Long main_id, Long taskinstance_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
 		return kpiFlow.doNext(main.getProcessinstanceId(), taskinstance_id);
-		//return null;
 	}
 
 	private Object reject(Long main_id, Long taskinstance_id) {
-		return null;
+		Main main = mainMapper.selectByPrimaryKey(main_id);
+		return kpiFlow.reject(main.getProcessinstanceId(), taskinstance_id);
 	}
 
 	@Override
@@ -187,7 +207,7 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 		for (EnactmentSelfWithBLOBs enactmentSelf : enactmentSelfs) {
 			Map<String, Object> enactmentMap = new HashMap<String, Object>();
 			enactmentMap.put("selfId", enactmentSelf.getId());
-			enactmentMap.put("taskDirection", enactmentSelf.getSelfDirection());
+			enactmentMap.put("selfDirection", enactmentSelf.getSelfDirection());
 			enactmentMap.put("selfGoal", enactmentSelf.getSelfGoal());
 			enactmentMap.put("selfWeight", enactmentSelf.getSelfWeight());
 			enactmentMap.put("selfEvaluate", enactmentSelf.getSelfEvaluate());
@@ -228,32 +248,51 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 	}
 
 	@Override
-	public boolean saveSelfList(List<Map<String, Object>> parameterSelfMapList) {
-		for(Map<String, Object> parameterSelfMap: parameterSelfMapList) {
+	public boolean saveSelfList(List<Map<String, Object>> parameterSelfMapList, Long main_id) {
+		for(int i=0;i<parameterSelfMapList.size();i++) {
+			Map<String, Object> parameterSelfMap = parameterSelfMapList.get(i);
 			if(StringUtils.isEmpty(parameterSelfMap.get(KpiApplication.requestThreadLocal.getSelfIdKey()))) {
 				EnactmentSelfWithBLOBs enactSelf = new EnactmentSelfWithBLOBs();
 				ClassHelper.setAttributes(enactSelf, parameterSelfMap);
+				enactSelf.setKpiMainId(main_id);
+				enactSelf.setStatus(1);
+				enactSelf.setIndexNum(i);
+				//空的 个人设定不入库
+				if(enactSelf.getSelfDirection()==null && enactSelf.getSelfGoal()==null
+						&& enactSelf.getSelfWeight()==null){
+					continue;
+				}
 				enactmentSelfMapper.insert(enactSelf);
 			} else {
 				EnactmentSelfWithBLOBs enactSelf = new EnactmentSelfWithBLOBs();
 				ClassHelper.setAttributes(enactSelf, parameterSelfMap);
-				enactmentSelfMapper.updateByPrimaryKeyWithBLOBs(enactSelf);
+				enactSelf.setKpiMainId(main_id);
+				enactSelf.setStatus(1);
+				enactSelf.setIndexNum(i);
+				enactmentSelfMapper.updateByPrimaryKeySelective(enactSelf);
 			}
 		}
 		return true;
 	}
 
 	@Override
-	public boolean saveCulturalList(List<Map<String, Object>> parameterSelfMapList) {
-		for(Map<String, Object> parameterSelfMap: parameterSelfMapList) {
-			if(StringUtils.isEmpty(parameterSelfMap.get(KpiApplication.requestThreadLocal.getSelfIdKey()))) {
+	public boolean saveCulturalList(List<Map<String, Object>> parameterCulturalMapList, Long main_id) {
+		for(int i=0;i<parameterCulturalMapList.size();i++ ) {
+			Map<String, Object> parameterCulturalMap = parameterCulturalMapList.get(i);
+			if(StringUtils.isEmpty(parameterCulturalMap.get(KpiApplication.requestThreadLocal.getCulturalIdKey()))) {
 				EnactmentCultural enactCultural = new EnactmentCultural();
-				ClassHelper.setAttributes(enactCultural, parameterSelfMap);
+				ClassHelper.setAttributes(enactCultural, parameterCulturalMap);
+				enactCultural.setKpiMainId(main_id);
+				enactCultural.setStatus(1);
+				enactCultural.setIndexNum(i);
 				enactmentCulturalMapper.insert(enactCultural);
 			} else {
 				EnactmentCultural enactCultural = new EnactmentCultural();
-				ClassHelper.setAttributes(enactCultural, parameterSelfMap);
-				enactmentCulturalMapper.updateByPrimaryKeyWithBLOBs(enactCultural);
+				ClassHelper.setAttributes(enactCultural, parameterCulturalMap);
+				enactCultural.setKpiMainId(main_id);
+				enactCultural.setStatus(1);
+				enactCultural.setIndexNum(i);
+				enactmentCulturalMapper.updateByPrimaryKeySelective(enactCultural);
 			}
 		}
 		return true;
@@ -263,15 +302,99 @@ public class KpiServiceImpl implements KpiService, KpiConstant {
 	public FlowTaskinstance findTaskinstance(Long processinstance_id, Long nextNodeid) {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("processinstance_id", processinstance_id);
-		parameterMap.put("nextNodeid", nextNodeid);
+		parameterMap.put("node_id", nextNodeid);
 		FlowTaskinstance flowTaskinstance = flowTaskinstanceMapper.getFlowTaskinstanceByProcessinstanceidandNodeid(parameterMap);
 		
 		return flowTaskinstance;
 	}
 
 	@Override
-	public void updateTaskinstance(FlowTaskinstance taskinstance) {
-		flowTaskinstanceMapper.updateByPrimaryKeySelective(taskinstance);
+	public void doCalculateLogic(Long processinstance_id) {
+		Main main = mainMapper.getMainByProcessinstanceid(processinstance_id);
+		List<EnactmentSelfWithBLOBs> selfs = enactmentSelfMapper.getEnactmentSelfsByProcessinstanceid(processinstance_id);
+		List<EnactmentCultural> culturals = enactmentCulturalMapper.getEnactmentCulturalsByProcessinstanceid(processinstance_id);
+		BigDecimal totalScore = new BigDecimal(0);
+		for(EnactmentSelfWithBLOBs self : selfs) {
+			BigDecimal partWeight = new BigDecimal(self.getSelfWeight()).divide(new BigDecimal(100));
+			BigDecimal partScore = self.getLeaderScore();
+			BigDecimal partTotal = partWeight.multiply(partScore);
+			totalScore.add(partTotal);
+		}
+		String grade = calculateGrade(totalScore);
+		
+		Main cmain = main.clone();
+		cmain.setGrade(grade);
+		cmain.setTotalScore(totalScore);
+		mainMapper.updateByPrimaryKeySelective(cmain);
+		
+	}
+
+	private String calculateGrade(BigDecimal totalScore) {
+		double score = totalScore.doubleValue();
+		if(score >=4.75 && score <= 5.5) 
+			return "A";
+		if(score >=4 && score < 4.75)
+			return "B";
+		if(score >= 3 && score < 4)
+			return "C";
+		if(score >=2 && score < 3)
+			return "D";
+		if(score >= 0 && score < 2)
+			return "E";
+		return "";
+	}
+
+	@Override
+	public Main getMainByProcessinstanceid(Long processinstance_id) {
+		Main main = mainMapper.getMainByProcessinstanceid(processinstance_id);
+		return main;
+	}
+
+	@Override
+	public void doNextTaskinstancePrepare(FlowTaskinstance currentTaskinstance, FlowTaskinstance nextTaskinstance) {
+		FlowTaskinstance cTaskinstance = (FlowTaskinstance) currentTaskinstance.clone();
+		cTaskinstance.setIsOpen(2);
+		FlowTaskinstance nTaskinstance = (FlowTaskinstance) nextTaskinstance.clone();
+		nTaskinstance.setIsOpen(1);
+		
+		flowTaskinstanceMapper.updateByPrimaryKeySelective(cTaskinstance);
+		flowTaskinstanceMapper.updateByPrimaryKeySelective(nTaskinstance);
+		
+		
+	}
+
+	@Override
+	public void doNextEndTaskinstancePrepare(FlowTaskinstance currentTaskinstance) {
+		FlowTaskinstance cTaskinstance = (FlowTaskinstance) currentTaskinstance.clone();
+		cTaskinstance.setIsOpen(2);
+		flowTaskinstanceMapper.updateByPrimaryKeySelective(cTaskinstance);
+	}
+
+	@Override
+	public void doPreTaskinstancePrepare(FlowTaskinstance preTaskinstance ,FlowTaskinstance currentTaskinstance) {
+		FlowTaskinstance pTaskinstance = (FlowTaskinstance) preTaskinstance.clone();
+		pTaskinstance.setIsOpen(1);
+		FlowTaskinstance cTaskinstance = (FlowTaskinstance) currentTaskinstance.clone();
+		cTaskinstance.setIsOpen(0);
+		
+		flowTaskinstanceMapper.updateByPrimaryKeySelective(pTaskinstance);
+		flowTaskinstanceMapper.updateByPrimaryKeySelective(cTaskinstance);
+		
+	}
+
+	@Override
+	public void doPreStartTaskinstancePrepare(FlowTaskinstance currentTaskinstance) {
+		FlowTaskinstance cTaskinstance = (FlowTaskinstance) currentTaskinstance.clone();
+		cTaskinstance.setIsOpen(0);
+		flowTaskinstanceMapper.updateByPrimaryKeySelective(cTaskinstance);
+	}
+
+	@Override
+	public void doNextMainPrepare(Long processinstance_id) {
+		Main main = getMainByProcessinstanceid(processinstance_id);
+		Main cmain = main.clone();
+		cmain.setAssessStatus(cmain.getAssessStatus()+1);
+		mainMapper.updateByPrimaryKeySelective(cmain);
 	}
 
 }

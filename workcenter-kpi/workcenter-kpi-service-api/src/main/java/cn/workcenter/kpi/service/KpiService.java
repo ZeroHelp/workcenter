@@ -3,6 +3,7 @@ package cn.workcenter.kpi.service;
 import java.util.List;
 import java.util.Map;
 
+import cn.workcenter.kpi.model.Main;
 import cn.workcenter.model.FlowTaskinstance;
 
 public interface KpiService {
@@ -19,12 +20,24 @@ public interface KpiService {
 
 	List<Map<String, Object>> getAssosiateKpis();
 
-	boolean saveSelfList(List<Map<String, Object>> parameterSelfMapList);
+	boolean saveSelfList(List<Map<String, Object>> parameterSelfMapList, Long main_id);
 
-	boolean saveCulturalList(List<Map<String, Object>> parameterSelfMapList);
+	boolean saveCulturalList(List<Map<String, Object>> parameterSelfMapList, Long main_id);
 
 	Object findTaskinstance(Long processinstance_id, Long id);
 
-	void updateTaskinstance(FlowTaskinstance taskinstance);
+	void doCalculateLogic(Long processinstance_id);
+
+	Main getMainByProcessinstanceid(Long processinstance_id);
+
+	void doNextTaskinstancePrepare(FlowTaskinstance currentTaskinstance, FlowTaskinstance nextTaskinstance);
+
+	void doNextEndTaskinstancePrepare(FlowTaskinstance currentTaskinstance);
+
+	void doPreTaskinstancePrepare(FlowTaskinstance preTaskinstance, FlowTaskinstance currentTaskinstance);
+
+	void doPreStartTaskinstancePrepare(FlowTaskinstance currentTaskinstance);
+
+	void doNextMainPrepare(Long processinstance_id);
 
 }

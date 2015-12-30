@@ -6,7 +6,7 @@
     <result column="kpi_main_id" property="kpiMainId" jdbcType="BIGINT" />
     <result column="index_num" property="indexNum" jdbcType="INTEGER" />
     <result column="task_direction" property="taskDirection" jdbcType="VARCHAR" />
-    <result column="task_weight" property="taskWeight" jdbcType="DECIMAL" />
+    <result column="task_weight" property="taskWeight" jdbcType="INTEGER" />
     <result column="task_score" property="taskScore" jdbcType="DECIMAL" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
@@ -40,7 +40,7 @@
       task_direction, task_weight, task_score, 
       status, task_content)
     values (#{id,jdbcType=BIGINT}, #{kpiMainId,jdbcType=BIGINT}, #{indexNum,jdbcType=INTEGER}, 
-      #{taskDirection,jdbcType=VARCHAR}, #{taskWeight,jdbcType=DECIMAL}, #{taskScore,jdbcType=DECIMAL}, 
+      #{taskDirection,jdbcType=VARCHAR}, #{taskWeight,jdbcType=INTEGER}, #{taskScore,jdbcType=DECIMAL}, 
       #{status,jdbcType=INTEGER}, #{taskContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.workcenter.kpi.model.EnactmentCultural" >
@@ -85,7 +85,7 @@
         #{taskDirection,jdbcType=VARCHAR},
       </if>
       <if test="taskWeight != null" >
-        #{taskWeight,jdbcType=DECIMAL},
+        #{taskWeight,jdbcType=INTEGER},
       </if>
       <if test="taskScore != null" >
         #{taskScore,jdbcType=DECIMAL},
@@ -111,7 +111,7 @@
         task_direction = #{taskDirection,jdbcType=VARCHAR},
       </if>
       <if test="taskWeight != null" >
-        task_weight = #{taskWeight,jdbcType=DECIMAL},
+        task_weight = #{taskWeight,jdbcType=INTEGER},
       </if>
       <if test="taskScore != null" >
         task_score = #{taskScore,jdbcType=DECIMAL},
@@ -130,7 +130,7 @@
     set kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
       index_num = #{indexNum,jdbcType=INTEGER},
       task_direction = #{taskDirection,jdbcType=VARCHAR},
-      task_weight = #{taskWeight,jdbcType=DECIMAL},
+      task_weight = #{taskWeight,jdbcType=INTEGER},
       task_score = #{taskScore,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER},
       task_content = #{taskContent,jdbcType=LONGVARCHAR}
@@ -141,7 +141,7 @@
     set kpi_main_id = #{kpiMainId,jdbcType=BIGINT},
       index_num = #{indexNum,jdbcType=INTEGER},
       task_direction = #{taskDirection,jdbcType=VARCHAR},
-      task_weight = #{taskWeight,jdbcType=DECIMAL},
+      task_weight = #{taskWeight,jdbcType=INTEGER},
       task_score = #{taskScore,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}

@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class FlowTaskinstance {
+public class FlowTaskinstance implements Cloneable {
     private Long id;
 
     private Long swimlaneId;

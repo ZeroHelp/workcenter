@@ -197,4 +197,19 @@
   	where pro.is_filed = #{is_filed} and fti.is_open = #{is_open} and user.user_name = #{username}
   	and main.status = 1
   </select>
+  
+  <select id="findFiledKpisByUsernameAndNotfiledAndIsopentaskAndNotcurrentuser" parameterType="java.util.Map" resultType="cn.workcenter.kpi.model.Main">
+  	select 
+  	<include refid="main_Base_Column_List" />, fti.id as taskinstanceId
+  	from kpi_main main
+  	left join base_flow_processinstance pro on pro.id = main.processinstance_id
+  	left join base_flow_taskinstance fti on fti.processinstance_id = main.processinstance_id
+  	left join base_flow_swimlane_user fsu on fsu.swimlane_id = fti.swimlane_id
+  	left join base_user user on user.id = fsu.user_id
+  	
+  	left join base_flow_swimlane_user fsu1 on fsu1.swimlane_id = pro.swimlane_id
+  	left join base_user user1 on user1.id = fsu1.user_id
+  	where pro.is_filed = #{is_filed} and fti.is_open = #{is_open} and user.user_name <![CDATA[<>]]> #{username} and user1.user_name = #{username}
+  	and main.status = 1
+  </select>
 </mapper>

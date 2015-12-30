@@ -1,5 +1,6 @@
 package cn.workcenter.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,12 +10,14 @@ import org.springframework.stereotype.Service;
 
 import cn.workcenter.common.constant.FlowConstant;
 import cn.workcenter.dao.FlowNodeMapper;
+import cn.workcenter.dao.FlowProcessinstanceMapper;
 import cn.workcenter.dao.FlowTaskMapper;
 import cn.workcenter.dao.FlowTaskinstanceMapper;
 import cn.workcenter.dao.FlowTransitionMapper;
 import cn.workcenter.dao.FlowVariableaccessMapper;
 import cn.workcenter.dao.FlowVariableinstanceMapper;
 import cn.workcenter.model.FlowNode;
+import cn.workcenter.model.FlowProcessinstance;
 import cn.workcenter.model.FlowTask;
 import cn.workcenter.model.FlowTaskinstance;
 import cn.workcenter.model.FlowTransition;
@@ -37,6 +40,8 @@ public class FlowServiceImpl implements FlowService, FlowConstant {
 	FlowNodeMapper flowNodeMapper;
 	@Autowired
 	FlowTransitionMapper flowTransitionMapper;
+	@Autowired
+	FlowProcessinstanceMapper flowProcessinstanceMapper;
 	
 	@Override
 	public Map<String, Object> getVariableaccess(Long node_id) {
@@ -84,5 +89,25 @@ public class FlowServiceImpl implements FlowService, FlowConstant {
 		FlowTransition flowTransition = flowTransitionMapper.findFlowTransitionByFromNodeidAndProcessdefinationid(parameterMap);
 		return flowTransition;
 	}
+	
+	@Override
+	public FlowTransition getFlowTransitionByToNodeidAndProcessdefinationid(Long processdefinitionId, Long nodeid) {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("processdefinition_id", processdefinitionId);
+		parameterMap.put("to_node_id", nodeid);
+		FlowTransition flowTransition = flowTransitionMapper.findFlowTransitionByToNodeidAndProcessdefinationid(parameterMap);
+		return flowTransition;
+	}
+
+	@Override
+	public void doEndNodeLogic(Long processinstance_id) {
+		FlowProcessinstance flowProcessinstance = flowProcessinstanceMapper.selectByPrimaryKey(processinstance_id);
+		FlowProcessinstance cflowProcessinstance = flowProcessinstance.clone();
+		cflowProcessinstance.setIsFiled(FILED);
+		cflowProcessinstance.setEndTime(new Date());
+		flowProcessinstanceMapper.updateByPrimaryKeySelective(cflowProcessinstance);
+	}
+
+	
 
 }

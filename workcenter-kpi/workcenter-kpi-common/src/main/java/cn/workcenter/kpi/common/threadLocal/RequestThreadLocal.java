@@ -1,5 +1,6 @@
 package cn.workcenter.kpi.common.threadLocal;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.util.StringUtils;
 
 import cn.workcenter.model.FlowVariableinstance;
 
@@ -63,10 +66,10 @@ public class RequestThreadLocal extends ThreadLocal<HttpServletRequest> {
 		List<Map<String, Object>> parameterMapList = new ArrayList<Map<String, Object>>();
 		
 		for(String parameterKey: paramkeys) {
-			String[] paramArray = request.getParameterValues(parameterKey);
+			String[] paramArray = request.getParameterValues(parameterKey)==null?new String[0]:request.getParameterValues(parameterKey);
 			for(int i=0;i<paramArray.length;i++) {
 				String param = paramArray[i];
-				Object paramObj = convert(param, flowvariableMap.get(parameterKey).getVarType());
+				Object paramObj = convert(param, flowvariableMap.get(parameterKey)==null?"":flowvariableMap.get(parameterKey).getVarType());
 				Map<String, Object> parameterMap = getParameterMap(parameterMapList, i);
 				parameterMap.put(parameterKey, paramObj);
 			}
@@ -87,15 +90,24 @@ public class RequestThreadLocal extends ThreadLocal<HttpServletRequest> {
 
 	private Object convert(String param, String varType) {
 		Object obj;
+		if(StringUtils.isEmpty(param)) {
+			return null;
+		}
 		switch(varType) {
 		case "S": 
 			obj = param;
 			break;
-		case "I":
-			obj = Integer.parseInt(param);
+		case "L":
+			obj = Long.parseLong(param);
 			break;
 		case "D":
 			obj = Double.parseDouble(param);
+			break;
+		case "B":
+			obj = new BigDecimal(param);
+			break;
+		case "I":
+			obj = Integer.parseInt(param);
 			break;
 		default :
 			obj = param;

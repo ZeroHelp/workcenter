@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class FlowProcessinstance {
+public class FlowProcessinstance implements Cloneable{
     private Long id;
 
     private Date startTime;
@@ -81,5 +81,14 @@ public class FlowProcessinstance {
 
     public void setSwimlaneId(Long swimlaneId) {
         this.swimlaneId = swimlaneId;
+    }
+    
+    public FlowProcessinstance clone() {
+    	try {
+			return (FlowProcessinstance) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+    	return null;
     }
 }
