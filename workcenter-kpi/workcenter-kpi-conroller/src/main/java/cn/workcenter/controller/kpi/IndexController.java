@@ -17,17 +17,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.workcenter.common.response.WorkcenterResponseBodyJson;
 import cn.workcenter.kpi.common.KpiApplication;
 import cn.workcenter.kpi.service.KpiService;
+import cn.workcenter.service.UserService;
 
 @Controller("kpiIndexController")
 public class IndexController extends KpiApplication {
 	
 	@Autowired
 	private KpiService kpiService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="{sid}/kpi/home", method=RequestMethod.GET)
 	public Object loginPage1(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
 		List<Map<String, Object>> kpiList = kpiService.getAssosiateKpis();
 		request.setAttribute("kpiList", kpiList);
+		request.setAttribute("username", userService.getUsername());
 		return "/kpi/list";
 	}
 	
@@ -42,6 +46,7 @@ public class IndexController extends KpiApplication {
 		
 		request.setAttribute("taskinstanceId", taskinstanceId);
 		request.setAttribute("method", method);
+		request.setAttribute("username", userService.getUsername());
 		return "kpi/detail";
 	}
 	

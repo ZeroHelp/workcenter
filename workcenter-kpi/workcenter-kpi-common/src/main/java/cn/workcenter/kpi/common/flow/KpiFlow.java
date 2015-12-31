@@ -119,12 +119,13 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 			
 			if(currentNode.getType().equals(TASK_NODE)){
 				FlowTaskinstance preTaskinstance = (FlowTaskinstance) kpiService.findTaskinstance(processinstance_id, preNode.getId());
-				kpiService.doPreTaskinstancePrepare(currentTaskinstance, preTaskinstance);
+				kpiService.doPreTaskinstancePrepare(preTaskinstance, currentTaskinstance);
 			} else if(preNode.getType().equals(START_NODE)) {
 				kpiService.doPreStartTaskinstancePrepare(currentTaskinstance);
 			} else {
 				//如果 下一节点 为 其他类型 
 			}
+			kpiService.doPreMainPrepare(processinstance_id);
 		}
 		return null;
 	}
@@ -152,7 +153,7 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 			writeFilterAttributes(parameterCulturalMapList, attributesAccess);
 			
 			kpiService.saveSelfList(parameterSelfMapList, null);
-			kpiService.saveCulturalList(parameterSelfMapList, null);
+			kpiService.saveCulturalList(parameterCulturalMapList, null);
 			
 		} else if(currentNode.getType().equals(START_NODE)) {
 			
@@ -207,7 +208,8 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 		for(Map<String, Object> attibuteMap: attributes) {
 			Set<String> keyset = attibuteMap.keySet();
 			Iterator<String> iterator = keyset.iterator();
-			for(String key = iterator.next();iterator.hasNext(); key = iterator.next()) {
+			for(;iterator.hasNext();) {
+				String key = iterator.next();
 				int access = (Integer)(attributesAccess.get(key + VARIABLEACCESS_SUFFIX)==null?0:attributesAccess.get(key + VARIABLEACCESS_SUFFIX));
 				if(access <= 0) {
 					if(key.contains("id")||key.contains("Id")) {
@@ -223,7 +225,8 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 		for(Map<String, Object> attributeMap: attributes) {
 			Set<String> keySet = attributeMap.keySet();
 			Iterator<String> iterator = keySet.iterator();
-			for(String key = iterator.next();iterator.hasNext();key = iterator.next()){
+			for(;iterator.hasNext();){
+				String key = iterator.next();
 				int access = (Integer)(attributesAccess.get(key + VARIABLEACCESS_SUFFIX)==null?0:attributesAccess.get(key + VARIABLEACCESS_SUFFIX));
 				if(access < 2) {
 					if(key.contains("id")||key.contains("Id")) {

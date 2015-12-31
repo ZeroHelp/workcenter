@@ -160,14 +160,30 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 	public Object doFlowPost(String method, Long main_id, Long taskinstance_id) {
 		Object obj = null;
 		switch (method) {
-		case "save":
+		case "save"://保存草稿
 			obj = save(main_id, taskinstance_id);
 			break;
-		case "submit":
+		case "submit"://提交审批
 			obj = submit(main_id, taskinstance_id);
 			break;
-		case "reject":
+			
+		case "pass"://通过审批
+			obj = submit(main_id, taskinstance_id);
+			break;
+		case "unpass"://不通过审批
 			obj = reject(main_id, taskinstance_id);
+			break;
+		case "saveEv"://保存自评
+			obj = save(main_id, taskinstance_id);
+			break;
+		case "submitEv"://提交审评
+			obj = submit(main_id, taskinstance_id);
+			break;
+		case "reject"://驳回
+			obj = reject(main_id, taskinstance_id);
+			break;
+		case "finish"://审评完成
+			obj = submit(main_id, taskinstance_id);
 			break;
 		default:
 			throw new RuntimeException("go away please!");
@@ -318,7 +334,7 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 			BigDecimal partWeight = new BigDecimal(self.getSelfWeight()).divide(new BigDecimal(100));
 			BigDecimal partScore = self.getLeaderScore();
 			BigDecimal partTotal = partWeight.multiply(partScore);
-			totalScore.add(partTotal);
+			totalScore = totalScore.add(partTotal);
 		}
 		String grade = calculateGrade(totalScore);
 		
@@ -394,6 +410,14 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 		Main main = getMainByProcessinstanceid(processinstance_id);
 		Main cmain = main.clone();
 		cmain.setAssessStatus(cmain.getAssessStatus()+1);
+		mainMapper.updateByPrimaryKeySelective(cmain);
+	}
+
+	@Override
+	public void doPreMainPrepare(Long processinstance_id) {
+		Main main = getMainByProcessinstanceid(processinstance_id);
+		Main cmain = main.clone();
+		cmain.setAssessStatus(cmain.getAssessStatus()-1);
 		mainMapper.updateByPrimaryKeySelective(cmain);
 	}
 

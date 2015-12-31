@@ -40,4 +40,6 @@ public interface KpiService {
 
 	void doNextMainPrepare(Long processinstance_id);
 
+	void doPreMainPrepare(Long processinstance_id);
+
 }

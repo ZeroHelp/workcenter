@@ -32,7 +32,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
 
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王林 <span class="caret"></span></a>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${username}<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 
 							<!-- <li><a href="#">修改密码</a></li> -->
@@ -226,16 +226,16 @@
 														分<span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu dropdown-menu-right">
-														<li><a class="selfScore_a" href="#" value1="5">5</a></li>
+														<li><a class="score_a" value1="5" href="javascript:void(0);">5</a></li>
 														<li role="separator" class="divider"></li>
-														<li><a class="selfScore_a" href="#" value1="4">4</a></li>
+														<li><a class="score_a" value1="4" href="javascript:void(0);">4</a></li>
 														<li role="separator" class="divider"></li>
-														<li><a class="selfScore_a" href="#" value1="3.75">3.75</a></li>
-														<li><a class="selfScore_a" href="#" value1="3.5">3.5</a></li>
-														<li><a class="selfScore_a" href="#" value1="3.25">3.25</a></li>
-														<li><a class="selfScore_a" href="#" value1="3">3</a></li>
+														<li><a class="score_a" value1="3.75" href="javascript:void(0);">3.75</a></li>
+														<li><a class="score_a" value1="3.5" href="javascript:void(0);">3.5</a></li>
+														<li><a class="score_a" value1="3.25" href="javascript:void(0);">3.25</a></li>
+														<li><a class="score_a" value1="3" href="javascript:void(0);">3</a></li>
 														<li role="separator" class="divider"></li>
-														<li><a class="selfScore_a" href="#" value1="2">2</a></li>
+														<li><a class="score_a" value1="2" href="javascript:void(0);">2</a></li>
 													</ul>
 												</div>
 											</div>
@@ -288,16 +288,16 @@
 														分<span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu dropdown-menu-right">
-														<li><a href="#">5</a></li>
+														<li><a class="score_a" value1="5" href="javascript:void(0);">5</a></li>
 														<li role="separator" class="divider"></li>
-														<li><a href="#">4</a></li>
+														<li><a class="score_a" value1="4" href="javascript:void(0);">4</a></li>
 														<li role="separator" class="divider"></li>
-														<li><a href="#">3.75</a></li>
-														<li><a href="#">3.5</a></li>
-														<li><a href="#">3.25</a></li>
-														<li><a href="#">3</a></li>
+														<li><a class="score_a" value1="3.75" href="javascript:void(0);">3.75</a></li>
+														<li><a class="score_a" value1="3.5" href="javascript:void(0);">3.5</a></li>
+														<li><a class="score_a" value1="3.25" href="javascript:void(0);">3.25</a></li>
+														<li><a class="score_a" value1="3" href="javascript:void(0);">3</a></li>
 														<li role="separator" class="divider"></li>
-														<li><a href="#">2</a></li>
+														<li><a class="score_a" value1="2" href="javascript:void(0);">2</a></li>
 													</ul>
 												</div>
 											</div>
@@ -517,27 +517,27 @@
 			<c:when test="${selfDirection_access == 3}">
 			<!-- 起草 -->
 				<div class="span7 text-center">
-					<button id="save_btn" type="button" class="btn btn-primary btn-lg">保存草稿</button>
+					<button value1="save" type="button" class="submit_btn btn btn-primary btn-lg">保存草稿</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="submit_btn" type="button" class="btn btn-primary btn-lg">提交审批</button>
+					<button value1="submit" type="button" class="submit_btn btn btn-primary btn-lg">提交审批</button>
 				</div>
 			</c:when>
 		
 			<c:when test="${selfEvaluate_access == 3}">
 			<!-- 任务自评 -->
 				<div class="span7 text-center">
-					<button id="save" type="button" class="btn btn-primary btn-lg">保存自评</button>
+					<button value1="saveEv" type="button" class="submit_btn btn btn-primary btn-lg">保存自评</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="evaluation" type="button" class="btn btn-primary btn-lg">提交审评</button>
+					<button value1="submitEv" type="button" class="submit_btn btn btn-primary btn-lg">提交审评</button>
 				</div>
 			</c:when>
 			
 			<c:when test="${leaderEvaluation_access == 3}">
 			<!-- 领导审评 -->
 				<div class="span7 text-center">
-					<button id="self_rating" type="button" class="btn btn-primary btn-lg">驳回</button>
+					<button value1="reject" type="button" class="submit_btn btn btn-primary btn-lg">驳回</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="viewkpi" type="button" class="btn btn-primary btn-lg">审评完成</button>
+					<button value1="finish" type="button" class="submit_btn btn btn-primary btn-lg">审评完成</button>
 				</div>
 			</c:when>
 			
@@ -550,14 +550,20 @@
 			<c:otherwise>
 			<!-- 领导审批 -->
 				<div class="span7 text-center">
-					<button id="kpi" type="button" class="btn btn-primary btn-lg">不通过审批</button>
+					<button value1="unpass" type="button" class="submit_btn btn btn-primary btn-lg">不通过审批</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button id="verify" type="button" class="btn btn-primary btn-lg">通过审批</button>
+					<button value1="pass" type="button" class="submit_btn btn btn-primary btn-lg">通过审批</button>
 				</div>
 			</c:otherwise>
 		</c:choose>
 		
-
+		<div class="col-sm-12">
+			<br>
+		</div> <!-- 空行 -->
+		
+		<div class="col-sm-12">
+			<br>
+		</div> <!-- 空行 -->
 	</div>
 	<!-- /container -->
 	
@@ -587,6 +593,40 @@
 	<script src="<%=basePath%>/js/jquery.form.js"></script>
 	
 	<script>
+		function checkNum(num) {
+			var regex = /^[1-9]*[0-9]*$/;
+			if(!regex.test(num)) {
+				return false;
+			}
+			return true;
+		}
+		function validateWeight() {
+			var totalWeight = 0;
+			var flag = false;
+			var index = 0;
+			$("#kpiForm").find("input[name='selfWeight']").each(function(i){
+				var weight = $(this).val()==""?0:$(this).val();
+				if(!checkNum(weight)){
+					flag = true;
+					index = i+1;
+					return false;
+				}
+				totalWeight = totalWeight + parseInt(weight);
+			})
+			if(flag) {
+				$("#model_title").text("表单异常");
+				$("#model_content").text("第"+index+"个权重非正整数");
+				$('#myModal').modal();
+				return false;
+			}
+			if(totalWeight!=100) {
+				$("#model_title").text("表单异常");
+				$("#model_content").text("权重相加非100%");
+				$('#myModal').modal();
+				return false;
+			}
+			return true;
+		}
 		$(document).ready(
 				function() {
 					$(".back_btn").on("click", function() {
@@ -594,42 +634,25 @@
 					});
 					
 					//自评分 选择框  第四个是 input-group div
-					$(".selfScore_a").on("click", function() {
+					$(".score_a").on("click", function() {
 						var score = $(this).attr("value1");
-						$(this).parent().parent().parent().parent().find("input").value(score);
+						$(this).parent().parent().parent().parent().find("input").val(score);
 					});
 					
-					/* 保存草稿 */
-					$("#save_btn").on("click", function() {
+					/* 提交表单 */
+					$(".submit_btn").on("click", function() {
 						var formParam = $("#kpiForm").formSerialize();
-						$.ajax({
-							type:"post",
-							url: "<%=basePath%>/${sid}/kpi/assessment/${main_id}",
-							dataType: "json",
-							data: formParam + '&method=save' ,
-							success: function(data) {
-								if(data.returncode=="200") {
-									$("#model_title").text(data.returnmsg);
-									$("#model_content").text(data.returnmemo);
-									$('#myModal').modal();
-								} else {
-									$("#model_title").text(data.returnmsg);
-									$("#model_content").text(data.returnmemo);
-									$('#myModal').modal();
-								}
+						var method = $(this).attr("value1");
+						if(method=='submit'){
+							if(!validateWeight()){
+								return;
 							}
-						});
-						
-					});
-					/* 提交审批 */
-					$("#submit_btn").on("click", function() {
-						var formParam = $("#kpiForm").formSerialize();
-						alert(formParam);
+						}
 						$.ajax({
 							type: "post",
-							url: "<%=basePath%>/${sid}/kpi/assessment/${main_id}",
+							url: "<%= basePath%>/${sid}/kpi/assessment/${main_id}",
 							dataType: "json",
-							data: formParam + '&method=submit' ,
+							data: formParam + "&method=" + method,
 							success: function(data) {
 								if(data.returncode=="200") {
 									$("#model_title").text(data.returnmsg);
@@ -642,7 +665,6 @@
 								}
 							}
 						})
-						
 					});
 					
 					$("#logout").on("click", function() {

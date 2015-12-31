@@ -32,7 +32,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
 
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">王林 <span class="caret"></span></a>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${username}<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 
 							<li><a id="changepassword" href="javascript:void(0);">修改密码</a></li>
