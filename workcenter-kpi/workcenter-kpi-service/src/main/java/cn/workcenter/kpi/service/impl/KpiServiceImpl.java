@@ -99,7 +99,7 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("username", username);
 		parameterMap.put("is_filed", notFiled);
-		parameterMap.put("is_open", OPENED);
+		parameterMap.put("is_open", OPEN);
 		List<Main> mains = mainMapper.findFiledKpisByUsernameAndNotfiledAndIsopentaskAndNotcurrentuser(parameterMap);
 		return mains;
 	}
@@ -113,7 +113,7 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 			mains =mainMapper.findFiledKpisByUsernameAndIsfiled(parameterMap);
 		} else {
 			//NOT_FILED
-			parameterMap.put("is_open", OPENED);
+			parameterMap.put("is_open", OPEN);
 			mains =mainMapper.findFiledKpisByUsernameAndNotfiledAndIsopentask(parameterMap);
 		} 
 				

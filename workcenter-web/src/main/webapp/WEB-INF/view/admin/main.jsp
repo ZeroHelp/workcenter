@@ -17,6 +17,10 @@
 <!-- Bootstrap core CSS -->
 <link href="<%=basePath%>/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=basePath%>/css/dashboard.css" rel="stylesheet">
+
+<script src="<%=basePath%>/js/jquery.min.js"></script>
+<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
+<script src="<%=basePath%>/js/jquery.form.js"></script>
 </head>
 
 <body>
@@ -57,7 +61,5 @@
 		</div>
 	</div>
 
-	<script src="<%=basePath%>/js/jquery.min.js"></script>
-	<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -9,6 +9,11 @@ public class FlowTask {
 
     private String description;
 
+    /**
+     * 	1.起草人
+		2.起草人直属领导
+		3.某角色所有的人 假如角色一个人则直接设置
+     */
     private Integer actorType;
 
     private Long roleId;

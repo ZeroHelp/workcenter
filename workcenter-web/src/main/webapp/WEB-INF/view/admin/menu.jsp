@@ -9,7 +9,7 @@
 	<c:forEach items="${menus}" var="catagory">
 		<ul class="nav nav-sidebar">
 			<c:forEach items="${catagory.subMenus}" var="submenu">
-				<li><a href="/${sid }/${submenu.url}">${submenu.menuName} </a></li>
+				<li><a href="<%=basePath%>/${sid }/${submenu.url}">${submenu.menuName} </a></li>
 			</c:forEach>
 			<!-- <li class="active"><a href="#">Overview</a></li> -->
 		</ul>

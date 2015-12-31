@@ -34,4 +34,10 @@ public interface UserService {
 
 	String getUserRealnameByUserid(Long waitAssessmentPersonId);
 
+	Long getUserId();
+
+	User getUser();
+
+	User getUserTeamLeader(Long id);
+
 }

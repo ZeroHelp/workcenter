@@ -7,8 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
-
 import cn.workcenter.common.WorkcenterApplication;
 import cn.workcenter.common.WorkcenterCodeEnum;
 import cn.workcenter.common.WorkcenterResult;
@@ -17,12 +15,12 @@ import cn.workcenter.common.constant.CacheConstant;
 import cn.workcenter.common.constant.SecurityConstant;
 import cn.workcenter.common.util.StringUtil;
 import cn.workcenter.dao.FlowProcessinstanceMapper;
-import cn.workcenter.dao.FlowTaskMapper;
 import cn.workcenter.dao.FlowTaskinstanceMapper;
+import cn.workcenter.dao.GroupMapper;
 import cn.workcenter.dao.UserMapper;
 import cn.workcenter.model.FlowProcessinstance;
-import cn.workcenter.model.FlowTask;
 import cn.workcenter.model.FlowTaskinstance;
+import cn.workcenter.model.Group;
 import cn.workcenter.model.Resource;
 import cn.workcenter.model.User;
 import cn.workcenter.service.ResourceService;
@@ -41,7 +39,8 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 	private FlowProcessinstanceMapper flowProcessinstanceMapper;
 	@Autowired
 	private FlowTaskinstanceMapper flowTaskinstanceMapper;
-	
+	@Autowired
+	private GroupMapper groupMapper;
 	//登录 redisCache.save(USERNAME_PREFIX + sid, username).expired(7 * 24 * 60 * 60 * 1000l);
 	//登录redisCache.save(RESOURCES_PREFIX + username, json(resourcelist));
 
@@ -196,6 +195,30 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		User user = userMapper.selectByPrimaryKey(waitAssessmentPersonId);
 		
 		return user.getRealName();
+	}
+	
+	@Override
+	public User getUser() {
+		String username = getUsername();
+		User user = userMapper.getUserByUsername(username);
+		return user;
+	}
+
+	@Override
+	public Long getUserId() {
+		return getUser().getId();
+	}
+
+	@Override
+	public User getUserTeamLeader(Long userid) {
+		
+		Group userGroup = groupMapper.getGroupByUserid(userid);
+		Group parentGroup = groupMapper.selectByPrimaryKey(userGroup.getParentId());
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("group_id", parentGroup.getId());
+		List<User> groupUsers = userMapper.getUsersByGroupid(parameterMap);
+		User tl = groupUsers.get(0);
+		return tl;
 	}
 
 }

@@ -146,4 +146,12 @@
   	inner join base_flow_processinstance fpr on fpr.processdefinition_id = fta.processdefinition_id
   	where fpr.id = #{processinstance_id} and fta.node_id = #{node_id}
   </select>
+  <select id="getFlowTaskByprocessdefinitionid" parameterType="java.lang.Long" resultType="cn.workcenter.model.FlowTask">
+  	select
+  	<include refid="fta_Base_Column_List" />
+  	from base_flow_task fta
+  	where fta.processdefinition_id = #{processdefinition_id}
+  	order by fta.node_id
+  </select>
+  
 </mapper>

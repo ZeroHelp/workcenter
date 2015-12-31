@@ -1,6 +1,7 @@
 package cn.workcenter.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.workcenter.model.User;
 
@@ -20,4 +21,6 @@ public interface UserMapper {
 	User getUserByUsername(String username);
 
 	List<User> getFlowSwimlaneUsers(Long swimlaneId);
+
+	List<User> getUsersByGroupid(Map<String, Object> parameterMap);
 }

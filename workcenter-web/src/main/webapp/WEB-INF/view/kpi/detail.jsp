@@ -162,7 +162,7 @@
 								</c:if><!-- selfGoal end -->
 								
 								<!-- selfWeight start -->
-								<c:if test="${selfGoal_access == 1}">
+								<c:if test="${selfWeight_access == 1}">
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
@@ -171,7 +171,7 @@
 										</div>
 									</div> <!-- /.row -->
 								</c:if>
-								<c:if test="${selfGoal_access == 3}">
+								<c:if test="${selfWeight_access == 3}">
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
@@ -588,7 +588,6 @@
 	</div><!-- /.modal -->
 	
 	<script src="<%=basePath%>/js/jquery.min.js"></script> 
-	<%--<script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>--%>
 	<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
 	<script src="<%=basePath%>/js/jquery.form.js"></script>
 	

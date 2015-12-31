@@ -14,6 +14,10 @@
   <sql id="Base_Column_List" >
     id, parent_id, group_name, group_ch_name, type, create_time, create_userid, status
   </sql>
+  <sql id="gro_Base_Column_List" >
+    gro.id, gro.parent_id as parentId, gro.group_name as groupName, 
+    gro.group_ch_name as groupChName, gro.type, gro.create_time as createTime, gro.create_userid as createUserid, gro.status
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -125,4 +129,24 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getGroupByUserid" parameterType="java.lang.Long" resultType="cn.workcenter.model.Group">
+  	select 
+  	<include refid="gro_Base_Column_List" />
+  	from base_group gro
+  	left join base_group_user bgu on bgu.group_id = gro.id
+  	where bgu.user_id = #{user_id}
+  	and bgu.status = 1 and gro.status = 1
+  	
+  </select>
+  
+  <select id="getParentGroupByGroupid" parameterType="java.lang.Long" resultType="cn.workcenter.model.Group">
+  	select 
+  	<include refid="gro_Base_Column_List" />
+  	from base_group gro
+  	left join base_group bgr on bgr.id = gro.parent_id
+  	where gro.id=#{group_id}
+  	and gro.status = 1 and bgr.status = 1
+  	
+  </select>
+  
 </mapper>

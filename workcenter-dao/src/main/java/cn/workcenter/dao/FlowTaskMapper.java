@@ -1,5 +1,6 @@
 package cn.workcenter.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import cn.workcenter.model.FlowTask;
@@ -19,4 +20,6 @@ public interface FlowTaskMapper {
     int updateByPrimaryKey(FlowTask record);
 
 	FlowTask getFlowTaskByProcessinstanceidandNodeid(Map<String, Long> parameterMap);
+
+	List<FlowTask> getFlowTaskByprocessdefinitionid(Long processdefinition_id);
 }

@@ -20,7 +20,17 @@ public interface FlowConstant extends Constant {
 	
 	int NOT_FILED = 0; 		//没有归档，流程未结束
 	int FILED = 1;     		//归档，流程结束
-	int NOT_OPENED = 0; 	//任务没有开启
-	int OPENED = 1;			//待执行任务
+	int NOT_SUSPENDED = 0;
+	int SUSPENDED = 0;
+	
+	int NOT_OPEN = 0; 	//任务没有开启
+	int OPEN = 1;			//待执行任务
+	
+	int NOT_CANCELLED = 0;
+	int CANCELLED = 1;
+	
+	int NOT_BLOCKING = 0;
+	int BLOCKING = 1;
+	
 	long VIEW_NODE_ID = 6;
 }

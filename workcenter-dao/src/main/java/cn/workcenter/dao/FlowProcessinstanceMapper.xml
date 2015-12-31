@@ -32,12 +32,9 @@
       #{isSuspended,jdbcType=INTEGER}, #{isFiled,jdbcType=INTEGER}, #{processdefinitionId,jdbcType=BIGINT}, #{rootTokenId,jdbcType=BIGINT}, 
       #{swimlaneId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowProcessinstance" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowProcessinstance" useGeneratedKeys="true" keyProperty="id">
     insert into base_flow_processinstance
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="startTime != null" >
         start_time,
       </if>
@@ -61,9 +58,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="startTime != null" >
         #{startTime,jdbcType=TIMESTAMP},
       </if>

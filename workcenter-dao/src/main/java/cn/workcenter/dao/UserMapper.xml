@@ -120,4 +120,13 @@
   	where fsu.swimlane_id = #{swimlaneId} 
   	and fsu.status = 1
   </select>
+  
+  <select id="getUsersByGroupid" parameterType="java.util.Map" resultType="cn.workcenter.model.User">
+  	select 
+  	<include refid="us_Base_Column_List" />
+  	from base_user us
+  	left join base_group_user bgu on bgu.user_id = us.id
+  	where bgu.group_id = #{group_id} 
+  	and bgu.status = 1 and us.status = 1
+  </select>
 </mapper>

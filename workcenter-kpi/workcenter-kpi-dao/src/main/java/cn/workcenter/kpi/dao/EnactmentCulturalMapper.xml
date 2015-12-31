@@ -43,12 +43,9 @@
       #{taskDirection,jdbcType=VARCHAR}, #{taskWeight,jdbcType=INTEGER}, #{taskScore,jdbcType=DECIMAL}, 
       #{status,jdbcType=INTEGER}, #{taskContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.kpi.model.EnactmentCultural" >
+  <insert id="insertSelective" parameterType="cn.workcenter.kpi.model.EnactmentCultural" useGeneratedKeys="true" keyProperty="id">
     insert into kpi_enactment_cultural
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="kpiMainId != null" >
         kpi_main_id,
       </if>
@@ -72,9 +69,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="kpiMainId != null" >
         #{kpiMainId,jdbcType=BIGINT},
       </if>

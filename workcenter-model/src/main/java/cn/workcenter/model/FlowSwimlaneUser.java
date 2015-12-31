@@ -1,6 +1,6 @@
 package cn.workcenter.model;
 
-public class FlowSwimlaneUser {
+public class FlowSwimlaneUser implements Cloneable {
     private Long id;
 
     private Long userId;
@@ -39,5 +39,14 @@ public class FlowSwimlaneUser {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+    
+    public FlowSwimlaneUser clone() {
+    	try {
+			return (FlowSwimlaneUser)super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+    	return null;
     }
 }

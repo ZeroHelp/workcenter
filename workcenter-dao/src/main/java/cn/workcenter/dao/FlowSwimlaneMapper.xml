@@ -27,12 +27,9 @@
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{chName,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowSwimlane" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowSwimlane" useGeneratedKeys="true" keyProperty="id">
     insert into base_flow_swimlane
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="name != null" >
         name,
       </if>
@@ -47,9 +44,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>

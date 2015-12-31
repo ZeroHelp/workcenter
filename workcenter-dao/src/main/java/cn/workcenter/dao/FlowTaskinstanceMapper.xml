@@ -50,7 +50,7 @@
       #{isSuspended,jdbcType=INTEGER}, #{isOpen,jdbcType=INTEGER}, #{isBlocking,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTaskinstance" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTaskinstance" useGeneratedKeys="true" keyProperty="id">
     insert into base_flow_taskinstance
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -230,6 +230,14 @@
   	from base_flow_taskinstance fti
   	left join base_flow_task fta on fta.id = fti.task_id
   	where fti.processinstance_id = #{processinstance_id} and fta.node_id = #{node_id}
+  </select>
+  
+  <select id="getTaskinstanceByProcessinstanceid" parameterType="java.lang.Long" resultType="cn.workcenter.model.FlowTaskinstance">
+ 	select 
+  	<include refid="Base_Column_List_fti" />
+  	from base_flow_taskinstance fti
+  	where fti.processinstance_id = #{processinstance_id} 
+  	order by fti.task_id
   </select>
   
 </mapper>

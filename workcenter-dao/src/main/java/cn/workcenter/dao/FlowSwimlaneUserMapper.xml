@@ -26,12 +26,9 @@
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{swimlaneId,jdbcType=BIGINT}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowSwimlaneUser" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowSwimlaneUser" useGeneratedKeys="true" keyProperty="id">
     insert into base_flow_swimlane_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="userId != null" >
         user_id,
       </if>
@@ -43,9 +40,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
       </if>

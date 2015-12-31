@@ -152,8 +152,9 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 			writeFilterAttributes(parameterSelfMapList, attributesAccess);
 			writeFilterAttributes(parameterCulturalMapList, attributesAccess);
 			
-			kpiService.saveSelfList(parameterSelfMapList, null);
-			kpiService.saveCulturalList(parameterCulturalMapList, null);
+			Main main = kpiService.getMainByProcessinstanceid(processinstance_id);
+			kpiService.saveSelfList(parameterSelfMapList, main.getId());
+			kpiService.saveCulturalList(parameterCulturalMapList, main.getId());
 			
 		} else if(currentNode.getType().equals(START_NODE)) {
 			

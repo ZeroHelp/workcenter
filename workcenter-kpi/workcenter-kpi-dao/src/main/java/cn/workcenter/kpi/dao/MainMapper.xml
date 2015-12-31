@@ -44,12 +44,9 @@
       #{grade,jdbcType=VARCHAR}, #{totalScore,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.kpi.model.Main" >
+  <insert id="insertSelective" parameterType="cn.workcenter.kpi.model.Main" useGeneratedKeys="true" keyProperty="id">
     insert into kpi_main
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="processinstanceId != null" >
         processinstance_id,
       </if>
@@ -82,9 +79,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="processinstanceId != null" >
         #{processinstanceId,jdbcType=BIGINT},
       </if>
