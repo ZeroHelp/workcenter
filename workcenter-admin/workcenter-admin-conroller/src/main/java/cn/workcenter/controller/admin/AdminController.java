@@ -18,6 +18,7 @@ import cn.workcenter.admin.model.Menu;
 import cn.workcenter.admin.service.AdminKpiService;
 import cn.workcenter.admin.service.MenuService;
 import cn.workcenter.common.constant.Constant;
+import cn.workcenter.common.response.WorkcenterResponseBodyJson;
 
 @Controller("adminController")
 public class AdminController implements Constant {
@@ -55,7 +56,8 @@ public class AdminController implements Constant {
 			@RequestParam String year, @RequestParam String remark, HttpServletRequest request, HttpServletResponse response) {
 		
 		adminKpiService.initKpi(year, remark);
-		return "admin/main";
+		
+		return WorkcenterResponseBodyJson.custom().build();
 	}
 	
 	@RequestMapping(value="{sid}/admin/user/list", method=RequestMethod.GET)

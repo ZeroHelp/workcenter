@@ -3,7 +3,7 @@
 <mapper namespace="cn.workcenter.dao.FlowVariableinstanceMapper" >
   <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowVariableinstance" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="processinstance_id" property="processinstanceId" jdbcType="BIGINT" />
+    <result column="processdefinition_id" property="processdefinitionId" jdbcType="BIGINT" />
     <result column="var_type" property="varType" jdbcType="VARCHAR" />
     <result column="var_value" property="varValue" jdbcType="VARCHAR" />
     <result column="index_num" property="indexNum" jdbcType="INTEGER" />
@@ -13,13 +13,13 @@
     <result column="var_name" property="varName" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, processinstance_id, var_type, var_value, index_num, status
+    id, processdefinition_id, var_type, var_value, index_num, status
   </sql>
   <sql id="Blob_Column_List" >
     var_name
   </sql>
   <sql id="fvi_Base_Column_List" >
-    fvi.id, fvi.processinstance_id as processinstanceId, fvi.var_type as varType, fvi.var_value as varValue, fvi.index_num as indexNum, fvi.status,fvi.var_name as varName
+    fvi.id, fvi.processdefinition_id as processdefinitionId, fvi.var_type as varType, fvi.var_value as varValue, fvi.index_num as indexNum, fvi.status,fvi.var_name as varName
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
@@ -34,10 +34,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="cn.workcenter.model.FlowVariableinstance" >
-    insert into base_flow_variableinstance (id, processinstance_id, var_type, 
+    insert into base_flow_variableinstance (id, processdefinition_id, var_type, 
       var_value, index_num, status, 
       var_name)
-    values (#{id,jdbcType=BIGINT}, #{processinstanceId,jdbcType=BIGINT}, #{varType,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{processdefinitionId,jdbcType=BIGINT}, #{varType,jdbcType=VARCHAR}, 
       #{varValue,jdbcType=VARCHAR}, #{indexNum,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{varName,jdbcType=LONGVARCHAR})
   </insert>
@@ -47,8 +47,8 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="processinstanceId != null" >
-        processinstance_id,
+      <if test="processdefinitionId != null" >
+        processdefinition_id,
       </if>
       <if test="varType != null" >
         var_type,
@@ -70,8 +70,8 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="processinstanceId != null" >
-        #{processinstanceId,jdbcType=BIGINT},
+      <if test="processdefinitionId != null" >
+        #{processdefinitionId,jdbcType=BIGINT},
       </if>
       <if test="varType != null" >
         #{varType,jdbcType=VARCHAR},
@@ -93,8 +93,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowVariableinstance" >
     update base_flow_variableinstance
     <set >
-      <if test="processinstanceId != null" >
-        processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+      <if test="processdefinitionId != null" >
+        processdefinition_id = #{processdefinitionId,jdbcType=BIGINT},
       </if>
       <if test="varType != null" >
         var_type = #{varType,jdbcType=VARCHAR},
@@ -116,7 +116,7 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.workcenter.model.FlowVariableinstance" >
     update base_flow_variableinstance
-    set processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+    set processdefinition_id = #{processdefinitionId,jdbcType=BIGINT},
       var_type = #{varType,jdbcType=VARCHAR},
       var_value = #{varValue,jdbcType=VARCHAR},
       index_num = #{indexNum,jdbcType=INTEGER},
@@ -126,7 +126,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowVariableinstance" >
     update base_flow_variableinstance
-    set processinstance_id = #{processinstanceId,jdbcType=BIGINT},
+    set processdefinition_id = #{processdefinitionId,jdbcType=BIGINT},
       var_type = #{varType,jdbcType=VARCHAR},
       var_value = #{varValue,jdbcType=VARCHAR},
       index_num = #{indexNum,jdbcType=INTEGER},
@@ -137,6 +137,7 @@
   	select 
   	<include refid="fvi_Base_Column_List" />
   	from base_flow_variableinstance fvi
-  	where fvi.processinstance_id = #{processinstanceId}
+  	left join base_flow_processinstance bfp on bfp.processdefinition_id = fvi.processdefinition_id
+  	where bfp.id = #{processinstanceId}
   </select>
 </mapper>

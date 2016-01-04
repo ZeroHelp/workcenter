@@ -26,7 +26,7 @@
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">KPI系统</a>
+				<a class="navbar-brand" href="<%=basePath%>/${sid }/kpi/home">KPI系统</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 
@@ -96,8 +96,6 @@
 </style>
 		<form id="kpiForm">
 		
-			<input type="hidden" name="taskinstanceId" value="${taskinstanceId }" />
-			
 			<span class="label label-info">个人设定</span>
 			<table class="table" id="selfset">
 				<tbody>

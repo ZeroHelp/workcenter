@@ -125,7 +125,7 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 			} else {
 				//如果 下一节点 为 其他类型 
 			}
-			kpiService.doPreMainPrepare(processinstance_id);
+			kpiService.doPreMainPrepare(processinstance_id, preNode.getId());
 		}
 		return null;
 	}
@@ -181,7 +181,7 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 				//如果 下一节点 为 其他类型 
 			}
 			
-			kpiService.doNextMainPrepare(processinstance_id);
+			kpiService.doNextMainPrepare(processinstance_id, nextNode.getId());
 		}
 		
 		//END_Node business
@@ -248,7 +248,7 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 		}
 		String currentUsername = userService.getUsername();
 		if(!currentRightUsernames.contains(currentUsername))
-			throw new RuntimeException("you are a stupid man!"); // > _ <
+			throw new RuntimeException("you are the most clever man!"); // > _ <
 	}
 
 	private void checkRelatedRight(Long processinstance_id) {
@@ -259,7 +259,7 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 		}
 		String currentUsername = userService.getUsername();
 		if(!relatedUsernames.contains(currentUsername)) 
-			throw new RuntimeException("you are a stupid man!"); // > _ <
+			throw new RuntimeException("you are the most clever man!"); // > _ <
 	}
 
 }

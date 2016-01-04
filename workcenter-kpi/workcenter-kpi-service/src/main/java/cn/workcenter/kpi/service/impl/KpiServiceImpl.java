@@ -2,6 +2,7 @@ package cn.workcenter.kpi.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,7 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 		mains.addAll(filedMains);
 		mains.addAll(notfiledMains);
 		mains.addAll(notfiledNotCurrentoperatorMains);
-		
+		Collections.sort(mains, new cn.workcenter.common.util.IdComparator());
 		List<Map<String, Object>> kpilist = new ArrayList<Map<String, Object>>();
 		spellPageAttributes(kpilist, mains);
 		
@@ -141,14 +142,14 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 	}
 
 	@Override
-	public Object doFlowGet(String method, Long main_id, Long taskinstance_id) {
+	public Object doFlowGet(String method, Long main_id) {
 		Object obj = null;
 		switch (method) {
 		case "enter":
-			obj = enter(main_id, taskinstance_id);
+			obj = enter(main_id);
 			break;
 		case "view":
-			obj = view(main_id, taskinstance_id);
+			obj = view(main_id);
 			break;
 		default:
 			throw new RuntimeException("go away please!");
@@ -157,33 +158,33 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 	}
 	
 	@Override
-	public Object doFlowPost(String method, Long main_id, Long taskinstance_id) {
+	public Object doFlowPost(String method, Long main_id) {
 		Object obj = null;
 		switch (method) {
 		case "save"://保存草稿
-			obj = save(main_id, taskinstance_id);
+			obj = save(main_id);
 			break;
 		case "submit"://提交审批
-			obj = submit(main_id, taskinstance_id);
+			obj = submit(main_id);
 			break;
 			
 		case "pass"://通过审批
-			obj = submit(main_id, taskinstance_id);
+			obj = submit(main_id);
 			break;
 		case "unpass"://不通过审批
-			obj = reject(main_id, taskinstance_id);
+			obj = reject(main_id);
 			break;
 		case "saveEv"://保存自评
-			obj = save(main_id, taskinstance_id);
+			obj = save(main_id);
 			break;
 		case "submitEv"://提交审评
-			obj = submit(main_id, taskinstance_id);
+			obj = submit(main_id);
 			break;
 		case "reject"://驳回
-			obj = reject(main_id, taskinstance_id);
+			obj = reject(main_id);
 			break;
 		case "finish"://审评完成
-			obj = submit(main_id, taskinstance_id);
+			obj = submit(main_id);
 			break;
 		default:
 			throw new RuntimeException("go away please!");
@@ -191,29 +192,33 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 		return null;
 	}
 
-	private Object enter(Long main_id, Long taskinstance_id) {
+	private Object enter(Long main_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
-		return kpiFlow.enter(main.getProcessinstanceId(), taskinstance_id);
+		FlowTaskinstance flowTaskinstance = flowTaskinstanceMapper.getCurrentOpenTaskinstance(main.getProcessinstanceId());
+		return kpiFlow.enter(main.getProcessinstanceId(), flowTaskinstance.getId());
 	}
 
-	private Object view(Long main_id, Long taskinstance_id) {
+	private Object view(Long main_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
-		return kpiFlow.view(main.getProcessinstanceId(), taskinstance_id);
+		return kpiFlow.view(main.getProcessinstanceId(), 0L);
 	}
 
-	private Object save(Long main_id, Long taskinstance_id) {
+	private Object save(Long main_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
-		return kpiFlow.save(main.getProcessinstanceId(), taskinstance_id);
+		FlowTaskinstance flowTaskinstance = flowTaskinstanceMapper.getCurrentOpenTaskinstance(main.getProcessinstanceId());
+		return kpiFlow.save(main.getProcessinstanceId(), flowTaskinstance.getId());
 	}
 	
-	private Object submit(Long main_id, Long taskinstance_id) {
+	private Object submit(Long main_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
-		return kpiFlow.doNext(main.getProcessinstanceId(), taskinstance_id);
+		FlowTaskinstance flowTaskinstance = flowTaskinstanceMapper.getCurrentOpenTaskinstance(main.getProcessinstanceId());
+		return kpiFlow.doNext(main.getProcessinstanceId(), flowTaskinstance.getId());
 	}
 
-	private Object reject(Long main_id, Long taskinstance_id) {
+	private Object reject(Long main_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
-		return kpiFlow.reject(main.getProcessinstanceId(), taskinstance_id);
+		FlowTaskinstance flowTaskinstance = flowTaskinstanceMapper.getCurrentOpenTaskinstance(main.getProcessinstanceId());
+		return kpiFlow.reject(main.getProcessinstanceId(), flowTaskinstance.getId());
 	}
 
 	@Override
@@ -406,18 +411,18 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 	}
 
 	@Override
-	public void doNextMainPrepare(Long processinstance_id) {
+	public void doNextMainPrepare(Long processinstance_id, Long node_id) {
 		Main main = getMainByProcessinstanceid(processinstance_id);
 		Main cmain = main.clone();
-		cmain.setAssessStatus(cmain.getAssessStatus()+1);
+		cmain.setAssessStatus(node_id.intValue());
 		mainMapper.updateByPrimaryKeySelective(cmain);
 	}
 
 	@Override
-	public void doPreMainPrepare(Long processinstance_id) {
+	public void doPreMainPrepare(Long processinstance_id, Long node_id) {
 		Main main = getMainByProcessinstanceid(processinstance_id);
 		Main cmain = main.clone();
-		cmain.setAssessStatus(cmain.getAssessStatus()-1);
+		cmain.setAssessStatus(node_id.intValue());
 		mainMapper.updateByPrimaryKeySelective(cmain);
 	}
 

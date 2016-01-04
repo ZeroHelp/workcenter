@@ -26,7 +26,7 @@
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">kpi系统</a>
+				<a class="navbar-brand" href="<%=basePath%>/${sid }/kpi/home">KPI系统</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 
@@ -108,7 +108,7 @@
 				var main_id = $(this).attr("value1");
 				var method = $(this).attr("value2");
 				var taskinstanceId = $(this).attr("value3");
-				window.location.href = '<%=basePath%>/${sid}/kpi/assessment/' + main_id + '?method=' + method + '&taskinstanceId=' + taskinstanceId ;
+				window.location.href = '<%=basePath%>/${sid}/kpi/assessment/' + main_id + '?method=' + method;
 			});
 		})
 	</script>

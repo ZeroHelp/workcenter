@@ -240,4 +240,11 @@
   	order by fti.task_id
   </select>
   
+  <select id="getCurrentOpenTaskinstance" parameterType="java.lang.Long" resultType="cn.workcenter.model.FlowTaskinstance">
+  	select
+  	<include refid="Base_Column_List_fti" />
+  	from base_flow_taskinstance fti
+  	where fti.processinstance_id = #{processinstance_id} and fti.is_open = 1
+  </select>
+  
 </mapper>

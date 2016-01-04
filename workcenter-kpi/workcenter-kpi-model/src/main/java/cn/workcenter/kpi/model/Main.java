@@ -2,7 +2,9 @@ package cn.workcenter.kpi.model;
 
 import java.math.BigDecimal;
 
-public class Main implements Cloneable{
+import cn.workcenter.model.Id;
+
+public class Main implements Cloneable, Id{
     private Long id;
 
     private Long processinstanceId;
@@ -22,6 +24,7 @@ public class Main implements Cloneable{
     private String remark;
 
     /**
+     * = nodeId
      * 1.发起
      * 2.起草
      * 3.审批

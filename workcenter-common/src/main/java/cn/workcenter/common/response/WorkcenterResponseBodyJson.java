@@ -83,6 +83,34 @@ public class WorkcenterResponseBodyJson implements ResponseBody , WebConstant{
 			this.data = null;
 			return this;
 		}
+		
+		public Builder setAll(RuntimeException e) {
+			this.returncode = "500";
+			this.returnmsg = "服务器错误";
+			this.returnmemo = "FAILURE:10010000:RuntimeExceptionException" + COLON + e.getMessage();
+			this.operator = null;
+			this.data = null;
+			return this;
+		}
+		
+		public Builder setAll(Exception e) {
+			this.returncode = "500";
+			this.returnmsg = "服务器错误";
+			this.returnmemo = "FAILURE:10010000:Exception" + COLON + e.getMessage();
+			this.operator = null;
+			this.data = null;
+			return this;
+		}
+		
+		public Builder setAll(Throwable t) {
+			this.returncode = "500";
+			this.returnmsg = "服务器错误";
+			this.returnmemo = "FAILURE:10010000:Throwable" + COLON + t.getMessage();
+			this.operator = null;
+			this.data = null;
+			return this;
+		}
+		
 		public WorkcenterResponseBodyJson.Builder setAll(RuntimeException e, String operator) {
 			this.returncode = "500";
 			this.returnmsg = "服务器错误";

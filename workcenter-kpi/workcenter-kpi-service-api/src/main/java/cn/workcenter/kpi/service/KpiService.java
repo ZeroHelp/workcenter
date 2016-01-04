@@ -14,9 +14,9 @@ public interface KpiService {
 
 	Map<String, Object> getMain(Long processinstance_id);
 
-	Object doFlowGet(String method, Long main_id, Long taskinstance_id);
+	Object doFlowGet(String method, Long main_id);
 	
-	Object doFlowPost(String method, Long main_id, Long taskinstance_id);
+	Object doFlowPost(String method, Long main_id);
 
 	List<Map<String, Object>> getAssosiateKpis();
 
@@ -38,8 +38,8 @@ public interface KpiService {
 
 	void doPreStartTaskinstancePrepare(FlowTaskinstance currentTaskinstance);
 
-	void doNextMainPrepare(Long processinstance_id);
+	void doNextMainPrepare(Long processinstance_id, Long node_id);
 
-	void doPreMainPrepare(Long processinstance_id);
+	void doPreMainPrepare(Long processinstance_id, Long node_id);
 
 }

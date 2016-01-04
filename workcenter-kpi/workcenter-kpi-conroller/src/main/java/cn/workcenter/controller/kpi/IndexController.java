@@ -37,14 +37,12 @@ public class IndexController extends KpiApplication {
 	
 	@RequestMapping(value="{sid}/kpi/assessment/{main_id}", method=RequestMethod.GET)
 	public Object kpiPage(@PathVariable String sid, @PathVariable Long main_id, 
-			@RequestParam String method,
-			@RequestParam Long taskinstanceId, HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam String method, HttpServletRequest request, HttpServletResponse response) {
 		
 		KpiApplication.requestThreadLocal.set(request);
 		
-		Object obj = kpiService.doFlowGet(method, main_id, taskinstanceId); 
+		Object obj = kpiService.doFlowGet(method, main_id); 
 		
-		request.setAttribute("taskinstanceId", taskinstanceId);
 		request.setAttribute("method", method);
 		request.setAttribute("username", userService.getUsername());
 		return "kpi/detail";
@@ -53,12 +51,11 @@ public class IndexController extends KpiApplication {
 	@RequestMapping(value="{sid}/kpi/assessment/{main_id}", method=RequestMethod.POST)
 	@ResponseBody
 	public Object kpiPost(@PathVariable String sid, @PathVariable Long main_id,
-			@RequestParam String method,
-			@RequestParam Long taskinstanceId, HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam String method, HttpServletRequest request, HttpServletResponse response) {
 		
 		KpiApplication.requestThreadLocal.set(request);
 		
-		Object obj = kpiService.doFlowPost(method, main_id, taskinstanceId); 
+		Object obj = kpiService.doFlowPost(method, main_id); 
 		
 		return WorkcenterResponseBodyJson.custom().build();
 	}

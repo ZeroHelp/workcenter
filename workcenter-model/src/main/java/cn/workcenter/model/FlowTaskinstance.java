@@ -166,4 +166,9 @@ public class FlowTaskinstance implements Cloneable {
 		}
 		return null;
     }
+
+	public FlowTaskinstance getCurrentTaskinstance(Long processinstanceId2) {
+		
+		return null;
+	}
 }

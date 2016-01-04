@@ -3,8 +3,15 @@ package cn.workcenter.model;
 public class FlowVariableinstance {
     private Long id;
 
-    private Long processinstanceId;
+    private Long processdefinitionId;
 
+    /**
+     * S:string
+     * L:Long
+     * D:Double
+     * B:Boolen
+     * I:Integer
+     */
     private String varType;
 
     private String varValue;
@@ -23,15 +30,15 @@ public class FlowVariableinstance {
         this.id = id;
     }
 
-    public Long getProcessinstanceId() {
-        return processinstanceId;
-    }
+    public Long getProcessdefinitionId() {
+		return processdefinitionId;
+	}
 
-    public void setProcessinstanceId(Long processinstanceId) {
-        this.processinstanceId = processinstanceId;
-    }
+	public void setProcessdefinitionId(Long processdefinitionId) {
+		this.processdefinitionId = processdefinitionId;
+	}
 
-    public String getVarType() {
+	public String getVarType() {
         return varType;
     }
 

@@ -23,4 +23,6 @@ public interface FlowTaskinstanceMapper {
 	FlowTaskinstance getFlowTaskinstanceByProcessinstanceidandNodeid(Map<String, Object> parameterMap);
 
 	List<FlowTaskinstance> getTaskinstanceByProcessinstanceid(Long flowProcessinstance_id);
+
+	FlowTaskinstance getCurrentOpenTaskinstance(Long processinstanceId);
 }
