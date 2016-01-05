@@ -30,7 +30,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.RoleResource" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.RoleResource" useGeneratedKeys="true" keyProperty="id">
     insert into base_role_resource
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

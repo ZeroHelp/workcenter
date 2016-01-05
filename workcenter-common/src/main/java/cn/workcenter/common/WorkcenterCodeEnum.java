@@ -9,12 +9,21 @@ public enum WorkcenterCodeEnum implements WebConstant{
 	NO_WRONGPASSWORD("10010003","登录失败,密码错误"),
 	NO_EXISTUSER("10010004", "用户不存在"),
 	
+	NO_USER_ADD("10020001", "用户添加失败"),
+	NO_USER_UPDATE("10020002", "用户更新失败"),
+	NO_USER_DELETE("10020003", "用户删除失败"),
+	NO_USER_GET("10020004", "用户查询失败"),
+	NO_USER_FORBIDDEN("10020005", "用户禁用失败"),
 	
 	OK_SUCCESS("20010000", "SUCCESS"),
 	OK_LOGOUT("20010001", "退出登录成功"),
 	OK_LOGIN("20010003", "登录成功"),
 	
-	
+	OK_USER_ADD("20020001", "用户添加成功"),
+	OK_USER_UPDATE("20020002", "用户更新成功"),
+	OK_USER_DELETE("20020003", "用户删除成功"),
+	OK_USER_GET("20020004", "用户查询成功"),
+	OK_USER_FORBIDDEN("20020005", "用户禁用成功"),
 	;
 	
 	private String code;

@@ -34,7 +34,7 @@
       #{resourceUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUserid,jdbcType=BIGINT}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.Resource" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.Resource" useGeneratedKeys="true" keyProperty="id">
     insert into base_resource
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

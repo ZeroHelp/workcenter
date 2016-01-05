@@ -40,4 +40,18 @@ public interface UserService {
 
 	User getUserTeamLeader(Long id);
 
+	List<User> getAllUsers();
+
+	Object addUser(User user);
+
+	Object editUser(User user);
+
+	Object getUserByUserid(Long userid);
+
+	Object deleteUsers(String userids);
+
+	Object forbiddenUsers(String userids);
+
+	List<User> queryUsers(User user);
+
 }

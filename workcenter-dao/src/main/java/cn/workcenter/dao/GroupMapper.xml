@@ -36,7 +36,7 @@
       #{groupChName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{createUserid,jdbcType=BIGINT}, #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.Group" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.Group" useGeneratedKeys="true" keyProperty="id">
     insert into base_group
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

@@ -23,4 +23,10 @@ public interface UserMapper {
 	List<User> getFlowSwimlaneUsers(Long swimlaneId);
 
 	List<User> getUsersByGroupid(Map<String, Object> parameterMap);
+
+	List<User> queryAllUsers();
+
+	int updateUserStatusById(Map<String, Object> parameterMap);
+
+	List<User> queryUsersBySelective(User user);
 }

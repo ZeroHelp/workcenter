@@ -1,14 +1,10 @@
 package cn.workcenter.common.response;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import com.alibaba.fastjson.JSON;
-
-import cn.workcenter.common.Loader;
 import cn.workcenter.common.WorkcenterResult;
 import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.common.exception.ParameterEmptyException;
+
+import com.alibaba.fastjson.JSON;
 
 
 public class WorkcenterResponseBodyJson implements ResponseBody , WebConstant{
@@ -177,48 +173,6 @@ public class WorkcenterResponseBodyJson implements ResponseBody , WebConstant{
 	public String toString() {
 		String json = JSON.toJSONString(this);
 		return json;
-	}
-	
-	public WorkcenterResponseBodyJson log() {
-		Class logClass = null;
-		try {
-			logClass = Loader.getClass("cn.godzilla.util.GodzillaWebApplication");
-		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-			System.out.println("GodzillaWebApplication.logThenReturn 更新日志失败 类错误");
-			return this;
-		}
-		Method dologmethod;
-		try {
-			dologmethod = logClass.getMethod("logThenReturn", WorkcenterResponseBodyJson.class);
-			dologmethod.invoke(logClass, this);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-			System.out.println("GodzillaWebApplication.logThenReturn 更新日志失败　方法错误");
-			return this;
-		}
-		return this;
-	}
-
-	public Object updateLog() {
-		Class logClass = null;
-		try {
-			logClass = Loader.getClass("cn.godzilla.util.GodzillaWebApplication");
-		} catch(ClassNotFoundException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-			System.out.println("GodzillaWebApplication.updateLogThenReturn 更新日志失败 类错误");
-			return this;
-		}
-		Method dologmethod;
-		try{
-			dologmethod = logClass.getMethod("updateLogThenReturn", WorkcenterResponseBodyJson.class);
-			dologmethod.invoke(logClass, this);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-			System.out.println("GodzillaWebApplication.updateLogThenReturn 更新日志失败　方法错误");
-			return this;
-		}
-		return this;
 	}
 	
 }

@@ -25,6 +25,7 @@ public enum WorkcenterOperationEnum implements WebConstant {
 	public String getOperationEn() {
 		return operationEn;
 	}
+
 	public String getOperationCh() {
 		return operationCh;
 	}

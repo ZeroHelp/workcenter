@@ -36,7 +36,7 @@
       #{description,jdbcType=VARCHAR}, #{actorType,jdbcType=INTEGER}, #{roleId,jdbcType=BIGINT}, #{groupId,jdbcType=BIGINT}, 
       #{nodeId,jdbcType=BIGINT}, #{startNodeId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTask" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowTask" useGeneratedKeys="true" keyProperty="id">
     insert into base_flow_task
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

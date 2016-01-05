@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import cn.workcenter.common.WorkcenterApplication;
 import cn.workcenter.common.WorkcenterCodeEnum;
@@ -13,6 +14,7 @@ import cn.workcenter.common.WorkcenterResult;
 import cn.workcenter.common.cache.RedisCache;
 import cn.workcenter.common.constant.CacheConstant;
 import cn.workcenter.common.constant.SecurityConstant;
+import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.common.util.StringUtil;
 import cn.workcenter.dao.FlowProcessinstanceMapper;
 import cn.workcenter.dao.FlowTaskinstanceMapper;
@@ -27,7 +29,7 @@ import cn.workcenter.service.ResourceService;
 import cn.workcenter.service.UserService;
 
 @Service("userService")
-public class UserServiceImpl extends WorkcenterApplication implements UserService , SecurityConstant, CacheConstant {
+public class UserServiceImpl extends WorkcenterApplication implements UserService , SecurityConstant, CacheConstant, WebConstant {
 
 	@Autowired
 	private RedisCache redisCache;
@@ -163,7 +165,7 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 	@Override
 	public WorkcenterResult doLogout(String sid) {
 		redisCache.delete(USERNAME_PREFIX + sid);
-		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_LOGOUT)).build();
+		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_ADD)).build();
 	}
 
 	@Override
@@ -219,6 +221,93 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		List<User> groupUsers = userMapper.getUsersByGroupid(parameterMap);
 		User tl = groupUsers.get(0);
 		return tl;
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		
+		List<User> users = userMapper.queryAllUsers();
+		return users;
+	}
+
+	@Override
+	public WorkcenterResult addUser(User user) {
+		if(StringUtils.isEmpty(user.getPassword())) {
+			user.setPassword(DEFAULT_PASSWORD);
+		}
+		
+		int re = userMapper.insert(user);
+		if(re>0){
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_ADD)).build();
+		} else {
+			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_USER_ADD)).build();
+		}
+		
+	}
+
+	@Override
+	public WorkcenterResult editUser(User user) {
+		int re = userMapper.updateByPrimaryKeySelective(user);
+		if(re>0){
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_UPDATE)).build();
+		} else {
+			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_USER_UPDATE)).build();
+		}
+	}
+
+	@Override
+	public Object deleteUsers(String userids) {
+		String[] arrayId = userids.split(",");
+		for(int i=0;i<arrayId.length; i++) {
+			deleteUser(Long.parseLong(arrayId[i]));
+		}
+		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_DELETE)).build();
+	}
+	
+	public Object deleteUser(Long id) {
+		int re = userMapper.deleteByPrimaryKey(id);
+		if(re>0){
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_DELETE)).build();
+		} else {
+			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_USER_DELETE)).build();
+		}
+	}
+
+	@Override
+	public Object getUserByUserid(Long userid) {
+		User user = userMapper.selectByPrimaryKey(userid);
+		if(user!=null && user.getId()>0){
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_GET), user).build();
+		} else {
+			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_USER_GET)).build();
+		}
+	}
+
+	@Override
+	public Object forbiddenUsers(String userids) {
+		String[] arrayId = userids.split(",");
+		for(int i=0;i<arrayId.length; i++) {
+			forbiddenUser(Long.parseLong(arrayId[i]));
+		}
+		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_FORBIDDEN)).build();
+	}
+
+	private WorkcenterResult forbiddenUser(Long id) {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("id", id);
+		parameterMap.put("status", 0);
+		int re = userMapper.updateUserStatusById(parameterMap);
+		if(re>0){
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_FORBIDDEN)).build();
+		} else {
+			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_USER_FORBIDDEN)).build();
+		}
+	}
+
+	@Override
+	public List<User> queryUsers(User user) {
+		List<User> users = userMapper.queryUsersBySelective(user);
+		return users;
 	}
 
 }

@@ -33,7 +33,7 @@
       #{password,jdbcType=VARCHAR}, #{lastLogin,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.User" >
+  <insert id="insertSelective" parameterType="cn.workcenter.model.User" useGeneratedKeys="true" keyProperty="id">
     insert into base_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -129,4 +129,33 @@
   	where bgu.group_id = #{group_id} 
   	and bgu.status = 1 and us.status = 1
   </select>
+  
+  <select id="queryAllUsers" resultType="cn.workcenter.model.User" >
+  	select 
+  	<include refid="us_Base_Column_List"></include>
+  	from base_user us 
+  </select>
+  
+  <update id="updateUserStatusById" parameterType="java.util.Map">
+  	update base_user
+  	set status = #{status}
+  	where id = #{id}
+  </update>
+  
+  <select id="queryUsersBySelective" parameterType="cn.workcenter.model.User" resultType="cn.workcenter.model.User">
+  	select
+  	<include refid="us_Base_Column_List"></include>
+  	from base_user us 
+  	
+  	<if test="userName != null" >
+      where us.user_name like CONCAT('%',#{userName},'%')
+    </if>
+    <if test="realName != null" >
+      where us.real_name like CONCAT('%',#{realName},'%')  
+    </if>
+    <if test="status != null" >
+      where us.status = #{status,jdbcType=INTEGER}
+    </if>
+  </select>
+  
 </mapper>
