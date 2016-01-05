@@ -20,4 +20,5 @@ public interface UserMapper {
 	User getUserByUsername(String username);
 
 	List<User> getFlowSwimlaneUsers(Long swimlaneId);
+	List<User> getUsers();
 }

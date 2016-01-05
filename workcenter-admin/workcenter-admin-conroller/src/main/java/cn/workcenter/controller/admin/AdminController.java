@@ -19,8 +19,7 @@ import cn.workcenter.common.constant.Constant;
 public class AdminController implements Constant {
 	
 	@Autowired
-	private MenuService menuService;
-	
+	private MenuService menuService;			
 	@RequestMapping(value="{sid}/admin/home", method=RequestMethod.GET)
 	public Object home(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
 		
@@ -42,7 +41,6 @@ public class AdminController implements Constant {
 		
 		return "admin/main";
 	}
-	
 	
 	
 }

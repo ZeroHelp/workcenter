@@ -19,5 +19,10 @@
 			<artifactId>workcenter-admin-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>cn.workcenter</groupId>
+			<artifactId>workcenter-service-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>
