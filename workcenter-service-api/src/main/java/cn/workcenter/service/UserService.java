@@ -34,6 +34,10 @@ public interface UserService {
 
 	String getUserRealnameByUserid(Long waitAssessmentPersonId);
 
+	/**
+	 * get current login userid
+	 * @return
+	 */
 	Long getUserId();
 
 	User getUser();

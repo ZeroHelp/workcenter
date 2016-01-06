@@ -264,7 +264,7 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_DELETE)).build();
 	}
 	
-	public Object deleteUser(Long id) {
+	private WorkcenterResult deleteUser(Long id) {
 		int re = userMapper.deleteByPrimaryKey(id);
 		if(re>0){
 			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_DELETE)).build();

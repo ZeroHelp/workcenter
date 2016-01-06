@@ -155,4 +155,26 @@
   	where parent_id = #{parentId}
   	and status = 1
   </select>
+  
+  <select id="queryResourcesBySelective" parameterType="cn.workcenter.model.Resource" resultType="cn.workcenter.model.Resource">
+  	select 
+  	<include refid="Re_Base_Column_List" />
+  	from base_resource re
+  	<if test="resourceName != null" >
+      where re.resource_name like CONCAT('%',#{resourceName},'%') 
+    </if>
+    <if test="resourceUrl != null" >
+      where re.resource_url like CONCAT('%',#{resourceUrl},'%')
+    </if>
+    <if test="status != null" >
+      where re.status = #{status}
+    </if>
+  </select>
+  
+  <update id="updateResourceStatusById" parameterType="java.util.Map">
+  	update base_resource
+  	set status = #{status}
+  	where id = #{id}
+  </update>
+  
 </mapper>

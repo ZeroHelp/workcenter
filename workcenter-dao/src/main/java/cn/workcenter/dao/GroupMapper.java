@@ -1,9 +1,9 @@
 package cn.workcenter.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.workcenter.model.Group;
-import cn.workcenter.model.User;
 
 public interface GroupMapper {
     int deleteByPrimaryKey(Long id);
@@ -21,5 +21,9 @@ public interface GroupMapper {
 	Group getGroupByUserid(Long userid);
 
 	Group getParentGroupByGroupid(Long id);
+
+	List<Group> queryGroupsBySelective(Group group);
+
+	int updateGroupStatusById(Map<String, Object> parameterMap);
 
 }

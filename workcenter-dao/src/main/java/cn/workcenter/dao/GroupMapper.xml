@@ -149,4 +149,25 @@
   	
   </select>
   
+  <select id="queryGroupsBySelective" parameterType="cn.workcenter.model.Group" resultType="cn.workcenter.model.Group">
+  	select 
+  	<include refid="gro_Base_Column_List" />
+  	from base_group gro
+  	<if test="groupName != null" >
+      where gro.group_name like CONCAT('%',#{groupName},'%') 
+    </if>
+    <if test="groupChName != null" >
+      where gro.group_ch_name like CONCAT('%',#{groupChName},'%')
+    </if>
+    <if test="status != null" >
+      where gro.status = #{status}
+    </if>
+  </select>
+  
+  <update id="updateGroupStatusById" parameterType="java.util.Map">
+  	update base_group
+  	set status = #{status}
+  	where id = #{id}
+  </update>
+  
 </mapper>
