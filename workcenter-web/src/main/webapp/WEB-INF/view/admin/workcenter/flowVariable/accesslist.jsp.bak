@@ -12,7 +12,6 @@
 	<div class="row">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="add">添加</button>
 		<button id="edit_btn" type="button" class="btn btn-primary" >修改</button>
-		<button value1="forbidden" type="button" class="delete_btn btn btn-primary" >禁用</button>
 		<button value1="delete" type="button" class="delete_btn btn btn-primary" >删除</button>
 
 		<div class="col-sm-3">
@@ -24,9 +23,10 @@
 							<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 						</button>
 						<ul class="dropdown-menu">
-							<li><a class="query_a" href="javascript:void(0);" value1="userName">用户名</a></li>
-							<li><a class="query_a" href="javascript:void(0);" value1="realName">真实姓名</a></li>
-							<li><a class="query_a" href="javascript:void(0);" value1="status">状态</a></li>
+							<li><a class="query_a" href="javascript:void(0);" value1="variablename">变量名称</a></li>
+							<li><a class="query_a" href="javascript:void(0);" value1="nodeId">节点Id</a></li>
+							<li><a class="query_a" href="javascript:void(0);" value1="variableinstanceId">流程Id</a></li>
+							<li><a class="query_a" href="javascript:void(0);" value1="access">权限</a></li>											
 						</ul>
 					</div>
 					
@@ -48,25 +48,28 @@
 				<tr>
 					<th>#</th>
 					<th>id</th>
-					<th>用户名</th>
-					<th>真实姓名</th>
-					<th>最后登录时间</th>
-					<th>状态</th>
+					<th>流程节点Id</th>
+					<th>流程Id</th>
+					<th>流程变量名称</th>
+					<th>权限</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${users }" var="user">
+				<c:forEach items="${flowVariableaccesss }" var="flowVariableaccess">
 					<tr>
-						<td><input type="checkbox" name="userId" value1="${user.id}" ></td>
-						<td>${user.id }</td>
-						<td>${user.userName }</td>
-						<td>${user.realName }</td>
-						<td>${user.lastLogin }</td>
-						<c:if test="${user.status == '1' }">
-							<td>可用</td>
+						<td><input type="checkbox" name="flowVariableaccessId" value1="${flowVariableaccess.id}" ></td>
+						<td>${flowVariableaccess.id }</td>
+						<td>${flowVariableaccess.nodeId }</td>
+						<td>${flowVariableaccess.variableinstanceId }</td>
+						<td>${flowVariableaccess.variablename }</td>
+						<c:if test="${flowVariableaccess.access == '1' }">
+							<td>可读</td>
 						</c:if>
-						<c:if test="${user.status == '0' }">
-							<td>禁用</td>
+						<c:if test="${flowVariableaccess.access == '2' }">
+							<td>可写</td>
+						</c:if>
+						<c:if test="${flowVariableaccess.access == '3' }">
+							<td>可读写</td>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -89,18 +92,23 @@
 				<form id="userForm">
 					<input id="id" name="id" type="hidden" >
 					<div class="form-group">
-						<label for="recipient-name" class="control-label">用户名:</label> 
-						<input id="userName" name="userName" type="text" class="form-control">
+						<label for="recipient-name" class="control-label">流程节点Id:</label> 
+						<input id="nodeId" name="nodeId" type="text" class="form-control">
 					</div>
 					<div class="form-group">
-						<label for="recipient-name" class="control-label">真实姓名:</label> 
-						<input id="realName" name="realName" type="text" class="form-control">
+						<label for="recipient-name" class="control-label">流程Id:</label> 
+						<input id="variableinstanceId" name="variableinstanceId" type="text" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="recipient-name" class="control-label">流程变量名称:</label> 
+						<input id="variablename" name="variablename" type="text" class="form-control">
 					</div>
 					<div class="form-group">
 						<label for="recipient-name" class="control-label">状态:</label> 
-						<select id="status" name="status" class="form-control">
-						  <option value="1">可用</option>
-						  <option value="0">禁用</option>
+						<select id="access" name="access" class="form-control">
+						  <option value="1">可读</option>
+						  <option value="2">可写</option>
+						  <option value="3">可读写</option>
 						</select>
 					</div>
 				</form>
@@ -153,13 +161,13 @@
 			
 			var queryKey = $("#query_input").attr("name");
 			var queryValue = $("#query_input").val();
-			var url = '<%=basePath%>/${sid}/admin/user/list?'+queryKey + '=' + queryValue;
+			var url = '<%=basePath%>/${sid}/admin/flow/Variableaccess/list?'+queryKey + '=' + queryValue;
 			var encodeUrl = encodeURI(url);
 			window.location.href = encodeUrl;
 		});
 		
 		$(".back_btn").on("click", function() {
-			window.location.href = '<%=basePath%>/${sid}/admin/user/list';
+			window.location.href = '<%=basePath%>/${sid}/admin/flow/Variableaccess/list';
 		});
 		
 		$('#exampleModal').on('show.bs.modal', function(event) {
@@ -175,9 +183,9 @@
 			var operator = $(this).attr("value1");
 			var url = '';
 			if(operator=='add') {
-				url = "<%=basePath%>/${sid}/admin/user/add";
+				url = "<%=basePath%>/${sid}/admin/flow/Variableaccess/add";
 			} else if(operator =='edit') {
-				url = "<%=basePath%>/${sid}/admin/user/edit";
+				url = "<%=basePath%>/${sid}/admin/flow/Variableaccess/edit";
 			}
 			$.ajax({
 				type: "post",
@@ -218,7 +226,7 @@
 			
 			$.ajax({
 				type: "get",
-				url: "<%=basePath%>/${sid}/admin/user/get",
+				url: "<%=basePath%>/${sid}/admin/flow/Variableaccess/get",
 				dataType: "json",
 				data: {
 					userid: editUserId,
@@ -252,7 +260,7 @@
 			if(operator=='forbidden') {
 				url = "<%=basePath%>/${sid}/admin/user/forbidden";
 			} else if(operator == 'delete') {
-				url = "<%=basePath%>/${sid}/admin/user/delete";
+				url = "<%=basePath%>/${sid}/admin/flow/Variableaccess/delete";
 			}
 			var deleteUserIds = '';
 			

@@ -18,4 +18,6 @@ public interface FlowVariableaccessMapper {
     int updateByPrimaryKey(FlowVariableaccess record);
     
 	List<FlowVariableaccess> getVariableaccess(Long node_id);
+
+	List<FlowVariableaccess> queryFlowVariableaccesss(FlowVariableaccess flowVariableaccess);
 }

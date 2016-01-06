@@ -140,4 +140,29 @@
   	left join base_flow_processinstance bfp on bfp.processdefinition_id = fvi.processdefinition_id
   	where bfp.id = #{processinstanceId}
   </select>
+ 
+  <select id="getFlowVariableinstance" parameterType="cn.workcenter.model.FlowVariableinstance" resultType="cn.workcenter.model.FlowVariableinstance">
+  	select
+  	<include refid="fvi_Base_Column_List"></include>
+  	from base_flow_variableinstance fvi 
+  	<if test="varType != null" >
+      where fvi.var_Type like CONCAT('%',#{varType},'%')
+    </if>
+    <if test="varName != null" >
+      where fvi.var_Name like CONCAT('%',#{varName},'%')
+    </if>
+    <if test="varValue != null" >
+      where fvi.var_Value like CONCAT('%',#{varValue},'%')
+    </if>
+      <if test="status != null" >
+      where fvi.status= #{status,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <update id="updateFlowVariableinstanceStatusById" parameterType="java.util.Map">
+  		update base_flow_variableinstance
+  		set status = #{status}
+  		where id = #{id}
+  </update>
+  
 </mapper>

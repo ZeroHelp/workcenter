@@ -1,105 +1,130 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.workcenter.dao.FlowVariableaccessMapper" >
-  <resultMap id="BaseResultMap" type="cn.workcenter.model.FlowVariableaccess" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="node_id" property="nodeId" jdbcType="BIGINT" />
-    <result column="variableinstance_id" property="variableinstanceId" jdbcType="BIGINT" />
-    <result column="variablename" property="variablename" jdbcType="VARCHAR" />
-    <result column="access" property="access" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, node_id, variableinstance_id, variablename, access
-  </sql>
-  <sql id="Base_Column_List_fva" >
-    fva.id, fva.node_id as nodeId, fva.variableinstance_id as variableinstanceId, fva.variablename, fva.access
-  </sql>
-  
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from base_flow_variableaccess
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from base_flow_variableaccess
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="cn.workcenter.model.FlowVariableaccess" >
-    insert into base_flow_variableaccess (id, node_id, variableinstance_id, 
-      variablename, access)
-    values (#{id,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, #{variableinstanceId,jdbcType=BIGINT}, 
-      #{variablename,jdbcType=VARCHAR}, #{access,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.workcenter.model.FlowVariableaccess" >
-    insert into base_flow_variableaccess
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="nodeId != null" >
-        node_id,
-      </if>
-      <if test="variableinstanceId != null" >
-        variableinstance_id,
-      </if>
-      <if test="variablename != null" >
-        variablename,
-      </if>
-      <if test="access != null" >
-        access,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="nodeId != null" >
-        #{nodeId,jdbcType=BIGINT},
-      </if>
-      <if test="variableinstanceId != null" >
-        #{variableinstanceId,jdbcType=BIGINT},
-      </if>
-      <if test="variablename != null" >
-        #{variablename,jdbcType=VARCHAR},
-      </if>
-      <if test="access != null" >
-        #{access,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowVariableaccess" >
-    update base_flow_variableaccess
-    <set >
-      <if test="nodeId != null" >
-        node_id = #{nodeId,jdbcType=BIGINT},
-      </if>
-      <if test="variableinstanceId != null" >
-        variableinstance_id = #{variableinstanceId,jdbcType=BIGINT},
-      </if>
-      <if test="variablename != null" >
-        variablename = #{variablename,jdbcType=VARCHAR},
-      </if>
-      <if test="access != null" >
-        access = #{access,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowVariableaccess" >
-    update base_flow_variableaccess
-    set node_id = #{nodeId,jdbcType=BIGINT},
-      variableinstance_id = #{variableinstanceId,jdbcType=BIGINT},
-      variablename = #{variablename,jdbcType=VARCHAR},
-      access = #{access,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <select id="getVariableaccess" parameterType="java.lang.Long" resultType="cn.workcenter.model.FlowVariableaccess">
-  	select 
-    <include refid="Base_Column_List_fva" />
-    from base_flow_variableaccess fva 
-    left join base_flow_variableinstance fvi on fvi.id = fva.variableinstance_id
-    where fva.node_id = #{node_id} 
-    order by fvi.index_num desc
-  </select>
+<mapper namespace="cn.workcenter.dao.FlowVariableaccessMapper">
+	<resultMap id="BaseResultMap" type="cn.workcenter.model.FlowVariableaccess">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="node_id" property="nodeId" jdbcType="BIGINT" />
+		<result column="variableinstance_id" property="variableinstanceId"
+			jdbcType="BIGINT" />
+		<result column="variablename" property="variablename" jdbcType="VARCHAR" />
+		<result column="access" property="access" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, node_id, variableinstance_id, variablename, access
+	</sql>
+	<sql id="Base_Column_List_fva">
+		fva.id, fva.node_id as nodeId, fva.variableinstance_id as variableinstanceId,
+		fva.variablename, fva.access
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from base_flow_variableaccess
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from base_flow_variableaccess
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="cn.workcenter.model.FlowVariableaccess">
+		insert into base_flow_variableaccess (id, node_id,
+		variableinstance_id,
+		variablename, access)
+		values (#{id,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT},
+		#{variableinstanceId,jdbcType=BIGINT},
+		#{variablename,jdbcType=VARCHAR}, #{access,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="cn.workcenter.model.FlowVariableaccess">
+		insert into base_flow_variableaccess
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="nodeId != null">
+				node_id,
+			</if>
+			<if test="variableinstanceId != null">
+				variableinstance_id,
+			</if>
+			<if test="variablename != null">
+				variablename,
+			</if>
+			<if test="access != null">
+				access,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="nodeId != null">
+				#{nodeId,jdbcType=BIGINT},
+			</if>
+			<if test="variableinstanceId != null">
+				#{variableinstanceId,jdbcType=BIGINT},
+			</if>
+			<if test="variablename != null">
+				#{variablename,jdbcType=VARCHAR},
+			</if>
+			<if test="access != null">
+				#{access,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="cn.workcenter.model.FlowVariableaccess">
+		update base_flow_variableaccess
+		<set>
+			<if test="nodeId != null">
+				node_id = #{nodeId,jdbcType=BIGINT},
+			</if>
+			<if test="variableinstanceId != null">
+				variableinstance_id = #{variableinstanceId,jdbcType=BIGINT},
+			</if>
+			<if test="variablename != null">
+				variablename = #{variablename,jdbcType=VARCHAR},
+			</if>
+			<if test="access != null">
+				access = #{access,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="cn.workcenter.model.FlowVariableaccess">
+		update base_flow_variableaccess
+		set node_id = #{nodeId,jdbcType=BIGINT},
+		variableinstance_id = #{variableinstanceId,jdbcType=BIGINT},
+		variablename = #{variablename,jdbcType=VARCHAR},
+		access = #{access,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="getVariableaccess" parameterType="java.lang.Long"
+		resultType="cn.workcenter.model.FlowVariableaccess">
+		select
+		<include refid="Base_Column_List_fva" />
+		from base_flow_variableaccess fva
+		left join base_flow_variableinstance fvi on fvi.id =
+		fva.variableinstance_id
+		where fva.node_id = #{node_id}
+		order by fvi.index_num desc
+	</select>
+	<select id="queryFlowVariableaccesss" parameterType="cn.workcenter.model.FlowVariableaccess"
+		resultType="cn.workcenter.model.FlowVariableaccess">
+		select
+		<include refid="Base_Column_List_fva" />
+		from base_flow_variableaccess fva
+		<if test="nodeId!=null">
+			where fva.node_id like CONCAT('%',#{nodeId},'%')
+		</if>
+		<if test="variableinstanceId!=null">
+			where fva.variableinstance_id like CONCAT('%',#{variableinstanceId},'%')
+		</if>
+		<if test="variablename!=null">
+			where fva.variablename like CONCAT('%',#{variablename},'%')
+		</if>
+		<if test="access!=null">
+			where fva.access like CONCAT('%',#{access},'%')
+		</if>
+	</select>
 </mapper>

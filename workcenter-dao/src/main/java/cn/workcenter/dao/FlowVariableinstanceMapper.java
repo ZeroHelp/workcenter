@@ -1,6 +1,7 @@
 package cn.workcenter.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.workcenter.model.FlowVariableinstance;
 
@@ -20,4 +21,10 @@ public interface FlowVariableinstanceMapper {
     int updateByPrimaryKey(FlowVariableinstance record);
 
 	List<FlowVariableinstance> getVariable(Long processinstance_id);
+
+	int updateFlowVariableinstanceStatusById(Map<String, Object> parameterMap);
+
+	List<FlowVariableinstance> getFlowVariableinstance(FlowVariableinstance flowVariableinstance);
+	
+
 }

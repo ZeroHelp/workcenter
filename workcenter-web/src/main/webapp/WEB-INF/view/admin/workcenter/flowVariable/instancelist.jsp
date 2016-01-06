@@ -24,8 +24,8 @@
 							<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
 						</button>
 						<ul class="dropdown-menu">
-							<li><a class="query_a" href="javascript:void(0);" value1="userName">用户名</a></li>
-							<li><a class="query_a" href="javascript:void(0);" value1="realName">真实姓名</a></li>
+							<li><a class="query_a" href="javascript:void(0);" value1="varName">变量名称</a></li>
+							<li><a class="query_a" href="javascript:void(0);" value1="varType">变量值</a></li>
 							<li><a class="query_a" href="javascript:void(0);" value1="status">状态</a></li>
 						</ul>
 					</div>
@@ -48,24 +48,28 @@
 				<tr>
 					<th>#</th>
 					<th>id</th>
-					<th>用户名</th>
-					<th>真实姓名</th>
-					<th>最后登录时间</th>
+					<th>流程id</th>
+					<th>变量类型</th>
+					<th>变量名称</th>
+					<th>变量值</th>
+					<th>变量顺序号</th>
 					<th>状态</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${users }" var="user">
+				<c:forEach items="${flowVariableinstances}" var="flowVariableinstances">
 					<tr>
-						<td><input type="checkbox" name="userId" value1="${user.id}" ></td>
-						<td>${user.id }</td>
-						<td>${user.userName }</td>
-						<td>${user.realName }</td>
-						<td>${user.lastLogin }</td>
-						<c:if test="${user.status == '1' }">
+						<td><input type="checkbox" name="flowVariableinstanceId" value1="${flowVariableinstances.id}" ></td>
+						<td>${flowVariableinstances.id }</td>
+						<td>${flowVariableinstances.processdefinitionId }</td>
+						<td>${flowVariableinstances.varType }</td>
+						<td>${flowVariableinstances.varName }</td>
+						<td>${flowVariableinstances.varValue }</td>
+						<td>${flowVariableinstances.indexNum }</td>
+						<c:if test="${flowVariableinstances.status == '1' }">
 							<td>可用</td>
 						</c:if>
-						<c:if test="${user.status == '0' }">
+						<c:if test="${flowVariableinstances.status == '0' }">
 							<td>禁用</td>
 						</c:if>
 					</tr>
@@ -89,13 +93,33 @@
 				<form id="userForm">
 					<input id="id" name="id" type="hidden" >
 					<div class="form-group">
-						<label for="recipient-name" class="control-label">用户名:</label> 
-						<input id="userName" name="userName" type="text" class="form-control">
+						<label for="recipient-name" class="control-label">变量类型:</label>
+						<select id="varType" name="varType" class="form-control">
+							<option value="S">string</option>
+							<option value="L">Long</option>
+							<option value="D">Double</option>
+							<option value="B">Boolean</option>
+							<option value="I">Integer</option>
+						</select>
+
 					</div>
 					<div class="form-group">
-						<label for="recipient-name" class="control-label">真实姓名:</label> 
-						<input id="realName" name="realName" type="text" class="form-control">
+						<label for="recipient-name" class="control-label">流程Id:</label> 
+						<input id="processdefinitionId" name="processdefinitionId" type="text" class="form-control">
 					</div>
+					<div class="form-group">
+						<label for="recipient-name" class="control-label">变量名称:</label> 
+						<input id="varName" name="varName" type="text" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="recipient-name" class="control-label">变量值:</label> 
+						<input id="varValue" name="varValue" type="text" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="recipient-name" class="control-label">变量顺序号:</label> 
+						<input id="indexNum" name="indexNum" type="text" class="form-control">
+					</div>
+					
 					<div class="form-group">
 						<label for="recipient-name" class="control-label">状态:</label> 
 						<select id="status" name="status" class="form-control">
@@ -153,13 +177,13 @@
 			
 			var queryKey = $("#query_input").attr("name");
 			var queryValue = $("#query_input").val();
-			var url = '<%=basePath%>/${sid}/admin/user/list?'+queryKey + '=' + queryValue;
+			var url = '<%=basePath%>/${sid}/admin/flow/Variable/instance/list?'+queryKey + '=' + queryValue;
 			var encodeUrl = encodeURI(url);
 			window.location.href = encodeUrl;
 		});
 		
 		$(".back_btn").on("click", function() {
-			window.location.href = '<%=basePath%>/${sid}/admin/user/list';
+			window.location.href = '<%=basePath%>/${sid}/admin/flow/Variable/instance/list';
 		});
 		
 		$('#exampleModal').on('show.bs.modal', function(event) {
@@ -175,9 +199,9 @@
 			var operator = $(this).attr("value1");
 			var url = '';
 			if(operator=='add') {
-				url = "<%=basePath%>/${sid}/admin/user/add";
+				url = "<%=basePath%>/${sid}/admin/flow/Variable/instance/add";
 			} else if(operator =='edit') {
-				url = "<%=basePath%>/${sid}/admin/user/edit";
+				url = "<%=basePath%>/${sid}/admin/flow/Variable/instance/edit";
 			}
 			$.ajax({
 				type: "post",
@@ -203,7 +227,7 @@
 			
 			$("#exampleModalLabel").text("编辑用户");
 			
-			var checkedNum = $("#listTable").find("input:checkbox[name='userId']:checked").length;
+			var checkedNum = $("#listTable").find("input:checkbox[name='flowVariableinstanceId']:checked").length;
 			
 			if(checkedNum > 1||checkedNum<=0) {
 				$("#exampleModal").modal('hide');
@@ -214,23 +238,24 @@
 				return ;
 			}
 			
-			var editUserId = $("#listTable").find("input:checkbox[name='userId']:checked").attr("value1");
+			var flowVariableinstanceId = $("#listTable").find("input:checkbox[name='flowVariableinstanceId']:checked").attr("value1");
 			
 			$.ajax({
 				type: "get",
-				url: "<%=basePath%>/${sid}/admin/user/get",
+				url: "<%=basePath%>/${sid}/admin/flow/Variable/instance/get",
 				dataType: "json",
 				data: {
-					userid: editUserId,
+					flowVariableinstanceid: flowVariableinstanceId,
 				},
 				success: function(data) {
 					if (data.returncode == "200") {
-						var user = data.data;
+						var flowVariableinstance = data.data;
 						$("#exampleModalLabel").text("编辑用户");
-						$("#id").val(user.id);
-						$("#userName").val(user.userName);
-						$("#realName").val(user.realName);
-						$("#status").val(user.status);
+						$("#id").val(flowVariableinstance.id);
+						$("#processdefinitionId").val(flowVariableinstance.processdefinitionId);				
+						$("#varName").val(flowVariableinstance.varName);
+						$("#varType").val(flowVariableinstance.varType);
+						$("#status").val(flowVariableinstance.status);
 						$("#exampleModal").modal('show');
 						$("#model_submit_btn").attr("value1", "edit");
 					} else {
@@ -241,29 +266,27 @@
 				}
 			});
 			
-			
-			
-			
 		})
 		
 		$(".delete_btn").on("click", function() {
 			var operator = $(this).attr("value1");
 			var url = '';
+			alert(operator=='forbidden');
 			if(operator=='forbidden') {
-				url = "<%=basePath%>/${sid}/admin/user/forbidden";
+				url = "<%=basePath%>/${sid}/admin/flow/Variable/instance/forbidden";
 			} else if(operator == 'delete') {
-				url = "<%=basePath%>/${sid}/admin/user/delete";
+				url = "<%=basePath%>/${sid}/admin/flow/Variable/instance/delete";
 			}
-			var deleteUserIds = '';
+			var deleteflowVariableinstanceIds = '';
 			
-			$("#listTable").find("input:checkbox[name='userId']:checked").each(function(){
-				var userid = $(this).attr("value1");
-				deleteUserIds = deleteUserIds + "," +userid;
+			$("#listTable").find("input:checkbox[name='flowVariableinstanceId']:checked").each(function(){
+				var flowVariableinstanceId = $(this).attr("value1");
+				deleteflowVariableinstanceIds = deleteflowVariableinstanceIds + "," +flowVariableinstanceId;
 			})
 			
-			deleteUserIds = deleteUserIds.substring(1);
+			deleteflowVariableinstanceIds = deleteflowVariableinstanceIds.substring(1);
 			
-			if(deleteUserIds == '') {
+			if(deleteflowVariableinstanceIds == '') {
 				$("#model_title").text("警告");
 				$("#model_content").text("请先选择要删除的项");
 				$('#myModal').modal();
@@ -275,7 +298,7 @@
 				url: url,
 				dataType: "json",
 				data: {
-					userids: deleteUserIds,
+					flowVariableinstanceids: deleteflowVariableinstanceIds,
 				},
 				success: function(data) {
 					if (data.returncode == "200") {

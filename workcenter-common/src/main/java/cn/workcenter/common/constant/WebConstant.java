@@ -30,9 +30,53 @@ public interface WebConstant extends Constant{
 	String OK_USER_DELETE = "OK_USER_DELETE";
 	String OK_USER_GET = "OK_USER_GET";
 	String OK_USER_FORBIDDEN = "OK_USER_FORBIDDEN";
+	
+	
 	//----WorkcenterOperationEnum englishname
 	String LOGIN = "LOGIN";
 	String LOGOUT = "LOGOUT";
+	//user model
+	String USER_ADD = "USER_ADD";
+	String USER_GET = "USER_GET";
+	String USER_EDIT = "USER_EDIT";
+	String USER_FORBIDDEN = "USER_FORBIDDEN";
+	String USER_DELETE = "USER_DELETE";
+	//FlowVariableinstance
+	String FVI_ADD = "FVI_ADD";
+	String FVI_GET = "FVI_GET";
+	String FVI_EDIT = "FVI_EDIT";
+	String FVI_FORBIDDEN = "FVI_FORBIDDEN";
+	String FVI_DELETE = "FVI_DELETE";
 	
+	String NO_FVI_ADD = "NO_FVI_ADD";
+	String NO_FVI_UPDATE = "NO_FVI_UPDATE";
+	String NO_FVI_DELETE = "NO_FVI_DELETE";
+	String NO_FVI_GET = "NO_FVI_GET";
+	String NO_FVI_FORBIDDEN = "NO_FVI_FORBIDDEN";
+	
+	String OK_FVI_ADD = "OK_FVI_ADD";
+	String OK_FVI_UPDATE = "OK_FVI_UPDATE";
+	String OK_FVI_DELETE = "OK_FVI_DELETE";
+	String OK_FVI_GET = "OK_FVI_GET";
+	String OK_FVI_FORBIDDEN = "OK_FVI_FORBIDDEN";
+	
+	//FlowVariableAccess
+	String FVA_ADD = "FVA_ADD";
+	String FVA_GET = "FVA_GET";
+	String FVA_EDIT = "FVA_EDIT";
+	String FVA_FORBIDDEN = "FVA_FORBIDDEN";
+	String FVA_DELETE = "FVA_DELETE";
+	
+	String NO_FVA_ADD = "NO_FVA_ADD";
+	String NO_FVA_UPDATE = "NO_FVA_UPDATE";
+	String NO_FVA_DELETE = "NO_FVA_DELETE";
+	String NO_FVA_GET = "NO_FVA_GET";
+	String NO_FVA_FORBIDDEN = "NO_FVA_FORBIDDEN";
+	
+	String OK_FVA_ADD = "OK_FVA_ADD";
+	String OK_FVA_UPDATE = "OK_FVA_UPDATE";
+	String OK_FVA_DELETE = "OK_FVA_DELETE";
+	String OK_FVA_GET = "OK_FVA_GET";
+	String OK_FVA_FORBIDDEN = "OK_FVA_FORBIDDEN";
 	
 }
