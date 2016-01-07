@@ -5,11 +5,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.workcenter.common.WorkcenterApplication;
@@ -48,27 +50,21 @@ public class IndexController extends WorkcenterApplication {
 	}
 	
 	@RequestMapping(value="{sid}/workcenter/password", method=RequestMethod.GET)
-	@ResponseBody
-	public Object getPassword(HttpServletRequest request, HttpServletResponse response) {
-		
-		String username = StringUtil.getParameterExceptionEmpty(request, "username");
-		String password = StringUtil.getParameterExceptionEmpty(request, "password");
-		
-		WorkcenterResult loginresult = (WorkcenterResult)userService.doLogin(username, password);
-		
-		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGIN).build();
+	public Object getPassword(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("basePath", BASE_PATH);
+		request.setAttribute("username", userService.getUsername());
+		return "/workcenter/password";
 	}
 	
 	@RequestMapping(value="{sid}/workcenter/password", method=RequestMethod.POST)
 	@ResponseBody
-	public Object postPassword(HttpServletRequest request, HttpServletResponse response) {
+	public Object postPassword(@PathVariable String sid, 
+			@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirmPassword,
+			HttpServletRequest request, HttpServletResponse response) {
 		
-		String username = StringUtil.getParameterExceptionEmpty(request, "username");
-		String password = StringUtil.getParameterExceptionEmpty(request, "password");
+		WorkcenterResult result = (WorkcenterResult)userService.changePassword(oldPassword, newPassword);
 		
-		WorkcenterResult loginresult = (WorkcenterResult)userService.doLogin(username, password);
-		
-		return WorkcenterResponseBodyJson.custom().setAll(loginresult, LOGIN).build();
+		return WorkcenterResponseBodyJson.custom().setAll(result, CHANGE_PASSWORD).build();
 	}
 	
 	@RequestMapping(value="workcenter/logout", method=RequestMethod.POST)

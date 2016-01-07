@@ -23,6 +23,7 @@ import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.common.response.WorkcenterResponseBodyJson;
 import cn.workcenter.model.Resource;
 import cn.workcenter.service.ResourceService;
+import cn.workcenter.service.UserService;
 
 @Controller("adminResourceController")
 public class ResourceController implements Constant, WebConstant {
@@ -31,6 +32,8 @@ public class ResourceController implements Constant, WebConstant {
 	private MenuService menuService;
 	@Autowired
 	private ResourceService resourceService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="{sid}/admin/resource/list", method=RequestMethod.GET)
 	public Object listpage(@PathVariable String sid, @ModelAttribute Resource resource, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -59,7 +62,7 @@ public class ResourceController implements Constant, WebConstant {
 		}
 		request.setAttribute("resources", resources);
 		request.setAttribute("menus", menus);
-		
+		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "workcenter/resource/list.jsp");
 		
 		return "admin/main";

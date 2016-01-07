@@ -25,6 +25,7 @@ import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.common.response.WorkcenterResponseBodyJson;
 import cn.workcenter.model.Group;
 import cn.workcenter.service.GroupService;
+import cn.workcenter.service.UserService;
 
 @Controller("adminGroupController")
 public class GroupController implements Constant, WebConstant {
@@ -35,6 +36,8 @@ public class GroupController implements Constant, WebConstant {
 	private GroupService groupService;
 	@Autowired
 	private ZtreeService ztreeService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="{sid}/admin/group/ztree", method=RequestMethod.GET)
 	@ResponseBody
@@ -71,7 +74,7 @@ public class GroupController implements Constant, WebConstant {
 		}
 		request.setAttribute("groups", groups);
 		request.setAttribute("menus", menus);
-		
+		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "workcenter/group/list.jsp");
 		
 		return "admin/main";

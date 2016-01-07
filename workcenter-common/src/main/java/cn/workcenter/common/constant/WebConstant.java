@@ -36,6 +36,8 @@ public interface WebConstant extends Constant{
 	String NO_GROUP_UPDATE = "NO_GROUP_UPDATE";
 	String NO_GROUP_FORBIDDEN = "NO_GROUP_FORBIDDEN";
 	String NO_GROUP_DELETE = "NO_GROUP_DELETE";
+	String NO_OLDPASSWORD_WRONG = "NO_OLDPASSWORD_WRONG";
+	String NO_CHANGE_PASSWORD = "NO_CHANGE_PASSWORD";
 	
 	String OK_SUCCESS = "OK_SUCCESS";
 	String OK_LOGOUT = "OK_LOGOUT";
@@ -60,10 +62,12 @@ public interface WebConstant extends Constant{
 	String OK_GROUP_UPDATE = "OK_GROUP_UPDATE";
 	String OK_GROUP_FORBIDDEN = "OK_GROUP_FORBIDDEN";
 	String OK_GROUP_DELETE = "OK_GROUP_DELETE";
+	String OK_CHANGE_PASSWORD = "OK_CHANGE_PASSWORD";
 	
 	//----WorkcenterOperationEnum englishname
 	String LOGIN = "LOGIN";
 	String LOGOUT = "LOGOUT";
+	String CHANGE_PASSWORD = "CHANGE_PASSWORD";
 	//user model
 	String USER_ADD = "USER_ADD";
 	String USER_GET = "USER_GET";

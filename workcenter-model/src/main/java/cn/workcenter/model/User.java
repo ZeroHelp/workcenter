@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class User implements Nameable {
+public class User implements Nameable, Cloneable {
     private Long id;
 
     private String userName;
@@ -63,6 +63,15 @@ public class User implements Nameable {
         this.status = status;
     }
     
+    @Override
+    public User clone() {
+    	try {
+			return (User)super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
+    }
     @Override
 	public String getName() {
 		return userName;

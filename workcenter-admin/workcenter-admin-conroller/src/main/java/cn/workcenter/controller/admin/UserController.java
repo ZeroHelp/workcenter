@@ -59,7 +59,7 @@ public class UserController implements Constant, WebConstant {
 		}
 		request.setAttribute("users", users);
 		request.setAttribute("menus", menus);
-		
+		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "workcenter/user/list.jsp");
 		
 		return "admin/main";

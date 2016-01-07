@@ -60,4 +60,6 @@ public interface UserService {
 
 	List<User> getUsersByGroupid(Long id);
 
+	Object changePassword(String oldPassword, String newPassword);
+
 }

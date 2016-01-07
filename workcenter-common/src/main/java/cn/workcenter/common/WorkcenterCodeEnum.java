@@ -29,7 +29,8 @@ public enum WorkcenterCodeEnum implements WebConstant{
 	NO_GROUP_UPDATE("10020018", "用户组更新失败"),
 	NO_GROUP_FORBIDDEN("10020019", "用户组禁止失败"),
 	NO_GROUP_DELETE("10020020", "用户组删除失败"),
-	
+	NO_CHANGE_PASSWORD("10020021", "更换密码失败"),
+	NO_OLDPASSWORD_WRONG("10020022", "更换密码失败,旧密码校验失败"),
 	
 	OK_SUCCESS("20010000", "SUCCESS"),
 	OK_LOGOUT("20010001", "退出登录成功"),
@@ -45,16 +46,17 @@ public enum WorkcenterCodeEnum implements WebConstant{
 	OK_ROLE_UPDATE("20020008", "角色更新成功"),
 	OK_ROLE_FORBIDDEN("20020009", "角色禁止成功"),
 	OK_ROLE_DELETE("20020010", "角色删除成功"),
-	OK_RESOURCE_ADD("20020006", "资源添加成功"),
-	OK_RESOURCE_GET("20020007", "资源获取成功"),
-	OK_RESOURCE_UPDATE("20020008", "资源更新成功"),
-	OK_RESOURCE_FORBIDDEN("20020009", "资源禁止成功"),
-	OK_RESOURCE_DELETE("20020010", "资源删除成功"),
-	OK_GROUP_ADD("20020006", "用户组添加成功"),
-	OK_GROUP_GET("20020007", "用户组获取成功"),
-	OK_GROUP_UPDATE("20020008", "用户组更新成功"),
-	OK_GROUP_FORBIDDEN("20020009", "用户组禁止成功"),
-	OK_GROUP_DELETE("20020010", "用户组删除成功"),
+	OK_RESOURCE_ADD("20020011", "资源添加成功"),
+	OK_RESOURCE_GET("20020012", "资源获取成功"),
+	OK_RESOURCE_UPDATE("20020013", "资源更新成功"),
+	OK_RESOURCE_FORBIDDEN("20020014", "资源禁止成功"),
+	OK_RESOURCE_DELETE("20020015", "资源删除成功"),
+	OK_GROUP_ADD("20020016", "用户组添加成功"),
+	OK_GROUP_GET("20020017", "用户组获取成功"),
+	OK_GROUP_UPDATE("20020018", "用户组更新成功"),
+	OK_GROUP_FORBIDDEN("20020019", "用户组禁止成功"),
+	OK_GROUP_DELETE("20020020", "用户组删除成功"),
+	OK_CHANGE_PASSWORD("20020021", "更换密码成功"),
 	
 	;
 	

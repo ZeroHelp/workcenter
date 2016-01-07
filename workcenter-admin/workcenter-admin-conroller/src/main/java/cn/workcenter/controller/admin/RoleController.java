@@ -23,6 +23,7 @@ import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.common.response.WorkcenterResponseBodyJson;
 import cn.workcenter.model.Role;
 import cn.workcenter.service.RoleService;
+import cn.workcenter.service.UserService;
 
 @Controller("adminRoleController")
 public class RoleController implements Constant, WebConstant {
@@ -31,6 +32,8 @@ public class RoleController implements Constant, WebConstant {
 	private MenuService menuService;
 	@Autowired
 	private RoleService roleService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="{sid}/admin/role/list", method=RequestMethod.GET)
 	public Object listpage(@PathVariable String sid, @ModelAttribute Role role, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -59,7 +62,7 @@ public class RoleController implements Constant, WebConstant {
 		}
 		request.setAttribute("roles", roles);
 		request.setAttribute("menus", menus);
-		
+		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "workcenter/role/list.jsp");
 		
 		return "admin/main";

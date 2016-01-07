@@ -318,4 +318,20 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		return users;
 	}
 
+	@Override
+	public WorkcenterResult changePassword(String oldPassword, String newPassword) {
+		User currentUser = getUser();
+		if(!currentUser.getPassword().equals(oldPassword)) {
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(NO_OLDPASSWORD_WRONG)).build();
+		}
+		User newUser = currentUser.clone();
+		newUser.setPassword(newPassword);
+		int re = userMapper.updateByPrimaryKeySelective(newUser);
+		if(re>0){
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_CHANGE_PASSWORD)).build();
+		} else {
+			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_CHANGE_PASSWORD)).build();
+		}
+	}
+
 }
