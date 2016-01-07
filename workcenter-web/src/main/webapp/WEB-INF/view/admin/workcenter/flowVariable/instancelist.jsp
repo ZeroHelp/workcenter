@@ -77,8 +77,39 @@
 			</tbody>
 		</table>
 	</div>
-
+		<div class="fixed-table-pagination">
+			<div class="pull-left pagination">
+				<div class="pagination-info">显示 1 至 10 项记录 共 21 条</div>
+			</div>
+			<div class="pull-right">
+			<nav>
+				<ul class="pagination">
+					<li class="page-first active"><a href="javascript:void(0)">&lt;&lt;首页</a></li>
+					<li class="page-pre disabled"><a href="javascript:void(0)">&lt;上一页</a></li>
+					<li class="page-number active"><a href="javascript:void(0)">1</a></li>
+					<li class="page-number"><a href="javascript:void(0)">2</a></li>
+					<li class="page-number"><a href="javascript:void(0)">3</a></li>
+					<li class="page-next"><a href="javascript:void(0)">下一页&gt;</a></li>
+					<li class="page-last"><a href="javascript:void(0)">尾页&gt;&gt;</a></li>
+				</ul>
+			</nav>
+		</div>
+			<div class="pull-right pagination btn-group dropup page-list">
+				<button type="button" class="btn btn-default dropdown-toggle"
+					data-toggle="dropdown">
+					10 <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="javascript:void(0)" value2="10">10</a></li>
+					<li><a href="javascript:void(0)" value2="20">20</a></li>
+					<li><a href="javascript:void(0)" value2="30">30</a></li>
+					<li><a href="javascript:void(0)" value2="40">40</a></li>
+					<li><a href="javascript:void(0)" value2="50">50</a></li>
+				</ul>
+			</div>
+		</div>
 </div>
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 	<div class="modal-dialog" role="document">
@@ -163,8 +194,8 @@
 <!-- /.modal -->
 
 <script>
+
 	$(document).ready(function() {
-		
 		$(".query_a").on("click", function() {
 			var query_a_ch = $(this).text();
 			var query_a_en = $(this).attr("value1");
@@ -180,6 +211,7 @@
 			var url = '<%=basePath%>/${sid}/admin/flow/Variable/instance/list?'+queryKey + '=' + queryValue;
 			var encodeUrl = encodeURI(url);
 			window.location.href = encodeUrl;
+			
 		});
 		
 		$(".back_btn").on("click", function() {
@@ -313,7 +345,8 @@
 				}
 			});
 		});
-	});
+
+});
 </script>
 
 
