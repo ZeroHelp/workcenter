@@ -8,6 +8,14 @@ public interface WebConstant extends Constant{
 	String SUCCESS = "SUCCESS";
 	String FAILURE = "FAILURE";
 	
+	int OK_STATUS = 1;
+	int NO_STATUS = 0;
+	
+	Long WORKCENTER_ROLE_ID = 2L;
+	Long KPI_ROLE_ID = 3L;
+	
+	Long DEVELOP_DEPART_GROUP_ID = 2L;
+	
 	String DEFAULT_PASSWORD = StringUtil.MD5("111111");
 	
 	//----WorkcenterCodeEnum 

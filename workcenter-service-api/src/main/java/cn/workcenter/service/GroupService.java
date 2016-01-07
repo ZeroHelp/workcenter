@@ -16,5 +16,7 @@ public interface GroupService {
 	Object forbiddenGroups(String groupids);
 
 	Object deleteGroups(String groupids);
+
+	List<Group> getAllGroups();
 	
 }

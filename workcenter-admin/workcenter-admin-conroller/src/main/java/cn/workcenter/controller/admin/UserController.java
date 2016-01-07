@@ -21,7 +21,11 @@ import cn.workcenter.common.WorkcenterResult;
 import cn.workcenter.common.constant.Constant;
 import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.common.response.WorkcenterResponseBodyJson;
+import cn.workcenter.model.Group;
+import cn.workcenter.model.Role;
 import cn.workcenter.model.User;
+import cn.workcenter.service.GroupService;
+import cn.workcenter.service.RoleService;
 import cn.workcenter.service.UserService;
 
 @Controller("adminUserController")
@@ -31,6 +35,10 @@ public class UserController implements Constant, WebConstant {
 	private MenuService menuService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
+	@Autowired
+	private GroupService groupService;
 	
 	@RequestMapping(value="{sid}/admin/user/list", method=RequestMethod.GET)
 	public Object listpage(@PathVariable String sid, @ModelAttribute User user, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -39,6 +47,8 @@ public class UserController implements Constant, WebConstant {
 		String realName = request.getParameter("realName");
 		
 		List<User> users = userService.queryUsers(user);
+		List<Role> roles = roleService.queryKpiDefaultRoles();
+		List<Group> groups = groupService.getAllGroups();
 		
 		if(user.getUserName()!=null) {
 			request.setAttribute("queryLabel_en", "userName");
@@ -59,6 +69,9 @@ public class UserController implements Constant, WebConstant {
 		}
 		request.setAttribute("users", users);
 		request.setAttribute("menus", menus);
+		request.setAttribute("roles", roles);
+		request.setAttribute("groups", groups);
+		request.setAttribute("defaultGroupId", DEVELOP_DEPART_GROUP_ID);
 		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "workcenter/user/list.jsp");
 		
@@ -67,9 +80,11 @@ public class UserController implements Constant, WebConstant {
 	
 	@RequestMapping(value="{sid}/admin/user/add", method=RequestMethod.POST)
 	@ResponseBody
-	public Object addUser(@ModelAttribute User user, HttpServletRequest request, HttpServletResponse response) {
+	public Object addUser(@ModelAttribute User user,
+			@RequestParam Long[] roleId, @RequestParam Long[] groupId,
+			HttpServletRequest request, HttpServletResponse response) {
 		
-		WorkcenterResult result = (WorkcenterResult) userService.addUser(user);
+		WorkcenterResult result = (WorkcenterResult) userService.addUser(user, roleId, groupId);
 		
 		return WorkcenterResponseBodyJson.custom().setAll(result, USER_ADD).build();
 	}

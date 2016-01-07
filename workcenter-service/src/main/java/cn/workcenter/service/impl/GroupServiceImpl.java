@@ -1,5 +1,6 @@
 package cn.workcenter.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -95,5 +96,10 @@ public class GroupServiceImpl extends WorkcenterApplication implements GroupServ
 		} else {
 			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_GROUP_DELETE)).build();
 		}
+	}
+	@Override
+	public List<Group> getAllGroups() {
+		List<Group> groups = groupMapper.queryAllGroup();
+		return groups;
 	}
 }

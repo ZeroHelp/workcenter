@@ -1,5 +1,6 @@
 package cn.workcenter.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +20,16 @@ import cn.workcenter.common.util.StringUtil;
 import cn.workcenter.dao.FlowProcessinstanceMapper;
 import cn.workcenter.dao.FlowTaskinstanceMapper;
 import cn.workcenter.dao.GroupMapper;
+import cn.workcenter.dao.GroupUserMapper;
 import cn.workcenter.dao.UserMapper;
+import cn.workcenter.dao.UserRoleMapper;
 import cn.workcenter.model.FlowProcessinstance;
 import cn.workcenter.model.FlowTaskinstance;
 import cn.workcenter.model.Group;
+import cn.workcenter.model.GroupUser;
 import cn.workcenter.model.Resource;
 import cn.workcenter.model.User;
+import cn.workcenter.model.UserRole;
 import cn.workcenter.service.ResourceService;
 import cn.workcenter.service.UserService;
 
@@ -43,6 +48,11 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 	private FlowTaskinstanceMapper flowTaskinstanceMapper;
 	@Autowired
 	private GroupMapper groupMapper;
+	@Autowired
+	private UserRoleMapper userRoleMapper;
+	@Autowired
+	private GroupUserMapper GroupUserMapper;
+	
 	//登录 redisCache.save(USERNAME_PREFIX + sid, username).expired(7 * 24 * 60 * 60 * 1000l);
 	//登录redisCache.save(RESOURCES_PREFIX + username, json(resourcelist));
 
@@ -231,21 +241,6 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 	}
 
 	@Override
-	public WorkcenterResult addUser(User user) {
-		if(StringUtils.isEmpty(user.getPassword())) {
-			user.setPassword(DEFAULT_PASSWORD);
-		}
-		
-		int re = userMapper.insert(user);
-		if(re>0){
-			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_ADD)).build();
-		} else {
-			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_USER_ADD)).build();
-		}
-		
-	}
-
-	@Override
 	public WorkcenterResult editUser(User user) {
 		int re = userMapper.updateByPrimaryKeySelective(user);
 		if(re>0){
@@ -332,6 +327,38 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		} else {
 			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_CHANGE_PASSWORD)).build();
 		}
+	}
+	
+	private Long addUser(User user) {
+		if(StringUtils.isEmpty(user.getPassword())) {
+			user.setPassword(DEFAULT_PASSWORD);
+		}
+		
+		int re = userMapper.insertSelective(user);
+		return user.getId();
+	}
+
+	@Override
+	public Object addUser(User user, Long[] roleId, Long[] groupId) {
+		Long userId = addUser(user);
+		for(int i=0;i<roleId.length;i++) {
+			UserRole userRole = new UserRole();
+			userRole.setUserId(userId);
+			userRole.setRoleId(roleId[i]);
+			userRole.setStatus(OK_STATUS);
+			userRole.setCreateTime(new Date());
+			userRole.setCreateUserId(getUserId());
+			userRoleMapper.insertSelective(userRole);
+		}
+		
+		for(int i=0;i<groupId.length;i++) {
+			GroupUser groupUser = new GroupUser();
+			groupUser.setUserId(userId);
+			groupUser.setGroupId(groupId[i]);
+			groupUser.setStatus(OK_STATUS);
+			GroupUserMapper.insertSelective(groupUser);
+		}
+		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_ADD)).build();
 	}
 
 }

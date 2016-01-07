@@ -61,6 +61,20 @@
 						<label for="message-text" class="control-label">Message:</label>
 						<textarea class="form-control" id="message-text"></textarea>
 					</div> -->
+					
+					<div class="col-sm-12">
+						<br>
+					</div> <!-- 空行 -->
+					
+					<c:forEach items="${groups}" var="group">
+						<div class="radio">
+						  <label>
+						    <input type="radio" name="groupId" value="${group.id}" >
+						    ${group.groupName}-${group.groupChName}
+						  </label>
+						</div>
+					</c:forEach>
+					
 				</form>
 			</div>
 			<div class="modal-footer">

@@ -36,9 +36,6 @@
   <insert id="insertSelective" parameterType="cn.workcenter.model.User" useGeneratedKeys="true" keyProperty="id">
     insert into base_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="userName != null" >
         user_name,
       </if>
@@ -56,9 +53,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
       </if>

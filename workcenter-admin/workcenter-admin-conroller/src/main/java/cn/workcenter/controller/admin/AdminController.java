@@ -1,5 +1,6 @@
 package cn.workcenter.controller.admin;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import cn.workcenter.admin.service.AdminKpiService;
 import cn.workcenter.admin.service.MenuService;
 import cn.workcenter.common.constant.Constant;
 import cn.workcenter.common.response.WorkcenterResponseBodyJson;
+import cn.workcenter.model.Group;
+import cn.workcenter.service.GroupService;
 import cn.workcenter.service.UserService;
 
 @Controller("adminController")
@@ -29,6 +32,8 @@ public class AdminController implements Constant {
 	private AdminKpiService adminKpiService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private GroupService groupService;
 	
 	@RequestMapping(value="{sid}/admin/home", method=RequestMethod.GET)
 	public Object home(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
@@ -46,7 +51,11 @@ public class AdminController implements Constant {
 	public Object kpilist(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
 		
 		List<Menu> menus = menuService.getMenuTree(MENU_RESOURCE_FLAG);
+		List<Group> groups = groupService.getAllGroups();
 		
+		removeRootGroup(groups);
+		
+		request.setAttribute("groups", groups);
 		request.setAttribute("menus", menus);
 		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "kpi/list.jsp");
@@ -54,12 +63,23 @@ public class AdminController implements Constant {
 		return "admin/main";
 	}
 	
+	private void removeRootGroup(List<Group> groups) {
+		Iterator<Group> iterator = groups.iterator();
+		while(iterator.hasNext()){
+			Group temp = iterator.next();
+			if(temp.getParentId() == 0) {
+				iterator.remove();
+			}
+		}
+	}
+
 	@RequestMapping(value="{sid}/admin/kpi/init", method=RequestMethod.POST)
 	@ResponseBody
 	public Object init(@PathVariable String sid, 
-			@RequestParam String year, @RequestParam String remark, HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam String year, @RequestParam String remark, @RequestParam Long groupId, 
+			HttpServletRequest request, HttpServletResponse response) {
 		
-		adminKpiService.initKpi(year, remark);
+		adminKpiService.initKpi(year, remark, groupId);
 		
 		return WorkcenterResponseBodyJson.custom().build();
 	}

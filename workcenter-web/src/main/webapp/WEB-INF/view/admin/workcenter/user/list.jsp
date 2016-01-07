@@ -14,7 +14,7 @@
 		<button id="edit_btn" type="button" class="btn btn-primary" >修改</button>
 		<button value1="forbidden" type="button" class="delete_btn btn btn-primary" >禁用</button>
 		<button value1="delete" type="button" class="delete_btn btn btn-primary" >删除</button>
-
+		
 		<div class="col-sm-3">
 			<form id="queryForm">
 				<div class="input-group">
@@ -103,6 +103,43 @@
 						  <option value="0">禁用</option>
 						</select>
 					</div>
+					
+					<div id="checkbox_div">
+					
+					<c:forEach items="${roles}" var="role">
+						<div class="checkbox">
+						  <label>
+						    <input type="checkbox" checked name="roleId" value="${role.id}">
+						    ${role.roleChName}
+						  </label>
+						</div>
+					</c:forEach>
+					
+					<div class="col-sm-12">
+						<br>
+					</div> <!-- 空行 -->
+					
+					<c:forEach items="${groups}" var="group">
+						<c:if test="${group.id == defaultGroupId}">
+							<div class="radio">
+							  <label>
+							    <input type="radio" checked name="groupId" value="${group.id}" >
+							    ${group.groupName}-${group.groupChName}
+							  </label>
+							</div>
+						</c:if>
+						<c:if test="${group.id != defaultGroupId}">
+							<div class="radio">
+							  <label>
+							    <input type="radio" name="groupId" value="${group.id}" >
+							    ${group.groupName}-${group.groupChName}
+							  </label>
+							</div>
+						</c:if>
+					</c:forEach>
+					
+					</div>
+					
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -231,6 +268,7 @@
 						$("#userName").val(user.userName);
 						$("#realName").val(user.realName);
 						$("#status").val(user.status);
+						$("#checkbox_div").hide();
 						$("#exampleModal").modal('show');
 						$("#model_submit_btn").attr("value1", "edit");
 					} else {

@@ -46,8 +46,6 @@ public interface UserService {
 
 	List<User> getAllUsers();
 
-	Object addUser(User user);
-
 	Object editUser(User user);
 
 	Object getUserByUserid(Long userid);
@@ -61,5 +59,7 @@ public interface UserService {
 	List<User> getUsersByGroupid(Long id);
 
 	Object changePassword(String oldPassword, String newPassword);
+
+	Object addUser(User user, Long[] roleId, Long[] groupId);
 
 }

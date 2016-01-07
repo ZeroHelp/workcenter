@@ -26,4 +26,6 @@ public interface GroupMapper {
 
 	int updateGroupStatusById(Map<String, Object> parameterMap);
 
+	List<Group> queryAllGroup();
+
 }

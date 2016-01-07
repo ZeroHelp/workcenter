@@ -170,4 +170,10 @@
   	where id = #{id}
   </update>
   
+  <select id="queryAllGroup" parameterType="cn.workcenter.model.Group" resultType="cn.workcenter.model.Group">
+  	select 
+  	<include refid="gro_Base_Column_List" />
+  	from base_group gro
+  	where gro.status = 1
+  </select>
 </mapper>

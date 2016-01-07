@@ -48,9 +48,9 @@ public class AdminKpiServiceImpl implements AdminKpiService, FlowConstant {
 	@Autowired
 	private EnactmentCulturalMapper enactmentCulturalMapper;
 	@Override
-	public void initKpi(String year, String remark) {
+	public void initKpi(String year, String remark, Long groupId) {
 		
-		List<User> users = adminUserService.getWaitAssessments();
+		List<User> users = adminUserService.getWaitAssessments(groupId);
 		
 		for(User writer: users) {
 			Long flowProcessinstance_id = creatKpi(writer, year, remark);

@@ -6,5 +6,5 @@ import cn.workcenter.model.User;
 
 public interface AdminUserService {
 
-	List<User> getWaitAssessments();
+	List<User> getWaitAssessments(Long groupId);
 }

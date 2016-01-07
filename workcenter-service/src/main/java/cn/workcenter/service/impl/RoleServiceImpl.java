@@ -1,5 +1,6 @@
 package cn.workcenter.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -95,5 +96,14 @@ public class RoleServiceImpl extends WorkcenterApplication implements RoleServic
 		} else {
 			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_ROLE_DELETE)).build();
 		}
+	}
+	@Override
+	public List<Role> queryKpiDefaultRoles() {
+		Role workcenterRole = roleMapper.selectByPrimaryKey(WORKCENTER_ROLE_ID);
+		Role kpiRole = roleMapper.selectByPrimaryKey(KPI_ROLE_ID);
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(workcenterRole);
+		roles.add(kpiRole);
+		return roles;
 	}
 }
