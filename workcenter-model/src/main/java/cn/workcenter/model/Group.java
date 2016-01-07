@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class Group {
+public class Group implements Nameable {
     private Long id;
 
     private Long parentId;
@@ -82,4 +82,9 @@ public class Group {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    @Override
+	public String getName() {
+		return groupName;
+	}
 }

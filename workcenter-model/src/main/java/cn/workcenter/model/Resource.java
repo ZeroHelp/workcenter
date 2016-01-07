@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class Resource {
+public class Resource implements Nameable {
     private Long id;
 
     private Long parentId;
@@ -72,4 +72,9 @@ public class Resource {
     public void setStatus(Integer status) {
         this.status = status;
     }
+    
+    @Override
+	public String getName() {
+		return resourceName;
+	}
 }

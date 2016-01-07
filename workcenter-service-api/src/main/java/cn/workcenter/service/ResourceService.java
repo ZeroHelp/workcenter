@@ -3,6 +3,7 @@ package cn.workcenter.service;
 import java.util.List;
 
 import cn.workcenter.model.Resource;
+import cn.workcenter.model.Resource;
 
 /**
  * parent_id 
@@ -21,5 +22,17 @@ public interface ResourceService {
 	List<Resource> initRedisResource(String username);
 
 	List<Resource> getResoucesByParentid(String parentId);
+	
+	List<Resource> queryResources(Resource resource);
 
+	Object addResource(Resource resource);
+
+	Object getResourceByResourceid(Long resourceid);
+
+	Object editResource(Resource resource);
+
+	Object forbiddenResources(String resourceids);
+
+	Object deleteResources(String resourceids);
+	
 }

@@ -1,6 +1,7 @@
 package cn.workcenter.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.workcenter.model.Resource;
 
@@ -24,4 +25,8 @@ public interface ResourceMapper {
 	List<Resource> getRootResourcesByUsername(String username);
 
 	List<Resource> getResoucesByParentid(String parentId);
+
+	List<Resource> queryResourcesBySelective(Resource resource);
+
+	int updateResourceStatusById(Map<String, Object> parameterMap);
 }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +18,7 @@ import cn.workcenter.admin.service.AdminKpiService;
 import cn.workcenter.admin.service.MenuService;
 import cn.workcenter.common.constant.Constant;
 import cn.workcenter.common.response.WorkcenterResponseBodyJson;
+import cn.workcenter.service.UserService;
 
 @Controller("adminController")
 public class AdminController implements Constant {
@@ -27,6 +27,8 @@ public class AdminController implements Constant {
 	private MenuService menuService;
 	@Autowired
 	private AdminKpiService adminKpiService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="{sid}/admin/home", method=RequestMethod.GET)
 	public Object home(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
@@ -34,6 +36,7 @@ public class AdminController implements Constant {
 		List<Menu> menus = menuService.getMenuTree(MENU_RESOURCE_FLAG);
 		
 		request.setAttribute("menus", menus);
+		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "home.jsp");
 		
 		return "admin/main";
@@ -45,6 +48,7 @@ public class AdminController implements Constant {
 		List<Menu> menus = menuService.getMenuTree(MENU_RESOURCE_FLAG);
 		
 		request.setAttribute("menus", menus);
+		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "kpi/list.jsp");
 		
 		return "admin/main";

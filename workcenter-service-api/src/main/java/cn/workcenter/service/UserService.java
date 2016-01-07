@@ -34,6 +34,10 @@ public interface UserService {
 
 	String getUserRealnameByUserid(Long waitAssessmentPersonId);
 
+	/**
+	 * get current login userid
+	 * @return
+	 */
 	Long getUserId();
 
 	User getUser();
@@ -53,5 +57,9 @@ public interface UserService {
 	Object forbiddenUsers(String userids);
 
 	List<User> queryUsers(User user);
+
+	List<User> getUsersByGroupid(Long id);
+
+	Object changePassword(String oldPassword, String newPassword);
 
 }

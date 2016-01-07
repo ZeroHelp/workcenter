@@ -12,6 +12,9 @@
   <sql id="Base_Column_List" >
     id, role_name, role_ch_name, create_time, create_userid, status
   </sql>
+  <sql id="r_Base_Column_List" >
+    r.id, r.role_name as roleName, r.role_ch_name as roleChName, r.create_time as createTime, r.create_userid as createUserid, r.status
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -102,5 +105,26 @@
       create_userid = #{createUserid,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryRolesBySelective" parameterType="cn.workcenter.model.Role" resultType="cn.workcenter.model.Role">
+  	select 
+  	<include refid="r_Base_Column_List" />
+  	from base_role r
+  	<if test="roleName != null" >
+      where r.role_name like CONCAT('%',#{roleName},'%') 
+    </if>
+    <if test="roleChName != null" >
+      where r.role_ch_name like CONCAT('%',#{roleChName},'%')
+    </if>
+    <if test="status != null" >
+      where r.status = #{status}
+    </if>
+  </select>
+  
+  <update id="updateRoleStatusById" parameterType="java.util.Map">
+  	update base_role
+  	set status = #{status}
+  	where id = #{id}
   </update>
 </mapper>

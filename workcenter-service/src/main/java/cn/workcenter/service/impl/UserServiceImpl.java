@@ -264,7 +264,7 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_DELETE)).build();
 	}
 	
-	public Object deleteUser(Long id) {
+	private WorkcenterResult deleteUser(Long id) {
 		int re = userMapper.deleteByPrimaryKey(id);
 		if(re>0){
 			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_DELETE)).build();
@@ -308,6 +308,30 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 	public List<User> queryUsers(User user) {
 		List<User> users = userMapper.queryUsersBySelective(user);
 		return users;
+	}
+
+	@Override
+	public List<User> getUsersByGroupid(Long id) {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("group_id", id);
+		List<User> users = userMapper.getUsersByGroupid(parameterMap);
+		return users;
+	}
+
+	@Override
+	public WorkcenterResult changePassword(String oldPassword, String newPassword) {
+		User currentUser = getUser();
+		if(!currentUser.getPassword().equals(oldPassword)) {
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(NO_OLDPASSWORD_WRONG)).build();
+		}
+		User newUser = currentUser.clone();
+		newUser.setPassword(newPassword);
+		int re = userMapper.updateByPrimaryKeySelective(newUser);
+		if(re>0){
+			return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_CHANGE_PASSWORD)).build();
+		} else {
+			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_CHANGE_PASSWORD)).build();
+		}
 	}
 
 }
