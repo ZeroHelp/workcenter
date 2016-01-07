@@ -21,6 +21,10 @@
 <script src="<%=basePath%>/js/jquery.min.js"></script>
 <script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
 <script src="<%=basePath%>/js/jquery.form.js"></script>
+
+<link rel="stylesheet" href="<%=basePath%>/css/ztree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="<%=basePath%>/js/jquery.ztree.all-3.5.min.js"></script>
+
 </head>
 
 <body>

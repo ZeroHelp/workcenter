@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.workcenter.admin.model.Menu;
+import cn.workcenter.admin.model.ZNode;
 import cn.workcenter.admin.service.MenuService;
+import cn.workcenter.admin.service.ZtreeService;
 import cn.workcenter.common.WorkcenterResult;
 import cn.workcenter.common.constant.Constant;
 import cn.workcenter.common.constant.WebConstant;
@@ -31,7 +33,17 @@ public class GroupController implements Constant, WebConstant {
 	private MenuService menuService;
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private ZtreeService ztreeService;
 	
+	@RequestMapping(value="{sid}/admin/group/ztree", method=RequestMethod.GET)
+	@ResponseBody
+	public Object ztree(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
+		
+		List<ZNode> ztree = ztreeService.getGroupZtree();
+		
+		return ztree;
+	}
 	@RequestMapping(value="{sid}/admin/group/list", method=RequestMethod.GET)
 	public Object listpage(@PathVariable String sid, @ModelAttribute Group group, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		

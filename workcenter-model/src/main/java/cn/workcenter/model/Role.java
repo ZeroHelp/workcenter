@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class Role {
+public class Role implements Nameable {
     private Long id;
 
     private String roleName;
@@ -62,4 +62,9 @@ public class Role {
     public void setStatus(Integer status) {
         this.status = status;
     }
+    
+    @Override
+	public String getName() {
+		return roleName;
+	}
 }

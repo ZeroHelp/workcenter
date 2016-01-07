@@ -310,4 +310,12 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		return users;
 	}
 
+	@Override
+	public List<User> getUsersByGroupid(Long id) {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("group_id", id);
+		List<User> users = userMapper.getUsersByGroupid(parameterMap);
+		return users;
+	}
+
 }

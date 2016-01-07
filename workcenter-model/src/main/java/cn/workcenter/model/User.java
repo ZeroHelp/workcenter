@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class User {
+public class User implements Nameable {
     private Long id;
 
     private String userName;
@@ -62,4 +62,9 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
+    
+    @Override
+	public String getName() {
+		return userName;
+	}
 }

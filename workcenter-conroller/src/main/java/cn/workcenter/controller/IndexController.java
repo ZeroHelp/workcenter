@@ -88,6 +88,7 @@ public class IndexController extends WorkcenterApplication {
 		List<Resource> modules = resourceService.getUserModule();
 		
 		request.setAttribute("sid", sid);
+		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("modules", modules);
 		return "/workcenter/home";
 	}

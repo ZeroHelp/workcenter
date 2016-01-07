@@ -58,4 +58,6 @@ public interface UserService {
 
 	List<User> queryUsers(User user);
 
+	List<User> getUsersByGroupid(Long id);
+
 }

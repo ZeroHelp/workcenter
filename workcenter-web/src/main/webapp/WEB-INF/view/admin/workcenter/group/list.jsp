@@ -4,45 +4,48 @@
 %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- 右侧列表  -->
+
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<!-- <h1 class="page-header">Dashboard</h1>
-
-	<h2 class="sub-header">Section title</h2> -->
-
-	<div class="row">
+	
+	<div class="col-sm-3 col-md-2">
+		<button id="refresh_btn" type="button" class="btn btn-primary" >刷新树</button>
+	</div>
+	
+	<!-- <div class="row col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2"> -->
+	<div class="row col-sm-offset-3 col-md-offset-2">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="add">添加</button>
 		<button id="edit_btn" type="button" class="btn btn-primary" >修改</button>
 		<button value1="forbidden" type="button" class="delete_btn btn btn-primary" >禁用</button>
 		<button value1="delete" type="button" class="delete_btn btn btn-primary" >删除</button>
 
 		<div class="col-sm-3">
-			<form id="queryForm">
-				<div class="input-group">
-					<div class="input-group-btn">
-						<button id="queryLabel_btn" type="button" class="btn btn-default">${queryLabel_ch }</button>
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
-						</button>
-						<ul class="dropdown-menu">
-							<li><a class="query_a" href="javascript:void(0);" value1="groupName">用户组名</a></li>
-							<li><a class="query_a" href="javascript:void(0);" value1="groupChName">用户组中文名</a></li>
-							<li><a class="query_a" href="javascript:void(0);" value1="status">状态</a></li>
-						</ul>
-					</div>
-					
-					<input id="query_input" type="text" name="${queryLabel_en }" value="${queryValue }" class="form-control" aria-label="Text input with segmented button dropdown">
-					<span class="input-group-btn">
-					<button id="query_btn" class="btn btn-default" type="button">查询</button>
-					</span>
+			<div class="input-group">
+				<div class="input-group-btn">
+					<button id="queryLabel_btn" type="button" class="btn btn-default">${queryLabel_ch }</button>
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a class="query_a" href="javascript:void(0);" value1="groupName">用户组名</a></li>
+						<li><a class="query_a" href="javascript:void(0);" value1="groupChName">用户组中文名</a></li>
+						<li><a class="query_a" href="javascript:void(0);" value1="status">状态</a></li>
+					</ul>
 				</div>
-				<!-- /.input-group -->
-			</form>
+
+				<input id="query_input" type="text" name="${queryLabel_en }" value="${queryValue }" class="form-control" aria-label="Text input with segmented button dropdown"> <span class="input-group-btn">
+					<button id="query_btn" class="btn btn-default" type="button">查询</button>
+				</span>
+			</div>
 		</div>
-
 	</div>
-	<!-- /.row -->
 
-	<div class="table-responsive">
+	<div class="col-sm-3 col-md-2">
+		<div class="zTreeDemoBackground left">
+			<ul id="treeDemo" class="ztree"></ul>
+		</div>
+	</div>
+	
+	<div class="table-responsive col-sm-offset-3 col-md-offset-2">
 		<table id="listTable" class="table table-striped" >
 			<thead>
 				<tr>
@@ -75,7 +78,6 @@
 			</tbody>
 		</table>
 	</div>
-
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" group="dialog" aria-labelledby="exampleModalLabel">
@@ -140,6 +142,29 @@
 </div>
 <!-- /.modal -->
 
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		refreshZTree();
+		$("#refresh_btn").on("click", function() {
+			refreshZTree();
+		})
+	});
+	function refreshZTree() {
+		$.ajax({
+			type: "get",
+			url: '<%=basePath%>/${sid}/admin/group/ztree',
+			dataType: "json",
+			data: {},
+			success : function(data) {
+				var setting = {};
+				var zNodes = data;
+				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			}
+		});
+	}
+</script>
+
 <script>
 	$(document).ready(function() {
 		
@@ -151,8 +176,6 @@
 		});
 		
 		$("#query_btn").on("click", function() {
-			var formParam = $("#queryForm").formSerialize();
-			
 			var queryKey = $("#query_input").attr("name");
 			var queryValue = $("#query_input").val();
 			var url = '<%=basePath%>/${sid}/admin/group/list?'+queryKey + '=' + queryValue;
@@ -242,11 +265,7 @@
 					}
 				}
 			});
-			
-			
-			
-			
-		})
+		});
 		
 		$(".delete_btn").on("click", function() {
 			var operator = $(this).attr("value1");
