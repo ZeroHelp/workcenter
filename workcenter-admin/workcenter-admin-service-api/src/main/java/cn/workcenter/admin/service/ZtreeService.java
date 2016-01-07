@@ -8,4 +8,6 @@ public interface ZtreeService {
 
 	List<ZNode> getGroupZtree();
 
+	List<ZNode> getRoleZtree();
+
 }

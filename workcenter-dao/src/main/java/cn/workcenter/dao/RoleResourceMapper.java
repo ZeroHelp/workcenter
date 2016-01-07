@@ -1,5 +1,7 @@
 package cn.workcenter.dao;
 
+import java.util.List;
+
 import cn.workcenter.model.RoleResource;
 
 public interface RoleResourceMapper {
@@ -14,4 +16,6 @@ public interface RoleResourceMapper {
     int updateByPrimaryKeySelective(RoleResource record);
 
     int updateByPrimaryKey(RoleResource record);
+    
+    List<RoleResource> getResourceByRoleid(Long id);
 }

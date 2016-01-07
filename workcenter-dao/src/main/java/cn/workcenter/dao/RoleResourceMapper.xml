@@ -103,4 +103,12 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="getResourceByRoleid" parameterType="java.lang.Long" resultType="cn.workcenter.model.RoleResource" >
+    select 
+        <include refid="Base_Column_List" />
+        from base_role_resource
+    where role_id = #{id,jdbcType=BIGINT}
+  </select>
+  
 </mapper>

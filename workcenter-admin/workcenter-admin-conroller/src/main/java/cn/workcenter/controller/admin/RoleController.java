@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.workcenter.admin.model.Menu;
+import cn.workcenter.admin.model.ZNode;
 import cn.workcenter.admin.service.MenuService;
+import cn.workcenter.admin.service.ZtreeService;
 import cn.workcenter.common.WorkcenterResult;
 import cn.workcenter.common.constant.Constant;
 import cn.workcenter.common.constant.WebConstant;
@@ -34,6 +36,18 @@ public class RoleController implements Constant, WebConstant {
 	private RoleService roleService;
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ZtreeService ztreeService;
+	
+	@RequestMapping(value="{sid}/admin/role/ztree", method=RequestMethod.GET)
+	@ResponseBody
+	public Object ztree(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
+		
+		List<ZNode> ztree = ztreeService.getRoleZtree();
+		
+		return ztree;
+	}
 	
 	@RequestMapping(value="{sid}/admin/role/list", method=RequestMethod.GET)
 	public Object listpage(@PathVariable String sid, @ModelAttribute Role role, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {

@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class RoleResource {
+public class RoleResource implements  Nameable, Cloneable{
     private Long id;
 
     private Long roleId;
@@ -62,4 +62,10 @@ public class RoleResource {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return resourceId.toString();
+	}
 }
