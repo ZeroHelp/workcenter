@@ -3,6 +3,7 @@ package cn.workcenter.dao;
 import java.util.List;
 import java.util.Map;
 
+import cn.workcenter.model.Group;
 import cn.workcenter.model.Resource;
 
 public interface ResourceMapper {
@@ -29,4 +30,12 @@ public interface ResourceMapper {
 	List<Resource> queryResourcesBySelective(Resource resource);
 
 	int updateResourceStatusById(Map<String, Object> parameterMap);
+	
+	List<Resource> queryResouces(Long roleId);
+	
+	List<Resource> getResoucesByRootParentId();
+	
+	List<Resource> getResoucesById(Long id);
+
+	List<Resource> selectByParent(Resource resource);
 }

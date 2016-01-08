@@ -8,7 +8,9 @@
 	<!-- <h1 class="page-header">Dashboard</h1>
 
 	<h2 class="sub-header">Section title</h2> -->
-
+	<div class="col-sm-3 col-md-2">
+		<button id="refresh_btn" type="button" class="btn btn-primary" >刷新树</button>
+	</div>
 	<div class="row">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="add">添加</button>
 		<button id="edit_btn" type="button" class="btn btn-primary" >修改</button>
@@ -38,7 +40,11 @@
 				<!-- /.input-group -->
 			</form>
 		</div>
-
+	</div>
+	<div class="col-sm-3 col-md-2">
+		<div class="zTreeDemoBackground left">
+			<ul id="treeDemo" class="ztree"></ul>
+		</div>
 	</div>
 	<!-- /.row -->
 
@@ -137,7 +143,28 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<script type="text/javascript">
 
+	$(document).ready(function() {
+		refreshZTree();
+		$("#refresh_btn").on("click", function() {
+			refreshZTree();
+		})
+	});
+	function refreshZTree() {
+		$.ajax({
+			type: "get",
+			url: '<%=basePath%>/${sid}/admin/user/ztree',
+			dataType: "json",
+			data: {},
+			success : function(data) {
+				var setting = {};
+				var zNodes = data;
+				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			}
+		});
+	}
+</script>
 <script>
 	$(document).ready(function() {
 		

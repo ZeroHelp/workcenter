@@ -21,4 +21,6 @@ public interface RoleMapper {
 	List<Role> queryRolesBySelective(Role role);
 
 	int updateRoleStatusById(Map<String, Object> parameterMap);
+	
+	List<Role> queryRolesByUserId(Long id);
 }

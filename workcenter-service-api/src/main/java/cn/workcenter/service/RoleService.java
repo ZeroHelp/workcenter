@@ -18,4 +18,6 @@ public interface RoleService {
 
 	Object deleteRoles(String roleids);
 	
+	List<Role> queryRolesByUserId(Long id);
+	
 }

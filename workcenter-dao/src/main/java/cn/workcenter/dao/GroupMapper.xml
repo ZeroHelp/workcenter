@@ -160,7 +160,7 @@
       where gro.group_ch_name like CONCAT('%',#{groupChName},'%')
     </if>
     <if test="status != null" >
-      where gro.status = #{status}
+      where gro.status = #{status} 
     </if>
   </select>
   
@@ -169,5 +169,17 @@
   	set status = #{status}
   	where id = #{id}
   </update>
-  
+    <select id="selectByParent" parameterType="cn.workcenter.model.Group" resultType="cn.workcenter.model.Group">
+  	select 
+  	<include refid="gro_Base_Column_List" />
+	from base_group gro where
+	gro.parent_id = #{parentId} and
+	gro.status = #{status}
+  	</select>
+    <select id="queryGroupsByParentId" parameterType="cn.workcenter.model.Group" resultType="cn.workcenter.model.Group">
+  	select 
+  	<include refid="gro_Base_Column_List" />
+  	from base_group gro
+      where gro.status = #{status} and <![CDATA[gro.parent_id<= 0 ]]> 
+  	</select>
 </mapper>

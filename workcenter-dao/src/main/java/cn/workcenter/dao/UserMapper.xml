@@ -157,5 +157,4 @@
       where us.status = #{status,jdbcType=INTEGER}
     </if>
   </select>
-  
 </mapper>

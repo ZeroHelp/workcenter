@@ -96,4 +96,9 @@ public class RoleServiceImpl extends WorkcenterApplication implements RoleServic
 			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_ROLE_DELETE)).build();
 		}
 	}
+	@Override
+	public List<Role> queryRolesByUserId(Long id) {
+		// TODO Auto-generated method stub
+		return roleMapper.queryRolesByUserId(id);
+	}
 }

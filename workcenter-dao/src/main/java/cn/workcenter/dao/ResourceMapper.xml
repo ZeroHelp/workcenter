@@ -148,6 +148,13 @@
   	where ue.user_name = #{username} and re.parent_id = 0
   	and re.status = 1 and rr .status = 1 and ro.status = 1 and ur.status = 1 and ue.status = 1
   </select>
+  <select id="queryResouces" parameterType="java.lang.Long" resultType="cn.workcenter.model.Resource">
+  	SELECT
+  	<include refid="Re_Base_Column_List" />	
+  	FROM base_resource re
+  	LEFT JOIN base_role_resource rr ON rr.resource_id = re.id
+  	WHERE re.status = 1 AND rr.STATUS = 1 AND rr.role_id =#{roleId}
+    </select>
   <select id="getResoucesByParentid" parameterType="java.lang.String" resultType="cn.workcenter.model.Resource">
   	select 
   	<include refid="Base_Column_List" />
@@ -176,5 +183,27 @@
   	set status = #{status}
   	where id = #{id}
   </update>
-  
+
+	<select id="getResoucesByRootParentid" resultType="cn.workcenter.model.Resource">
+		select
+  		<include refid="Re_Base_Column_List" />
+		from base_resource re
+		where  <![CDATA[re.parent_id <= 0 ]]>
+		and re.status = 1
+	</select>
+	<select id="getResoucesById" parameterType="cn.workcenter.model.Resource" resultType="cn.workcenter.model.Resource">
+		select
+  		<include refid="Re_Base_Column_List" />
+		from base_resource re
+		where re.parent_id =#{id,jdbcType=BIGINT}
+		and re.status = 1
+	</select>  
+  	<select id="selectByParent" parameterType="cn.workcenter.model.Resource" resultType="cn.workcenter.model.Resource">
+		select
+  		<include refid="Re_Base_Column_List" />
+		from base_resource re
+		where re.parent_id =#{id,jdbcType=BIGINT}
+		and re.status = #{status,jdbcType=BIGINT}
+	</select>
+
 </mapper>

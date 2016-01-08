@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.workcenter.model.Group;
 import cn.workcenter.model.Nameable;
+import cn.workcenter.model.Resource;
 
 public class ZNode extends ZLeaf{
 	
@@ -52,5 +53,13 @@ public class ZNode extends ZLeaf{
 		ZLeaf leaf = new ZLeaf();
 		leaf.setName(name.getName());
 		return leaf;
+	}
+	public void addChilden(ZLeaf zleaf) {
+		if(children==null) {
+			children = new ArrayList<ZLeaf>();
+			children.add(zleaf);
+			return;
+		}
+		children.add(zleaf);
 	}
 }

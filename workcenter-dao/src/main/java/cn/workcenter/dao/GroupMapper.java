@@ -25,5 +25,8 @@ public interface GroupMapper {
 	List<Group> queryGroupsBySelective(Group group);
 
 	int updateGroupStatusById(Map<String, Object> parameterMap);
+	
+	List<Group> selectByParent(Group group);
+	List<Group> queryGroupsByParentId(Group group);
 
 }

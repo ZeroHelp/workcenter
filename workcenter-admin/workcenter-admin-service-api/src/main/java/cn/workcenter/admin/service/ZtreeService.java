@@ -10,4 +10,6 @@ public interface ZtreeService {
 
 	List<ZNode> getRoleZtree();
 
+	List<ZNode> getUserRoleZtree();
+	List<ZNode> getResourcesZtree();
 }
