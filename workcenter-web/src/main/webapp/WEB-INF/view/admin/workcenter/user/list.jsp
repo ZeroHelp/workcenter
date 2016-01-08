@@ -14,6 +14,8 @@
 		<button id="edit_btn" type="button" class="btn btn-primary" >修改</button>
 		<button value1="forbidden" type="button" class="delete_btn btn btn-primary" >禁用</button>
 		<button value1="delete" type="button" class="delete_btn btn btn-primary" >删除</button>
+		<button id="edit_role_btn" type="button" class="btn btn-primary" >编辑角色</button>
+		<button id="edit_group_btn" type="button" class="btn btn-primary" >编辑用户组</button>
 		
 		<div class="col-sm-3">
 			<form id="queryForm">
@@ -41,9 +43,13 @@
 
 	</div>
 	<!-- /.row -->
+	
+	<div class="row">
+		<br>
+	</div> <!-- 空行 -->
 
 	<div class="table-responsive">
-		<table id="listTable" class="table table-striped"  >
+		<table id="listTable" class="table table-striped table-bordered"  >
 			<thead>
 				<tr>
 					<th>#</th>
@@ -57,7 +63,7 @@
 			<tbody>
 				<c:forEach items="${users }" var="user">
 					<tr>
-						<td><input type="checkbox" name="userId" value1="${user.id}" ></td>
+						<td><input type="checkbox" name="userId" value1="${user.id}" value2="${user.realName}" ></td>
 						<td>${user.id }</td>
 						<td>${user.userName }</td>
 						<td>${user.realName }</td>
@@ -75,6 +81,232 @@
 	</div>
 
 </div>
+
+<div class="modal fade bs-example-modal-lg" id="userRoleModal" tabindex="-1" role="dialog" aria-labelledby="userRoleModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="back_btn close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="exampleRoleModalLabel">更新用户角色</h4>
+				<h4 class="modal-title" id="exampleRoleModalLabel1">username</h4>
+			</div>
+			<div class="modal-body">
+			
+				<!--<div class="row">
+					<br>
+				</div>  空行 -->
+				
+				<form id="userRoleForm">
+					<input id="updateRole_userid_input" type="hidden" name="userId" />
+					<table id="modelRoleListTable" class="table table-striped table-bordered" >
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>角色名</th>
+								<th>角色中文名</th>
+								<th>创建时间</th>
+								<th>状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr style="display: none;">
+								<td><input type="checkbox" name="roleId"></td>
+								<td title="id"></td>
+								<td title="roleName"></td>
+								<td title="roleChName"></td>
+								<td title="createTime"></td>
+								<td title="status"></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="back_btn btn btn-default" data-dismiss="modal">关闭</button>
+				<button id="update_role_btn" type="button" class="btn btn-primary">更新</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+	$(document).ready(function() {
+		
+		$("#update_role_btn").on("click", function() {
+			var formParam = $("#userRoleForm").formSerialize();
+			$.ajax({
+				type: "post",
+				url: "<%=basePath%>/${sid}/admin/user/updateRole",
+				dataType: "json",
+				data: formParam,
+				success: function(data) {
+					if (data.returncode == "200") {
+						$("#userRoleModal").modal('hide');
+						$("#model_title").text(data.returnmsg);
+						$("#model_content").text(data.returnmemo);
+						$('#myModal').modal();
+					} else {
+						$("#model_title").text(data.returnmsg);
+						$("#model_content").text(data.returnmemo);
+						$('#myModal').modal();
+					}
+				}
+			})
+		});
+		
+		$("#edit_role_btn").on("click", function() {
+			
+			$("#userRoleModalLabel").text("编辑用户角色");
+			var checkedNum = $("#listTable").find("input:checkbox[name='userId']:checked").length;
+			if(checkedNum > 1||checkedNum<=0) {
+				$("#exampleModal").modal('hide');
+				
+				$("#model_title").text("警告");
+				$("#model_content").text("只能选择一个要编辑的项");
+				$('#myModal').modal();
+				return ;
+			}
+			
+			var editUserId = $("#listTable").find("input:checkbox[name='userId']:checked").attr("value1");
+			var editUserName = $("#listTable").find("input:checkbox[name='userId']:checked").attr("value2");
+			
+			$.ajax({
+				type: "get",
+				url: '<%=basePath%>/${sid}/admin/user/rolelist',
+				dataType: "json",
+				data: {
+					userId: editUserId,
+				},
+				success : function(data) {
+					$("#updateRole_userid_input").val(editUserId);
+					$("#exampleRoleModalLabel1").text(editUserName);
+					$('#modelRoleListTable').tableData(data); 
+					$("#userRoleModal").modal('show');
+				}
+			});
+		});
+		
+		
+	})
+</script>
+
+
+<div class="modal fade bs-example-modal-lg" id="userGroupModal" tabindex="-1" role="dialog" aria-labelledby="userGroupModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="back_btn close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="exampleGroupModalLabel">更新用户用户组</h4>
+				<h4 class="modal-title" id="exampleGroupModalLabel1">username</h4>
+			</div>
+			<div class="modal-body">
+			
+				<!--<div class="row">
+					<br>
+				</div>  空行 -->
+				
+				<form id="userGroupForm">
+					<input id="updateGroup_userid_input" type="hidden" name="userId" />
+					<table id="modelGroupListTable" class="table table-striped table-bordered" >
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>用户组名</th>
+								<th>用户组中文名</th>
+								<th>创建时间</th>
+								<th>状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr id="test_tr" style="display: none;">
+								<td><input type="radio" name="groupId"></td>
+								<td title="id"></td>
+								<td title="groupName"></td>
+								<td title="groupChName"></td>
+								<td title="createTime"></td>
+								<td title="status"></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="back_btn btn btn-default" data-dismiss="modal">关闭</button>
+				<button id="update_group_btn" type="button" class="btn btn-primary">更新</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+	$(document).ready(function() {
+		
+		$("#update_group_btn").on("click", function() {
+			var formParam = $("#userGroupForm").formSerialize();
+			$.ajax({
+				type: "post",
+				url: "<%=basePath%>/${sid}/admin/user/updateGroup",
+				dataType: "json",
+				data: formParam,
+				success: function(data) {
+					if (data.returncode == "200") {
+						$("#userGroupModal").modal('hide');
+						$("#model_title").text(data.returnmsg);
+						$("#model_content").text(data.returnmemo);
+						$('#myModal').modal();
+					} else {
+						$("#model_title").text(data.returnmsg);
+						$("#model_content").text(data.returnmemo);
+						$('#myModal').modal();
+					}
+				}
+			})
+		});
+		
+		$("#edit_group_btn").on("click", function() {
+			
+			$("#userGroupModalLabel").text("编辑用户用户组");
+			var checkedNum = $("#listTable").find("input:checkbox[name='userId']:checked").length;
+			if(checkedNum > 1||checkedNum<=0) {
+				$("#exampleModal").modal('hide');
+				
+				$("#model_title").text("警告");
+				$("#model_content").text("只能选择一个要编辑的项");
+				$('#myModal').modal();
+				return ;
+			}
+			
+			var editUserId = $("#listTable").find("input:checkbox[name='userId']:checked").attr("value1");
+			var editUserName = $("#listTable").find("input:checkbox[name='userId']:checked").attr("value2");
+			
+			$.ajax({
+				type: "get",
+				url: '<%=basePath%>/${sid}/admin/user/grouplist',
+				dataType: "json",
+				data: {
+					userId: editUserId,
+				},
+				success : function(data) {
+					$("#updateGroup_userid_input").val(editUserId);
+					$("#exampleGroupModalLabel1").text(editUserName);
+					$('#modelGroupListTable').tableData(data); 
+					$("#userGroupModal").modal('show');
+				}
+			});
+		});
+		
+		
+	})
+</script>
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 	<div class="modal-dialog" role="document">
@@ -278,10 +510,6 @@
 					}
 				}
 			});
-			
-			
-			
-			
 		})
 		
 		$(".delete_btn").on("click", function() {

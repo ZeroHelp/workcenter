@@ -3,7 +3,6 @@ package cn.workcenter.service;
 import java.util.List;
 
 import cn.workcenter.model.Resource;
-import cn.workcenter.model.Resource;
 
 /**
  * parent_id 
@@ -34,5 +33,9 @@ public interface ResourceService {
 	Object forbiddenResources(String resourceids);
 
 	Object deleteResources(String resourceids);
+
+	List<Resource> getResourcesByUserid(Long roleId);
+
+	Object updateUserResources(Long roleId, Long[] resourceId);
 	
 }

@@ -1,9 +1,13 @@
 package cn.workcenter.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +18,10 @@ import cn.workcenter.common.cache.RedisCache;
 import cn.workcenter.common.constant.CacheConstant;
 import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.dao.ResourceMapper;
+import cn.workcenter.dao.RoleResourceMapper;
+import cn.workcenter.model.GroupUser;
 import cn.workcenter.model.Resource;
+import cn.workcenter.model.RoleResource;
 import cn.workcenter.service.ResourceService;
 import cn.workcenter.service.UserService;
 
@@ -31,6 +38,8 @@ public class ResourceServiceImpl implements ResourceService , CacheConstant, Web
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleResourceMapper roleResourceMapper;
 	
 	@Override
 	public List<Resource> getResourcesByUserName(String username) {
@@ -133,6 +142,40 @@ public class ResourceServiceImpl implements ResourceService , CacheConstant, Web
 		} else {
 			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_RESOURCE_DELETE)).build();
 		}
+	}
+
+	@Override
+	public List<Resource> getResourcesByUserid(Long roleId) {
+		List<Resource> resourcesList = new ArrayList<Resource>();
+		
+		Set<Resource> resourcesSet = new HashSet<Resource>();
+		List<Resource> userResources = resourceMapper.getResourcesByRoleid(roleId);
+		List<Resource> allResources = resourceMapper.queryAllResource();
+		resourcesSet.addAll(userResources);
+		resourcesSet.addAll(allResources);
+		
+		resourcesList.addAll(resourcesSet);
+		Collections.sort(resourcesList);
+		return resourcesList;
+	}
+
+	@Override
+	public Object updateUserResources(Long roleId, Long[] resourceId) {
+		
+		roleResourceMapper.deleteRoleResourceByRoleId(roleId);
+		
+		for(int i=0;i<resourceId.length;i++) {
+			Long resourceid = resourceId[i];
+			RoleResource roleResource = new RoleResource();
+			roleResource.setRoleId(roleId);
+			roleResource.setResourceId(resourceid);
+			roleResource.setCreateTime(new Date());
+			roleResource.setCreateUserId(userService.getUserId());
+			roleResource.setStatus(OK_STATUS);
+			roleResourceMapper.insertSelective(roleResource);
+		}
+		
+		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_ROLERESOURCE_UPDATE)).build();
 	}
 
 }

@@ -14,7 +14,8 @@
 		<button id="edit_btn" type="button" class="btn btn-primary" >修改</button>
 		<button value1="forbidden" type="button" class="delete_btn btn btn-primary" >禁用</button>
 		<button value1="delete" type="button" class="delete_btn btn btn-primary" >删除</button>
-
+		<button id="edit_resource_btn" type="button" class="btn btn-primary" >编辑用户组</button>
+		
 		<div class="col-sm-3">
 			<form id="queryForm">
 				<div class="input-group">
@@ -57,7 +58,7 @@
 			<tbody>
 				<c:forEach items="${roles }" var="role">
 					<tr>
-						<td><input type="checkbox" name="roleId" value1="${role.id}" ></td>
+						<td><input type="checkbox" name="roleId" value1="${role.id}" value2="${role.roleName}" value3="${role.roleChName}"></td>
 						<td>${role.id }</td>
 						<td>${role.roleName }</td>
 						<td>${role.roleChName }</td>
@@ -75,8 +76,120 @@
 			</tbody>
 		</table>
 	</div>
-
 </div>
+
+<div class="modal fade bs-example-modal-lg" id="roleResourceModal" tabindex="-1" role="dialog" aria-labelledby="roleResourceModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="back_btn close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="exampleResourceModalLabel">更新用户用户组</h4>
+				<h4 class="modal-title" id="exampleResourceModalLabel1">rolename</h4>
+			</div>
+			<div class="modal-body">
+			
+				<!--<div class="row">
+					<br>
+				</div>  空行 -->
+				
+				<form id="roleResourceForm">
+					<input id="updateResource_roleid_input" type="hidden" name="roleId" />
+					<table id="modelResourceListTable" class="table table-striped table-bordered" >
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>id</th>
+								<th>资源名</th>
+								<th>资源链接地址</th>
+								<th>创建时间</th>
+								<th>状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr id="test_tr" style="display: none;">
+								<td><input type="checkbox" name="resourceId"></td>
+								<td title="id"></td>
+								<td title="resourceName"></td>
+								<td title="resourceUrl"></td>
+								<td title="createTime"></td>
+								<td title="status"></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="back_btn btn btn-default" data-dismiss="modal">关闭</button>
+				<button id="update_resource_btn" type="button" class="btn btn-primary">更新</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+	$(document).ready(function() {
+		
+		$("#update_resource_btn").on("click", function() {
+			var formParam = $("#roleResourceForm").formSerialize();
+			$.ajax({
+				type: "post",
+				url: "<%=basePath%>/${sid}/admin/role/updateResource",
+				dataType: "json",
+				data: formParam,
+				success: function(data) {
+					if (data.returncode == "200") {
+						$("#roleResourceModal").modal('hide');
+						$("#model_title").text(data.returnmsg);
+						$("#model_content").text(data.returnmemo);
+						$('#myModal').modal();
+					} else {
+						$("#model_title").text(data.returnmsg);
+						$("#model_content").text(data.returnmemo);
+						$('#myModal').modal();
+					}
+				}
+			})
+		});
+		
+		$("#edit_resource_btn").on("click", function() {
+			
+			$("#roleResourceModalLabel").text("编辑用户用户组");
+			var checkedNum = $("#listTable").find("input:checkbox[name='roleId']:checked").length;
+			if(checkedNum > 1||checkedNum<=0) {
+				$("#exampleModal").modal('hide');
+				
+				$("#model_title").text("警告");
+				$("#model_content").text("只能选择一个要编辑的项");
+				$('#myModal').modal();
+				return ;
+			}
+			
+			var editRoleId = $("#listTable").find("input:checkbox[name='roleId']:checked").attr("value1");
+			var editRoleName = $("#listTable").find("input:checkbox[name='roleId']:checked").attr("value2");
+			var editRoleChName = $("#listTable").find("input:checkbox[name='roleId']:checked").attr("value2");
+			
+			$.ajax({
+				type: "get",
+				url: '<%=basePath%>/${sid}/admin/role/resourcelist',
+				dataType: "json",
+				data: {
+					roleId: editRoleId,
+				},
+				success : function(data) {
+					$("#updateResource_roleid_input").val(editRoleId);
+					$("#exampleResourceModalLabel1").text(editRoleName+"-"+editRoleChName);
+					$('#modelResourceListTable').tableData(data); 
+					$("#roleResourceModal").modal('show');
+				}
+			});
+		});
+		
+		
+	})
+</script>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 	<div class="modal-dialog" role="document">

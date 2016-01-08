@@ -77,6 +77,9 @@ public enum WorkcenterCodeEnum implements WebConstant{
 	OK_FVA_DELETE("20020030", "流程变量权限删除成功"),
 	OK_FVA_GET("20020031", "流程变量权限查询成功"),
 	OK_FVA_FORBIDDEN("20020032", "流程变量权限禁用成功"),
+	OK_USERROLE_UPDATE("20020033", "用户角色更新成功"),
+	OK_USERGROUP_UPDATE("20020034", "用户用户组更新成功"),
+	OK_ROLERESOURCE_UPDATE("20020035", "角色资源更新成功"),
 	;
 	
 	private String code;

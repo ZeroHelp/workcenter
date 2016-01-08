@@ -97,4 +97,9 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <delete id="deleteUserRoleByUserId" parameterType="java.lang.Long">
+  	delete from base_user_role 
+    where user_id = #{user_id}
+  </delete>
 </mapper>

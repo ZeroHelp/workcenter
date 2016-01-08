@@ -14,4 +14,6 @@ public interface RoleResourceMapper {
     int updateByPrimaryKeySelective(RoleResource record);
 
     int updateByPrimaryKey(RoleResource record);
+
+	void deleteRoleResourceByRoleId(Long roleId);
 }

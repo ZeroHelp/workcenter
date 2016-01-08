@@ -103,4 +103,9 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <delete id="deleteRoleResourceByRoleId" parameterType="java.lang.Long">
+  	delete from base_role_resource 
+    where role_id = #{role_id}
+  </delete>
 </mapper>

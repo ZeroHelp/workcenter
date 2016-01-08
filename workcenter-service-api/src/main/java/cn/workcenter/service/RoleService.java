@@ -19,5 +19,9 @@ public interface RoleService {
 	Object deleteRoles(String roleids);
 
 	List<Role> queryKpiDefaultRoles();
+
+	List<Role> getRolesByUserid(Long userId);
+
+	Object updateUserRoles(Long userId, Long[] roleId);
 	
 }

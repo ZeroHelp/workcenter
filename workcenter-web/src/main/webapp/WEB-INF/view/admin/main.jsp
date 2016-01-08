@@ -17,12 +17,12 @@
 <!-- Bootstrap core CSS -->
 <link href="<%=basePath%>/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=basePath%>/css/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="<%=basePath%>/css/ztree/zTreeStyle.css" type="text/css">
 
 <script src="<%=basePath%>/js/jquery.min.js"></script>
 <script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
 <script src="<%=basePath%>/js/jquery.form.js"></script>
-
-<link rel="stylesheet" href="<%=basePath%>/css/ztree/zTreeStyle.css" type="text/css">
+<script src="<%=basePath%>/js/jquery.table.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/jquery.ztree.all-3.5.min.js"></script>
 
 </head>
@@ -44,7 +44,7 @@
 						<ul class="dropdown-menu">
 
 							<li><a id="changepassword" href="javascript:void(0);">修改密码</a></li>
-							<li role="separator" class="divider"></li>
+							<!-- <li role="separator" class="divider"></li> -->
 						</ul></li>
 					<li><a id="logout" href="javascript:void(0);">退出</a></li>
 				</ul>

@@ -73,4 +73,9 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <delete id="deleteGroupUserByUserId">
+  	delete from base_group_user 
+    where user_id = #{user_id}
+  </delete>
 </mapper>

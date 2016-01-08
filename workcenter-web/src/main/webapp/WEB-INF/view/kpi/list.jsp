@@ -36,7 +36,7 @@
 						<ul class="dropdown-menu">
 
 							<li><a id="changepassword" href="javascript:void(0);">修改密码</a></li>
-							<li role="separator" class="divider"></li>
+							<!-- <li role="separator" class="divider"></li> -->
 						</ul></li>
 					<li><a id="logout" href="javascript:void(0);">退出</a></li>
 				</ul>

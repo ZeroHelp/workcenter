@@ -117,6 +117,17 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="getResourcesByRoleid" parameterType="java.lang.Long" resultType="cn.workcenter.model.Resource">
+  	select
+  	<include refid="Re_Base_Column_List" />, 1 as checked
+  	from base_resource re
+  	left join base_role_resource rr on rr.resource_id = re.id
+  	left join base_role ro on rr.role_id = ro.id
+  	where ro.id = #{role_id}
+  	and re.status = 1 and rr .status = 1 and ro.status = 1
+  </select>
+  
   <select id="getResourcesByRolename" parameterType="java.lang.String" resultType="cn.workcenter.model.Resource">
   	select
   	<include refid="Re_Base_Column_List" />
@@ -176,5 +187,11 @@
   	set status = #{status}
   	where id = #{id}
   </update>
+  
+  <select id="queryAllResource" resultType="cn.workcenter.model.Resource">
+  	select 
+  	<include refid="Re_Base_Column_List" /> , 0 as checked
+  	from base_resource re
+  </select>
   
 </mapper>

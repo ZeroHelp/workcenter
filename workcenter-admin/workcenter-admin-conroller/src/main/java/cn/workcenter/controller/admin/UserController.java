@@ -78,6 +78,50 @@ public class UserController implements Constant, WebConstant {
 		return "admin/main";
 	}
 	
+	@RequestMapping(value="{sid}/admin/user/rolelist", method=RequestMethod.GET)
+	@ResponseBody
+	public Object rolelist(@PathVariable String sid, 
+			@RequestParam Long userId,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		List<Role> roles = roleService.getRolesByUserid(userId);
+		
+		return roles;
+	}
+	
+	@RequestMapping(value="{sid}/admin/user/updateRole", method=RequestMethod.POST)
+	@ResponseBody
+	public Object updateRole(@RequestParam Long[] roleId, @RequestParam Long userId,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		WorkcenterResult result = (WorkcenterResult) roleService.updateUserRoles(userId, roleId);
+		
+		return WorkcenterResponseBodyJson.custom().setAll(result, USER_UPDATEROLE).build();
+	}
+	
+	@RequestMapping(value="{sid}/admin/user/grouplist", method=RequestMethod.GET)
+	@ResponseBody
+	public Object grouplist(@PathVariable String sid, 
+			@RequestParam Long userId,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		List<Group> groups = groupService.getGroupsByUserid(userId);
+		
+		return groups;
+	}
+	
+	@RequestMapping(value="{sid}/admin/user/updateGroup", method=RequestMethod.POST)
+	@ResponseBody
+	public Object updateGroup(@RequestParam Long[] groupId, @RequestParam Long userId,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		WorkcenterResult result = (WorkcenterResult) groupService.updateUserGroups(userId, groupId);
+		
+		return WorkcenterResponseBodyJson.custom().setAll(result, USER_UPDATEGROUP).build();
+	}
+	
 	@RequestMapping(value="{sid}/admin/user/add", method=RequestMethod.POST)
 	@ResponseBody
 	public Object addUser(@ModelAttribute User user,

@@ -127,4 +127,20 @@
   	set status = #{status}
   	where id = #{id}
   </update>
+  
+  <select id="queryAllRoles" resultType="cn.workcenter.model.Role">
+  	select 
+  	<include refid="r_Base_Column_List" />, 0 as checked
+  	from base_role r
+  	where r.status = 1
+  </select>
+  <select id="queryRolesByUserid" parameterType="java.lang.Long" resultType="cn.workcenter.model.Role">
+  	select 
+  	<include refid="r_Base_Column_List" />, 1 as checked
+  	from base_role r
+  	left join base_user_role bur on bur.role_id = r.id
+  	where bur.user_id = #{user_id} 
+  	and bur.status = 1 and r.status = 1
+  </select>
+  
 </mapper>
