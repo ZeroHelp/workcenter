@@ -48,7 +48,7 @@ public class ZtreeServiceImpl implements ZtreeService {
 		return ztree;
 	}
 	
-	public void setSubZNode(ZNode rootzNode,Long id){
+	private void setSubZNode(ZNode rootzNode,Long id){
 		List<ZLeaf> ztreec = new ArrayList<ZLeaf>();	
 		Group groupc = new Group();
 		groupc.setStatus(1);
@@ -66,6 +66,7 @@ public class ZtreeServiceImpl implements ZtreeService {
 			}
 		}
 	}
+	
 	@Override
 	public List<ZNode> getRoleZtree() {
 		List<ZNode> ztree = new ArrayList<ZNode>();
@@ -84,7 +85,6 @@ public class ZtreeServiceImpl implements ZtreeService {
 
 	@Override
 	public List<ZNode> getUserRoleZtree() {
-		// TODO Auto-generated method stub
 		List<ZNode> ztree=new ArrayList<ZNode>();
 		List<User> users= userService.getAllUsers();
 		for(int i=0;i<users.size();i++){		
@@ -99,24 +99,18 @@ public class ZtreeServiceImpl implements ZtreeService {
 
 	@Override
 	public List<ZNode> getResourcesZtree() {
-		// TODO Auto-generated method stub
 		
 		List<ZNode> ztree=new ArrayList<ZNode>();
 		List<Resource> resources=resourceMapper.getResoucesByRootParentId();
-		
-		
 		for(int i=0;i<resources.size();i++){
 			Resource resource=resources.get(i);
 			ZNode node=ZNode.makeZNode(resource);
 			ztree.add(node);
-			
 			makeResourcesZtree(node, resource.getId());
-			/*List<Resource> r=resourceMapper.getResoucesById(resource.getId());
-			node.setZLeafs(r);
-			setSubResourceZNode(node,resource.getId());*/
 		}
 		return ztree;
 	}
+	
 	private List<Resource> makeResourcesZtree(ZNode node, Long resourceid) {
 		
 		List<Resource> childs=resourceMapper.getResoucesByParentid(resourceid+"");	
@@ -134,22 +128,4 @@ public class ZtreeServiceImpl implements ZtreeService {
 		return childs;
 	}
 
-	public void setSubResourceZNode(ZNode rootzNode,Long id){
-		List<ZLeaf> ztreec = new ArrayList<ZLeaf>();	
-		Resource resource = new Resource();
-		resource.setStatus(1);
-		resource.setParentId(id);
-		List<Resource> rs=resourceMapper.selectByParent(resource);	
-		if(rs!=null &&rs.size()>0){
-			for(int j=0;j<rs.size();j++){
-				Resource c = rs.get(j);	
-				ZNode nodec = ZNode.makeZNode(c);
-				ztreec.add(nodec);
-				List<Resource> resourcec = resourceMapper.selectByParent(c);	
-				nodec.setZLeafs(resourcec);	
-				rootzNode.getChildren().addAll(ztreec);
-				setSubZNode(nodec,c.getId());
-			}
-		}
-	}
 }

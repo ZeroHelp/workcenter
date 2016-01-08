@@ -128,7 +128,7 @@
   	where id = #{id}
   </update>
   
-    <select id="queryRolesByUserId" parameterType="java.lang.Long" resultType="cn.workcenter.model.Role">
+  <select id="queryRolesByUserId" parameterType="java.lang.Long" resultType="cn.workcenter.model.Role">
   	select 
   	<include refid="r_Base_Column_List" />
 	FROM

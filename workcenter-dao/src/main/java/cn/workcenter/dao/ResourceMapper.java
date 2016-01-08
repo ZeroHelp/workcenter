@@ -35,7 +35,4 @@ public interface ResourceMapper {
 	
 	List<Resource> getResoucesByRootParentId();
 	
-	List<Resource> getResoucesById(Long id);
-
-	List<Resource> selectByParent(Resource resource);
 }

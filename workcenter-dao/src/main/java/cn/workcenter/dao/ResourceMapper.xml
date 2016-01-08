@@ -184,26 +184,12 @@
   	where id = #{id}
   </update>
 
-	<select id="getResoucesByRootParentId" resultType="cn.workcenter.model.Resource">
-		select
-  		<include refid="Re_Base_Column_List" />
-		from base_resource re
-		where  <![CDATA[re.parent_id <= 0 ]]>
-		and re.status = 1
-	</select>
-	<select id="getResoucesById" parameterType="cn.workcenter.model.Resource" resultType="cn.workcenter.model.Resource">
-		select
-  		<include refid="Re_Base_Column_List" />
-		from base_resource re
-		where re.parent_id =#{id,jdbcType=BIGINT}
-		and re.status = 1
-	</select>  
-  	<select id="selectByParent" parameterType="cn.workcenter.model.Resource" resultType="cn.workcenter.model.Resource">
-		select
-  		<include refid="Re_Base_Column_List" />
-		from base_resource re
-		where re.parent_id =#{id,jdbcType=BIGINT}
-		and re.status = #{status,jdbcType=BIGINT}
-	</select>
+  <select id="getResoucesByRootParentId" resultType="cn.workcenter.model.Resource">
+	select
+	<include refid="Re_Base_Column_List" />
+	from base_resource re
+	where  <![CDATA[re.parent_id <= 0 ]]>
+	and re.status = 1
+  </select>
 
 </mapper>
