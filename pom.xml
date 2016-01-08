@@ -7,7 +7,7 @@
 	<version>0.0.1.Alpha1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
-	<description>The parent project of godzilla</description>
+	<description>The parent project of workcenter</description>
 
 	<scm>
 		<developerConnection>scm:git:ssh://git@github.com/ZeroHelp/workcenter.git</developerConnection>

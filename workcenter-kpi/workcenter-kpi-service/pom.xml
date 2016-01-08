@@ -9,7 +9,6 @@
 	<artifactId>workcenter-kpi-service</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
-	<description>The spring config module of dubbo project</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

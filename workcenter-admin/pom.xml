@@ -9,7 +9,6 @@
 	<artifactId>workcenter-admin</artifactId>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
-	<description>The config module of dubbo project</description>
 	<properties>
 		<skip_maven_deploy>true</skip_maven_deploy>
 	</properties>
