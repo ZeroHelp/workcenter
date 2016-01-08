@@ -50,12 +50,8 @@
 	</div>
 	<!-- /.row -->
 	
-	<div class="row">
-		<br>
-	</div> <!-- 空行 -->
-
 	<div class="table-responsive">
-		<table id="listTable" class="table table-striped table-bordered"  >
+		<table id="listTable" class="table table-striped "  ><!-- table-bordered -->
 			<thead>
 				<tr>
 					<th>#</th>
