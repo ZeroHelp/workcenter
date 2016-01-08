@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>cn.workcenter</groupId>
 		<artifactId>workcenter-parent</artifactId>
-		<version>0.0.1.Alpha1</version>
+		<version>0.0.1Alpha2-SNAPSHOT</version>
 	</parent>
 	<artifactId>workcenter-dao</artifactId>
 	<packaging>jar</packaging>

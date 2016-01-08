@@ -4,14 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.workcenter</groupId>
 	<artifactId>workcenter-parent</artifactId>
-	<version>0.0.1.Alpha1</version>
+	<version>0.0.1Alpha2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>The parent project of workcenter</description>
 
 	<scm>
 		<developerConnection>scm:git:ssh://git@github.com/ZeroHelp/workcenter.git</developerConnection>
-		<tag>workcenter-0.0.1.Alpha1</tag>
+		<tag>HEAD</tag>
   </scm>
   
 	<modules>
