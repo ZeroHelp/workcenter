@@ -117,20 +117,21 @@ public class ZtreeServiceImpl implements ZtreeService {
 		}
 		return ztree;
 	}
-	private void makeResourcesZtree(ZNode node, Long resourceid) {
+	private List<Resource> makeResourcesZtree(ZNode node, Long resourceid) {
 		
 		List<Resource> childs=resourceMapper.getResoucesByParentid(resourceid+"");	
 		for(int i=0;i<childs.size();i++) {
 			ZNode znode = ZNode.makeZNode(childs.get(i));
 			
-			makeResourcesZtree(znode, childs.get(i).getId());
-			if(znode.getChildren()==null||znode.getChildren().size()==0) {
+			List<Resource> childschilds = makeResourcesZtree(znode, childs.get(i).getId());
+			if(childschilds==null||childschilds.size()==0) {
 				ZLeaf zleaf = ZNode.makeZLeaf(childs.get(i));
 				node.addChilden(zleaf);
-				return;
+				continue;
 			}
 			node.addChilden(znode);
 		}
+		return childs;
 	}
 
 	public void setSubResourceZNode(ZNode rootzNode,Long id){

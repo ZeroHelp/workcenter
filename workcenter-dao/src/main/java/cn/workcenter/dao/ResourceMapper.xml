@@ -184,7 +184,7 @@
   	where id = #{id}
   </update>
 
-	<select id="getResoucesByRootParentid" resultType="cn.workcenter.model.Resource">
+	<select id="getResoucesByRootParentId" resultType="cn.workcenter.model.Resource">
 		select
   		<include refid="Re_Base_Column_List" />
 		from base_resource re
