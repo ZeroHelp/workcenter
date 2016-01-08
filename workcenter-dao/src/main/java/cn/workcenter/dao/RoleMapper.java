@@ -23,4 +23,12 @@ public interface RoleMapper {
 	int updateRoleStatusById(Map<String, Object> parameterMap);
 	
 	List<Role> queryRolesByUserId(Long id);
+
+	List<Role> queryAllRoles();
+	/**
+	 * 属于用户checked 1 
+	 * @param userId
+	 * @return
+	 */
+	List<Role> queryRolesByUserid(Long userId);
 }

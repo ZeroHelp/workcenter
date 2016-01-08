@@ -131,7 +131,7 @@
   </update>
   <select id="getGroupByUserid" parameterType="java.lang.Long" resultType="cn.workcenter.model.Group">
   	select 
-  	<include refid="gro_Base_Column_List" />
+  	<include refid="gro_Base_Column_List" />, 1 as checked
   	from base_group gro
   	left join base_group_user bgu on bgu.group_id = gro.id
   	where bgu.user_id = #{user_id}
@@ -183,6 +183,13 @@
   	<include refid="gro_Base_Column_List" />
   	from base_group gro
       where gro.status = #{status} and <![CDATA[gro.parent_id<= 0 ]]> 
+  </select>
+  
+  <select id="queryAllGroup" parameterType="cn.workcenter.model.Group" resultType="cn.workcenter.model.Group">
+  	select 
+  	<include refid="gro_Base_Column_List" />, 0 as checked
+  	from base_group gro
+  	where gro.status = 1
   </select>
   
 </mapper>

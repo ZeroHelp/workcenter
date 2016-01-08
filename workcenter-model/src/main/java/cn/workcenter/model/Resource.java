@@ -2,7 +2,7 @@ package cn.workcenter.model;
 
 import java.util.Date;
 
-public class Resource implements Nameable {
+public class Resource implements Nameable , Comparable<Resource> {
     private Long id;
 
     private Long parentId;
@@ -16,8 +16,18 @@ public class Resource implements Nameable {
     private Long createUserid;
 
     private Integer status;
+    
+    private Integer checked;
+    
+    public Integer getChecked() {
+		return checked;
+	}
 
-    public Long getId() {
+	public void setChecked(Integer checked) {
+		this.checked = checked;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -76,5 +86,32 @@ public class Resource implements Nameable {
     @Override
 	public String getName() {
 		return resourceName;
+	}
+    
+    @Override 
+    public int hashCode() {
+    	return this.getName()==null?0:this.getName().hashCode();
+    };
+    
+    @Override
+    public boolean equals(Object o) {
+    	if(o == null&& this == null) return true;
+    	if(o == null ) return false;
+    	
+    	if(o instanceof Nameable) {
+    		String oName = ((Nameable) o).getName()==null?"":((Nameable) o).getName();
+    		String name = this.getName()==null?"":this.getName();
+    		return name.equals(oName);
+    	}
+		return false;
+    	
+    }
+    
+    @Override
+	public int compareTo(Resource o) {
+		Long oId = o.getId();
+		if(id >= oId) return 1;
+		
+		return -1;
 	}
 }

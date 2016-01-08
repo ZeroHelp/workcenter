@@ -29,4 +29,6 @@ public interface GroupMapper {
 	List<Group> selectByParent(Group group);
 	List<Group> queryGroupsByParentId(Group group);
 
+	List<Group> queryAllGroup();
+
 }

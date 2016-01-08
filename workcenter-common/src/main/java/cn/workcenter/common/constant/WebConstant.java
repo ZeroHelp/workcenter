@@ -8,6 +8,14 @@ public interface WebConstant extends Constant{
 	String SUCCESS = "SUCCESS";
 	String FAILURE = "FAILURE";
 	
+	int OK_STATUS = 1;
+	int NO_STATUS = 0;
+	
+	Long WORKCENTER_ROLE_ID = 2L;
+	Long KPI_ROLE_ID = 3L;
+	
+	Long DEVELOP_DEPART_GROUP_ID = 2L;
+	
 	String DEFAULT_PASSWORD = StringUtil.MD5("111111");
 	
 	//----WorkcenterCodeEnum 
@@ -83,6 +91,9 @@ public interface WebConstant extends Constant{
 	String OK_FVA_DELETE = "OK_FVA_DELETE";
 	String OK_FVA_GET = "OK_FVA_GET";
 	String OK_FVA_FORBIDDEN = "OK_FVA_FORBIDDEN";
+	String OK_USERROLE_UPDATE = "OK_USERROLE_UPDATE";
+	String OK_USERGROUP_UPDATE = "OK_USERGROUP_UPDATE";
+	String OK_ROLERESOURCE_UPDATE = "OK_ROLERESOURCE_UPDATE";
 	
 	//----WorkcenterOperationEnum englishname
 	String LOGIN = "LOGIN";
@@ -94,6 +105,7 @@ public interface WebConstant extends Constant{
 	String USER_EDIT = "USER_EDIT";
 	String USER_FORBIDDEN = "USER_FORBIDDEN";
 	String USER_DELETE = "USER_DELETE";
+	
 	//role model
 	String ROLE_ADD = "ROLE_ADD";
 	String ROLE_GET = "ROLE_GET";
@@ -127,4 +139,9 @@ public interface WebConstant extends Constant{
 	String FVA_EDIT = "FVA_EDIT";
 	String FVA_FORBIDDEN = "FVA_FORBIDDEN";
 	String FVA_DELETE = "FVA_DELETE";
+	
+	//user role
+	String USER_UPDATEROLE = "USER_UPDATEROLE";
+	String USER_UPDATEGROUP = "USER_UPDATEGROUP";
+	String ROLE_UPDATERESOURCE = "ROLE_UPDATERESOURCE";
 }

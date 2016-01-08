@@ -14,7 +14,7 @@
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">创建新季度绩效</button>
 
 	<div class="table-responsive">
-		<table class="table table-striped">
+		<!-- <table class="table table-striped">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -33,7 +33,7 @@
 					<td>sit</td>
 				</tr>
 			</tbody>
-		</table>
+		</table> -->
 	</div>
 
 </div>
@@ -61,6 +61,20 @@
 						<label for="message-text" class="control-label">Message:</label>
 						<textarea class="form-control" id="message-text"></textarea>
 					</div> -->
+					
+					<div class="col-sm-12">
+						<br>
+					</div> <!-- 空行 -->
+					
+					<c:forEach items="${groups}" var="group">
+						<div class="radio">
+						  <label>
+						    <input type="radio" name="groupId" value="${group.id}" >
+						    ${group.groupName}-${group.groupChName}
+						  </label>
+						</div>
+					</c:forEach>
+					
 				</form>
 			</div>
 			<div class="modal-footer">

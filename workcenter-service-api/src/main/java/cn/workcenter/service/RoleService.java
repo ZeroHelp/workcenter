@@ -17,6 +17,12 @@ public interface RoleService {
 	Object forbiddenRoles(String roleids);
 
 	Object deleteRoles(String roleids);
+
+	List<Role> queryKpiDefaultRoles();
+
+	List<Role> getRolesByUserid(Long userId);
+
+	Object updateUserRoles(Long userId, Long[] roleId);
 	
 	List<Role> queryRolesByUserId(Long id);
 	

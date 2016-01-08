@@ -19,7 +19,21 @@ public enum WorkcenterOperationEnum implements WebConstant {
 	ROLE_FORBIDDEN("0020009", WebConstant.ROLE_FORBIDDEN, "角色获取"),
 	ROLE_DELETE("0020010", WebConstant.ROLE_DELETE, "角色获取"),
 	
+	RESOURCE_ADD("0020011", WebConstant.RESOURCE_ADD, "资源添加"),
+	RESOURCE_GET("0020012", WebConstant.RESOURCE_GET, "资源获取"),
+	RESOURCE_EDIT("0020013", WebConstant.RESOURCE_EDIT, "资源获取"),
+	RESOURCE_FORBIDDEN("0020014", WebConstant.RESOURCE_FORBIDDEN, "资源获取"),
+	RESOURCE_DELETE("0020015", WebConstant.RESOURCE_DELETE, "资源获取"),
 	
+	GROUP_ADD("0020016", WebConstant.GROUP_ADD, "用户组添加"),
+	GROUP_GET("0020017", WebConstant.GROUP_GET, "用户组获取"),
+	GROUP_EDIT("0020018", WebConstant.GROUP_EDIT, "用户组获取"),
+	GROUP_FORBIDDEN("0020019", WebConstant.GROUP_FORBIDDEN, "用户组获取"),
+	GROUP_DELETE("0020020", WebConstant.GROUP_DELETE, "用户组获取"),
+	
+	USER_UPDATEROLE("0020021", WebConstant.USER_UPDATEROLE, "用户角色更改"),
+	USER_UPDATEGROUP("0020022", WebConstant.USER_UPDATEGROUP, "用户用户组更改"),
+	ROLE_UPDATERESOURCE("0020023", WebConstant.ROLE_UPDATERESOURCE, "角色资源更改"),
 	;
 	
 	String operationCode;

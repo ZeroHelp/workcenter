@@ -1,9 +1,13 @@
 package cn.workcenter.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +17,9 @@ import cn.workcenter.common.WorkcenterCodeEnum;
 import cn.workcenter.common.WorkcenterResult;
 import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.dao.RoleMapper;
+import cn.workcenter.dao.UserRoleMapper;
 import cn.workcenter.model.Role;
+import cn.workcenter.model.UserRole;
 import cn.workcenter.service.RoleService;
 import cn.workcenter.service.UserService;
 
@@ -24,6 +30,8 @@ public class RoleServiceImpl extends WorkcenterApplication implements RoleServic
 	private UserService userService;
 	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
+	private UserRoleMapper userRoleMapper;
 	@Override
 	public List<Role> queryRoles(Role role) {
 		List<Role> roles = roleMapper.queryRolesBySelective(role);
@@ -96,9 +104,54 @@ public class RoleServiceImpl extends WorkcenterApplication implements RoleServic
 			return WorkcenterResult.custom().setNO(WorkcenterCodeEnum.valueOf(NO_ROLE_DELETE)).build();
 		}
 	}
+	
 	@Override
 	public List<Role> queryRolesByUserId(Long id) {
 		// TODO Auto-generated method stub
 		return roleMapper.queryRolesByUserId(id);
+	}
+
+	@Override
+	public List<Role> queryKpiDefaultRoles() {
+		Role workcenterRole = roleMapper.selectByPrimaryKey(WORKCENTER_ROLE_ID);
+		Role kpiRole = roleMapper.selectByPrimaryKey(KPI_ROLE_ID);
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(workcenterRole);
+		roles.add(kpiRole);
+		return roles;
+	}
+	
+	@Override
+	public List<Role> getRolesByUserid(Long userId) {
+		List<Role> rolesList = new ArrayList<Role>();
+		
+		Set<Role> rolesSet = new HashSet<Role>();
+		List<Role> userRoles = roleMapper.queryRolesByUserid(userId);
+		List<Role> allRoles = roleMapper.queryAllRoles();
+		rolesSet.addAll(userRoles);
+		rolesSet.addAll(allRoles);
+		
+		rolesList.addAll(rolesSet);
+		Collections.sort(rolesList);
+		return rolesList;
+	}
+	
+	@Override
+	public Object updateUserRoles(Long userId, Long[] roleId) {
+		
+		userRoleMapper.deleteUserRoleByUserId(userId);
+		
+		for(int i=0;i<roleId.length;i++) {
+			Long roleid = roleId[i];
+			UserRole userRole = new UserRole();
+			userRole.setUserId(userId);
+			userRole.setRoleId(roleid);
+			userRole.setCreateTime(new Date());
+			userRole.setCreateUserId(userService.getUserId());
+			userRole.setStatus(OK_STATUS);
+			userRoleMapper.insertSelective(userRole);
+		}
+		
+		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USERROLE_UPDATE)).build();
 	}
 }

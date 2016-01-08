@@ -17,10 +17,10 @@ public class AdminUserServiceImpl implements AdminUserService {
 	@Autowired
 	private UserMapper userMapper;
 	@Override
-	public List<User> getWaitAssessments() {
+	public List<User> getWaitAssessments(Long groupId) {
 		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		parameterMap.put("group_id", 2L);
+		parameterMap.put("group_id", groupId);
 		List<User> users = userMapper.getUsersByGroupid(parameterMap);
 		
 		return users;

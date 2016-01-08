@@ -14,4 +14,6 @@ public interface GroupUserMapper {
     int updateByPrimaryKeySelective(GroupUser record);
 
     int updateByPrimaryKey(GroupUser record);
+
+	void deleteGroupUserByUserId(Long userId);
 }

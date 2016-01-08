@@ -19,6 +19,8 @@ public interface ResourceMapper {
 
     int updateByPrimaryKey(Resource record);
     
+    List<Resource> getResourcesByRoleid(Long roleId);
+    
 	List<Resource> getResourcesByRolename(String rolename);
 
 	List<Resource> getResourcesByUsername(String username);
@@ -34,5 +36,7 @@ public interface ResourceMapper {
 	List<Resource> queryResouces(Long roleId);
 	
 	List<Resource> getResoucesByRootParentId();
+
+	List<Resource> queryAllResource();
 	
 }

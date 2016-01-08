@@ -33,9 +33,6 @@
   <insert id="insertSelective" parameterType="cn.workcenter.model.UserRole" useGeneratedKeys="true" keyProperty="id">
     insert into base_user_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="userId != null" >
         user_id,
       </if>
@@ -53,9 +50,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
       </if>
@@ -103,4 +97,9 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <delete id="deleteUserRoleByUserId" parameterType="java.lang.Long">
+  	delete from base_user_role 
+    where user_id = #{user_id}
+  </delete>
 </mapper>

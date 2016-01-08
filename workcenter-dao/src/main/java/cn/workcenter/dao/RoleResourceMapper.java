@@ -18,4 +18,6 @@ public interface RoleResourceMapper {
     int updateByPrimaryKey(RoleResource record);
     
     List<RoleResource> getResourceByRoleid(Long id);
+
+	void deleteRoleResourceByRoleId(Long roleId);
 }

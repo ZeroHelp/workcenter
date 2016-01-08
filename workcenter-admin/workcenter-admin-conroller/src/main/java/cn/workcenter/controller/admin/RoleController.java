@@ -23,7 +23,10 @@ import cn.workcenter.common.WorkcenterResult;
 import cn.workcenter.common.constant.Constant;
 import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.common.response.WorkcenterResponseBodyJson;
+import cn.workcenter.model.Group;
+import cn.workcenter.model.Resource;
 import cn.workcenter.model.Role;
+import cn.workcenter.service.ResourceService;
 import cn.workcenter.service.RoleService;
 import cn.workcenter.service.UserService;
 
@@ -36,6 +39,8 @@ public class RoleController implements Constant, WebConstant {
 	private RoleService roleService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ResourceService resourceService;
 	
 	@Autowired
 	private ZtreeService ztreeService;
@@ -80,6 +85,27 @@ public class RoleController implements Constant, WebConstant {
 		request.setAttribute("viewPage", "workcenter/role/list.jsp");
 		
 		return "admin/main";
+	}
+	
+	@RequestMapping(value="{sid}/admin/role/resourcelist", method=RequestMethod.GET)
+	@ResponseBody
+	public Object resourcelist(@PathVariable String sid, 
+			@RequestParam Long roleId,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		List<Resource> resources = resourceService.getResourcesByUserid(roleId);
+		
+		return resources;
+	}
+	
+	@RequestMapping(value="{sid}/admin/role/updateResource", method=RequestMethod.POST)
+	@ResponseBody
+	public Object updateResource(@RequestParam Long[] resourceId, @RequestParam Long roleId,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		WorkcenterResult result = (WorkcenterResult) resourceService.updateUserResources(roleId, resourceId);
+		
+		return WorkcenterResponseBodyJson.custom().setAll(result, ROLE_UPDATERESOURCE).build();
 	}
 	
 	@RequestMapping(value="{sid}/admin/role/add", method=RequestMethod.POST)
