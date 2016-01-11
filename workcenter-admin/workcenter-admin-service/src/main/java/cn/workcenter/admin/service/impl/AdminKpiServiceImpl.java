@@ -15,8 +15,10 @@ import cn.workcenter.dao.FlowSwimlaneUserMapper;
 import cn.workcenter.dao.FlowTaskMapper;
 import cn.workcenter.dao.FlowTaskinstanceMapper;
 import cn.workcenter.kpi.dao.EnactmentCulturalMapper;
+import cn.workcenter.kpi.dao.EnactmentSelfMapper;
 import cn.workcenter.kpi.dao.MainMapper;
 import cn.workcenter.kpi.model.EnactmentCultural;
+import cn.workcenter.kpi.model.EnactmentSelfWithBLOBs;
 import cn.workcenter.kpi.model.Main;
 import cn.workcenter.model.FlowProcessinstance;
 import cn.workcenter.model.FlowSwimlane;
@@ -47,6 +49,8 @@ public class AdminKpiServiceImpl implements AdminKpiService, FlowConstant {
 	private MainMapper mainMapper;
 	@Autowired
 	private EnactmentCulturalMapper enactmentCulturalMapper;
+	@Autowired
+	EnactmentSelfMapper enactmentSelfMapper;
 	@Override
 	public void initKpi(String year, String remark, Long groupId) {
 		
@@ -71,6 +75,7 @@ public class AdminKpiServiceImpl implements AdminKpiService, FlowConstant {
 	 * 2.根据task组件 创建任务 关联人组 swimelane
 	 * 3.创建taskinstance
 	 * 4.创建main cultural
+	 * 5.创建main self
 	 * @param writer
 	 * @param year
 	 * @param remark
@@ -116,11 +121,23 @@ public class AdminKpiServiceImpl implements AdminKpiService, FlowConstant {
 		//3.创建main
 		Long mainId = createMain(writer, assessment, flowProcessinstance_id, year, remark);
 		createCultural(mainId);
+		createSelf(mainId);
 		
 		return flowProcessinstance_id;
 	}
 	
 	
+	private void createSelf(Long mainId) {
+		EnactmentSelfWithBLOBs enactmentSelf = new EnactmentSelfWithBLOBs();
+		enactmentSelf.setKpiMainId(mainId);
+		enactmentSelf.setIndexNum(0);
+		enactmentSelf.setSelfDirection("");
+		enactmentSelf.setSelfGoal("");
+		enactmentSelf.setSelfWeight(100);
+		enactmentSelf.setStatus(1);
+		enactmentSelfMapper.insertSelective(enactmentSelf);
+	}
+
 	private void createCultural(Long mainId) {
 		EnactmentCultural enactmentCultural = new EnactmentCultural();
 		enactmentCultural.setKpiMainId(mainId);

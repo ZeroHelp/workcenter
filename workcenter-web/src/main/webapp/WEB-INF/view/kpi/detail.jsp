@@ -15,6 +15,7 @@
 <title>宜信财富在线</title>
 <link href="<%=basePath%>/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=basePath%>/css/navbar-fixed-top.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -121,14 +122,14 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" value="${self.selfDirection}" type="text" class="form-control" placeholder="填写方向..."  > 
+												<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" value="${self.selfDirection}" type="text" class="requireds form-control" placeholder="填写方向..."  > 
 												<span class="input-group-btn">
 													<button class="plus_btn btn btn-default" type="button">
 														<span class="glyphicon glyphicon-plus" />
 													</button>
-													<button class="minus_btn btn btn-default" type="button">
+													<!-- <button class="minus_btn btn btn-default" type="button">
 														<span class="glyphicon glyphicon-minus" />
-													</button>
+													</button> -->
 												</span>
 											</div>
 										</div>
@@ -154,7 +155,7 @@
 									<div class="row">
 										<span class="col-sm-1 control-label text-right label_text">个人设定目标:</span>
 										<div class="form-group col-sm-11">
-											<textarea name="selfGoal" class="form-control" rows="3" >${self.selfGoal }</textarea>
+											<textarea name="selfGoal" class="requireds form-control" rows="3" >${self.selfGoal }</textarea>
 										</div>
 									</div>
 								</c:if><!-- selfGoal end -->
@@ -173,7 +174,7 @@
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
-												<span class="input-group-addon">权重</span> <input type="text" name="selfWeight" class="form-control text-right" aria-label="Amount (to the nearest dollar)" value="${self.selfWeight }"> <span class="input-group-addon">%</span>
+												<span class="input-group-addon">权重</span> <input type="text" name="selfWeight" class="requireds form-control text-right required" aria-label="Amount (to the nearest dollar)" value="${self.selfWeight }"> <span class="input-group-addon">%</span>
 											</div>
 										</div>
 									</div> <!-- /.row -->
@@ -196,7 +197,7 @@
 									<div class="row">
 										<span class="col-sm-1 control-label text-right">自我评价:</span>
 										<div class="form-group col-sm-11">
-											<textarea name="selfEvaluate" class="form-control" rows="3" >${self.selfEvaluate }</textarea>
+											<textarea name="selfEvaluate" class="requireds form-control" rows="3" >${self.selfEvaluate }</textarea>
 										</div>
 									</div>
 								</c:if> <!-- selfEvaluate end -->
@@ -218,7 +219,7 @@
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
-												<span class="input-group-addon">自评</span> <input name="selfScore" type="text" class="form-control text-right" aria-label="..." value="${self.selfScore}">
+												<span class="input-group-addon">自评</span> <input name="selfScore" type="text" class="requireds form-control text-right" aria-label="..." value="${self.selfScore}">
 												<div class="input-group-btn">
 													<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														分<span class="caret"></span>
@@ -260,7 +261,7 @@
 									<div class="row">
 										<span class="col-sm-1 control-label text-right">领导评价:</span>
 										<div class="form-group col-sm-11">
-											<textarea name="leaderEvaluation" class="form-control" rows="3" value="${self.leaderEvaluation}"></textarea>
+											<textarea name="leaderEvaluation" class="requireds form-control" rows="3" value="${self.leaderEvaluation}"></textarea>
 										</div>
 									</div> <!-- /.row -->
 								</c:if>
@@ -280,7 +281,7 @@
 									<div class="row">
 										<div class="col-sm-2 col-sm-offset-10">
 											<div class="input-group">
-												<span class="input-group-addon">审评</span> <input name="leaderScore" type="text" class="form-control text-right" aria-label="..." value="${self.leaderScore}">
+												<span class="input-group-addon">审评</span> <input name="leaderScore" type="text" class="requireds form-control text-right" aria-label="..." value="${self.leaderScore}">
 												<div class="input-group-btn">
 													<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														分<span class="caret"></span>
@@ -308,87 +309,6 @@
 						</tr>
 					</c:forEach>
 					
-					<!-- 如果起草阶段，接一个空的 个人目标  -->
-					<c:if test="${selfDirection_access == 3}">
-						<tr> 
-							<td>
-								<input type="hidden" name="selfId" value="" />
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="input-group">
-											<span class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方向&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <input name="selfDirection" type="text" class="form-control" placeholder="填写方向...">
-											<span class="input-group-btn">
-												<button class="plus_btn btn btn-default" type="button">
-													<span class="glyphicon glyphicon-plus" />
-												</button>
-												<button class="minus_btn btn btn-default" type="button">
-													<span class="glyphicon glyphicon-minus" />
-												</button>
-											</span>
-										</div>
-									</div>
-								</div> <!-- /.row -->
-								
-								<div class="col-sm-12">
-									<br>
-								</div> <!-- 空行 -->
-
-								<div class="row">
-									<span class="col-sm-1 control-label text-right label_text">个人设定目标:</span>
-									<div class="form-group col-sm-11">
-										<textarea name="selfGoal" class="form-control" rows="3" placeholder="填写个人设定目标..."></textarea>
-									</div>
-								</div> <!-- /.row -->
-
-								<div class="row">
-									<div class="col-sm-2 col-sm-offset-10">
-										<div class="input-group">
-											<span class="input-group-addon">权重</span> <input name="selfWeight" type="text" class="form-control text-right" aria-label="Amount (to the nearest dollar)"> <span class="input-group-addon">%</span>
-										</div>
-									</div>
-								</div> <!-- /.row -->
-								
-								<div class="col-sm-12">
-									<br>
-								</div> <!-- 空行 -->
-
-								<div class="row">
-									<span class="col-sm-1 control-label text-right">自我评价:</span>
-									<div class="form-group col-sm-11">
-										<textarea name="selfEvaluate" class="form-control" rows="3" readonly></textarea>
-									</div>
-								</div> <!-- /.row -->
-								
-								<div class="row">
-									<div class="col-sm-2 col-sm-offset-10">
-										<div class="input-group">
-											<span class="input-group-addon">自评</span> <input name="selfScore" type="text" class="form-control text-right" aria-label="..." readonly> <span class="input-group-addon">分</span>
-										</div>
-									</div>
-								</div> <!-- /.row -->
-								
-								<div class="col-sm-12">
-									<br>
-								</div> <!-- 空行 -->
-
-								<div class="row">
-									<span class="col-sm-1 control-label text-right">领导评价:</span>
-									<div class="form-group col-sm-11">
-										<textarea name="leaderEvaluation" class="form-control" rows="3" readonly></textarea>
-									</div>
-								</div> <!-- /.row -->
-								
-								<div class="row">
-
-									<div class="col-sm-2 col-sm-offset-10">
-										<div class="input-group">
-											<span class="input-group-addon">审评</span> <input name="leaderScore" type="text" class="form-control text-right" aria-label="..." readonly> <span class="input-group-addon">分</span>
-										</div>
-									</div>
-								</div> <!-- /.row -->
-							</td>
-						</tr>
-					</c:if>
 				</tbody>
 			</table>
 
@@ -462,7 +382,7 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)">
+												<span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="requireds form-control " placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)">
 											</div>
 										</div>
 									</div> <!-- /.row -->
@@ -588,6 +508,9 @@
 	<script src="<%=basePath%>/js/jquery.min.js"></script> 
 	<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
 	<script src="<%=basePath%>/js/jquery.form.js"></script>
+	<script src="<%=basePath%>/js/jquery.validate.js"></script>
+	<script src="<%=basePath%>/js/additional-methods.js"></script>
+	<script src="<%=basePath%>/js/messages_zh.js"></script>
 	
 	<script>
 		function checkNum(num) {
@@ -624,8 +547,17 @@
 			}
 			return true;
 		}
+		function alert() {
+			$("#model_title").text("表单异常");
+			$("#model_content").text("valid");
+			$('#myModal').modal();
+		}
+		
+		var button;
 		$(document).ready(
+				
 				function() {
+					
 					$(".back_btn").on("click", function() {
 						window.location.href = '<%=basePath%>/${sid}/kpi/home';
 					});
@@ -636,32 +568,78 @@
 						$(this).parent().parent().parent().parent().find("input").val(score);
 					});
 					
-					/* 提交表单 */
-					$(".submit_btn").on("click", function() {
-						var formParam = $("#kpiForm").formSerialize();
-						var method = $(this).attr("value1");
-						if(method=='submit'){
-							if(!validateWeight()){
-								return;
-							}
-						}
-						$.ajax({
-							type: "post",
-							url: "<%= basePath%>/${sid}/kpi/assessment/${main_id}",
-							dataType: "json",
-							data: formParam + "&method=" + method,
-							success: function(data) {
-								if(data.returncode=="200") {
-									$("#model_title").text(data.returnmsg);
-									$("#model_content").text(data.returnmemo);
-									$('#myModal').modal();
-								} else {
-									$("#model_title").text(data.returnmsg);
-									$("#model_content").text(data.returnmemo);
-									$('#myModal').modal();
+					$("#kpiForm").validate({
+						rules: {
+							selfDirection: "requireds",
+							selfGoal: "requireds",
+							selfWeight: "requireds",
+							selfEvaluate: "requireds",
+							selfScore: "requireds",
+							leaderEvaluation: "requireds",
+							leaderScore: "requireds",
+							
+							taskContent: "requireds",
+						},
+						messages: {
+							selfDirection: "存在方向为空",
+							selfGoal: "存在个人设定目标为空",
+							selfWeight: "存在权重为空",
+							selfEvaluate: "存在自我评价为空",
+							selfScore: "存在自评为空",
+							leaderEvaluation: "存在领导评价为空",
+							leaderScore: "存在审评为空",
+							
+							taskContent: "存在能力素质为空",
+						},
+						onfocusout: function(element) { 
+							return ; 
+						},
+						onfocuson: function(element) { 
+							return ; 
+						},
+						submitHandler: function(form) {
+							
+							var formParam = $("#kpiForm").formSerialize();
+							
+							var method = button.attr("value1");
+							if(method=='submit'){
+								if(!validateWeight()){
+									return false;
 								}
 							}
-						})
+							$.ajax({
+								type: "post",
+								url: "<%= basePath%>/${sid}/kpi/assessment/${main_id}",
+								dataType: "json",
+								data: formParam + "&method=" + method,
+								success: function(data) {
+									if(data.returncode=="200") {
+										$("#model_title").text(data.returnmsg);
+										$("#model_content").text(data.returnmemo);
+										$('#myModal').modal();
+									} else {
+										$("#model_title").text(data.returnmsg);
+										$("#model_content").text(data.returnmemo);
+										$('#myModal').modal();
+									}
+								}
+							})
+							return false;
+						},
+						invalidHandler: function(form, validator) {
+							return false;
+						}
+					});
+					
+					/* 提交表单 */
+					$(".submit_btn").on("click", function() {
+						button = $(this);
+						
+						$("#model_title").text("");
+						$("#model_content").text("");
+						$('#myModal').modal();
+						
+						$("#kpiForm").submit();
 					});
 					
 					$("#changepassword").on("click", function() {
@@ -707,9 +685,9 @@
 												'<button class="plus_btn btn btn-default" type="button">' + 
 													'<span class="glyphicon glyphicon-plus" />' + 
 												'</button>' + 
-												'<button class="minus_btn btn btn-default" type="button">' + 
+												/* '<button class="minus_btn btn btn-default" type="button">' + 
 													'<span class="glyphicon glyphicon-minus" />' + 
-												'</button>' + 
+												'</button>' +  */
 											'</span>' + 
 										'</div>' + 
 									'</div>' + 
@@ -722,7 +700,7 @@
 								'<div class="row">' + 
 									'<span class="col-sm-1 control-label text-right label_text">个人设定目标:</span>' + 
 									'<div class="form-group col-sm-11">' + 
-										'<textarea name="selfGoal" class="form-control" rows="3" placeholder="填写个人设定目标..."></textarea>' + 
+										'<textarea name="selfGoal" class="requireds form-control" rows="3" placeholder="填写个人设定目标..."></textarea>' + 
 									'</div>' + 
 								'</div> <!-- /.row -->' + 
 
@@ -742,7 +720,7 @@
 								'<div class="row">' + 
 									'<span class="col-sm-1 control-label text-right">自我评价:</span>' + 
 									'<div class="form-group col-sm-11">' + 
-										'<textarea class="form-control" rows="3" readonly></textarea>' + 
+										'<textarea class="requireds form-control" rows="3" readonly></textarea>' + 
 									'</div>' + 
 								'</div> <!-- /.row -->' + 
 								
@@ -761,7 +739,7 @@
 								'<div class="row">' + 
 									'<span class="col-sm-1 control-label text-right">领导评价:</span>' + 
 									'<div class="form-group col-sm-11">' + 
-										'<textarea class="form-control" rows="3" readonly></textarea>' + 
+										'<textarea class="requireds form-control" rows="3" readonly></textarea>' + 
 									'</div>' + 
 								'</div> <!-- /.row -->' + 
 
