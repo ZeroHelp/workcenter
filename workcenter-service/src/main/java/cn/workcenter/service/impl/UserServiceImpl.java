@@ -361,4 +361,13 @@ public class UserServiceImpl extends WorkcenterApplication implements UserServic
 		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USER_ADD)).build();
 	}
 
+	@Override
+	public User getRootGroupManager(Long group_id) {
+		Map<String , Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("group_id", group_id);
+		List<User> groupUsers = userMapper.getUsersByGroupid(parameterMap);
+		User manager = groupUsers.get(0);
+		return manager;
+	}
+
 }

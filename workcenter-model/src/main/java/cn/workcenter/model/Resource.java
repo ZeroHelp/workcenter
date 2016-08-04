@@ -18,8 +18,18 @@ public class Resource implements Nameable , Comparable<Resource> {
     private Integer status;
     
     private Integer checked;
+    //vo
+    private String icons;
     
-    public Integer getChecked() {
+    public String getIcons() {
+		return icons;
+	}
+
+	public void setIcons(String icons) {
+		this.icons = icons;
+	}
+
+	public Integer getChecked() {
 		return checked;
 	}
 

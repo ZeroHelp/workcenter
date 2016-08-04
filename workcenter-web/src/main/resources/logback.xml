@@ -2,8 +2,6 @@
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/2002/xmlspec/dtd/2.10/xmlspec.dtd"> -->
 <configuration>
 
-	<property name="LOG_HOME" value="/app/tomcat/logs" />
-
 	<property name="LOG_LEVEL" value="DEBUG" />
 
 	<!-- 控制台输出 -->
@@ -21,7 +19,7 @@
 		<Encoding>UTF-8</Encoding>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${LOG_HOME}/godzilla/log-%d{yyyy-MM-dd}.log
+			<FileNamePattern>${catalina.base}/logs/log-%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			<!-- 存活时间（天） -->
 			<MaxHistory>365</MaxHistory>

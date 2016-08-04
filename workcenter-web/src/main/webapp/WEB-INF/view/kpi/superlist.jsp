@@ -26,7 +26,7 @@
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<%=basePath%>/${sid }/workcenter/home">workcenter系统</a><a class="navbar-brand" href="#">
+				<a class="navbar-brand" href="<%=basePath%>/${sid }/workcenter/home">workcenter系统</a><a class="navbar-brand" href="#">></a><a class="navbar-brand" href="<%=basePath%>/${sid }/kpi/superhome">KPI超级用户查看</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 
@@ -50,61 +50,65 @@
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
 			<div class="span7 text-center">
-				<h1>欢迎使用,workcenter</h1>
+				<h1>欢迎使用,kpi系统</h1>
 			</div>
 		</div>
 
-		<div class="row">
-			<c:forEach var="component" items="${modules}">
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail">
-						<p>&nbsp;</p>
-						<img style="width: 200px;" src="<%=basePath%>/img/icons/png/${component.icons }" alt="Infinity-Loop" class="tile-image big-illustration">
-						<div class="caption">
-							<div class="span7 text-center">
-								<h3>${component.resourceName }</h3>
-							</div>
-							<div class="span7 text-center">
-								<p>
-									<a  href="#" class="component btn btn-primary" value1="${component.resourceUrl }" role="button">进入</a>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
+
+
+		
+		<c:forEach items="${groupKpis}" var="groupKpiMap">
+			<div class="panel panel-default">
+				<div class="panel-heading">&nbsp;${groupKpiMap.groupChName}考核列表</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>年度</th>
+							<th>备注</th>
+							<th>待考核人</th>
+							<th>审核人</th>
+							<th>等级</th>
+							<th>状态</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${groupKpiMap.kpiList}" var="kpi">
+							<tr>
+								<th scope="row">${kpi.index }</th>
+								<td>${kpi.year }</td>
+								<td>${kpi.remark }</td>
+								<td>${kpi.waitAssessmentPerson }</td>
+								<td>${kpi.assessmentPerson }</td>
+								<td>${kpi.grade }</td>
+								<td>${kpi.assessStatusName }</td>
+								<td>
+									<button type="button" 
+										value1= "${kpi.mainId}" value2="${kpi.method}" value3="${kpi.taskinstanceId}" 
+										class="get_btn btn btn-sm btn-default">${kpi.operator }</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</c:forEach>
+		
 	</div>
 	<!-- /container -->
-	
-	<!-- dialog -->
-	<div class="modal fade" id="myModal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="model_title">model_title</h4>
-	      </div>
-	      <div class="modal-body">
-	        <p id="model_content">model_content</p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-	
+
 	<script src="<%=basePath%>/js/jquery.min.js"></script>
 	<script src="<%=basePath%>/dist/js/bootstrap.min.js"></script>
+
 	<script>
 		$(document).ready(function() {
-			$(".component").on("click", function() {
-				var url = $(this).attr("value1");
-				window.location.href = '<%=basePath%>/${sid}/'+ url;
+			$(".get_btn").on("click", function() {
+				var main_id = $(this).attr("value1");
+				var method = $(this).attr("value2");
+				var taskinstanceId = $(this).attr("value3");
+				window.location.href = '<%=basePath%>/${sid}/kpi/superview/' + main_id + '?method=' + method;
 			});
-			
 			$("#changepassword").on("click", function() {
 				window.location.href = '<%=basePath%>/${sid}/workcenter/password';
 			});

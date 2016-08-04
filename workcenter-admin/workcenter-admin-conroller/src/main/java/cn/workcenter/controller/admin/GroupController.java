@@ -1,6 +1,7 @@
 package cn.workcenter.controller.admin;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +73,12 @@ public class GroupController implements Constant, WebConstant {
 			request.setAttribute("queryLabel_ch", "用户组名");
 			request.setAttribute("queryValue", "");
 		}
+		
+		List<Group> parentGroups = groupService.getParentGroups();
+		
 		request.setAttribute("groups", groups);
+		
+		request.setAttribute("parentGroups", parentGroups);
 		request.setAttribute("menus", menus);
 		request.setAttribute("username", userService.getUsername());
 		request.setAttribute("viewPage", "workcenter/group/list.jsp");

@@ -17,6 +17,8 @@ public interface KpiService {
 	Object doFlowGet(String method, Long main_id);
 	
 	Object doFlowPost(String method, Long main_id);
+	
+	Object doFlowSuperView(String method, Long main_id);
 
 	List<Map<String, Object>> getAssosiateKpis();
 
@@ -41,5 +43,9 @@ public interface KpiService {
 	void doNextMainPrepare(Long processinstance_id, Long node_id);
 
 	void doPreMainPrepare(Long processinstance_id, Long node_id);
+
+	List<Map<String, Object>> getAllKpis();
+
+	String getWaitAssessmentPerson(Long main_id);
 
 }

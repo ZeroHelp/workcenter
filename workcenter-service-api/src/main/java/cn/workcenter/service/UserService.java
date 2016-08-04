@@ -62,4 +62,6 @@ public interface UserService {
 
 	Object addUser(User user, Long[] roleId, Long[] groupId);
 
+	User getRootGroupManager(Long group_id);
+
 }

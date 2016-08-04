@@ -117,7 +117,12 @@ public class GroupServiceImpl extends WorkcenterApplication implements GroupServ
 		
 		Set<Group> groupsSet = new HashSet<Group>();
 		List<Group> userGroups = new ArrayList<Group>();
-		userGroups.add(groupMapper.getGroupByUserid(userId));
+		
+		Group group = groupMapper.getGroupByUserid(userId);
+		if(group!=null) {
+			userGroups.add(group);
+		}
+		
 		List<Group> allGroups = groupMapper.queryAllGroup();
 		groupsSet.addAll(userGroups);
 		groupsSet.addAll(allGroups);
@@ -141,5 +146,27 @@ public class GroupServiceImpl extends WorkcenterApplication implements GroupServ
 		}
 		
 		return WorkcenterResult.custom().setOK(WorkcenterCodeEnum.valueOf(OK_USERGROUP_UPDATE)).build();
+	}
+	@Override
+	public List<Group> getParentGroups() {
+		List<Group> groups = getAllGroups();
+		List<Group> parentGroups = new ArrayList<Group>();
+		parentGroups.addAll(groups);
+		Group rootGroup = new Group();
+		rootGroup.setId(0L);
+		rootGroup.setGroupChName("父用户组");
+		parentGroups.add(0, rootGroup);
+		return parentGroups;
+	}
+	@Override
+	public List<Group> getGroupsParentIdZero() {
+		List<Group> groups = getAllGroups();
+		List<Group> parentGroup = new ArrayList<Group>();
+		for(Group group: groups) {
+			if(group.getParentId()!=null && group.getParentId().equals(0L)) {
+				parentGroup.add(group);
+			}
+		}
+		return parentGroup;
 	}
 }

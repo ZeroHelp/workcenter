@@ -16,7 +16,7 @@
 		<button id="edit_btn" type="button" class="btn btn-primary" >修改</button>
 		<button value1="forbidden" type="button" class="delete_btn btn btn-primary" >禁用</button>
 		<button value1="delete" type="button" class="delete_btn btn btn-primary" >删除</button>
-		<button id="edit_resource_btn" type="button" class="btn btn-primary" >编辑用户组</button>
+		<button id="edit_resource_btn" type="button" class="btn btn-primary" >编辑角色</button>
 		
 		<div class="col-sm-3">
 			<form id="queryForm">
@@ -91,7 +91,7 @@
 				<button type="button" class="back_btn close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="exampleResourceModalLabel">更新用户用户组</h4>
+				<h4 class="modal-title" id="exampleResourceModalLabel">更新角色</h4>
 				<h4 class="modal-title" id="exampleResourceModalLabel1">rolename</h4>
 			</div>
 			<div class="modal-body">
@@ -162,7 +162,7 @@
 		
 		$("#edit_resource_btn").on("click", function() {
 			
-			$("#roleResourceModalLabel").text("编辑用户用户组");
+			$("#roleResourceModalLabel").text("编辑角色");
 			var checkedNum = $("#listTable").find("input:checkbox[name='roleId']:checked").length;
 			if(checkedNum > 1||checkedNum<=0) {
 				$("#exampleModal").modal('hide');

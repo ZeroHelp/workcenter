@@ -27,8 +27,31 @@ public class IndexController extends KpiApplication {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping(value="{sid}/kpi/superhome", method=RequestMethod.GET)
+	public Object superKpiListPage(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
+		List<Map<String, Object>> groupKpis = kpiService.getAllKpis();
+		request.setAttribute("groupKpis", groupKpis);
+		request.setAttribute("username", userService.getUsername());
+		return "/kpi/superlist";
+	}
+	
+	@RequestMapping(value="{sid}/kpi/superview/{main_id}", method=RequestMethod.GET)
+	public Object superviewPage(@PathVariable String sid, @PathVariable Long main_id, 
+			@RequestParam String method, HttpServletRequest request, HttpServletResponse response) {
+		
+		KpiApplication.requestThreadLocal.set(request);
+		
+		Object obj = kpiService.doFlowSuperView(method, main_id); 
+		
+		String waitAssessmentPerson = kpiService.getWaitAssessmentPerson(main_id);
+		request.setAttribute("waitAssessmentPerson", waitAssessmentPerson);
+		request.setAttribute("method", method);
+		request.setAttribute("username", userService.getUsername());
+		return "kpi/superdetail";
+	}
+	
 	@RequestMapping(value="{sid}/kpi/home", method=RequestMethod.GET)
-	public Object loginPage1(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
+	public Object kpiListPage1(@PathVariable String sid, HttpServletRequest request, HttpServletResponse response) {
 		List<Map<String, Object>> kpiList = kpiService.getAssosiateKpis();
 		request.setAttribute("kpiList", kpiList);
 		request.setAttribute("username", userService.getUsername());
@@ -43,6 +66,8 @@ public class IndexController extends KpiApplication {
 		
 		Object obj = kpiService.doFlowGet(method, main_id); 
 		
+		String waitAssessmentPerson = kpiService.getWaitAssessmentPerson(main_id);
+		request.setAttribute("waitAssessmentPerson", waitAssessmentPerson);
 		request.setAttribute("method", method);
 		request.setAttribute("username", userService.getUsername());
 		return "kpi/detail";

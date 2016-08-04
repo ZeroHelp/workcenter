@@ -27,6 +27,9 @@ import cn.workcenter.kpi.model.EnactmentSelfWithBLOBs;
 import cn.workcenter.kpi.model.Main;
 import cn.workcenter.kpi.service.KpiService;
 import cn.workcenter.model.FlowTaskinstance;
+import cn.workcenter.model.Group;
+import cn.workcenter.model.User;
+import cn.workcenter.service.GroupService;
 import cn.workcenter.service.UserService;
 
 @Service("kpiService")
@@ -47,8 +50,12 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 	
 	@Override
 	public List<Map<String, Object>> getAssosiateKpis() {
-		
 		String username = userService.getUsername();
+		return getAssosiateKpis(username);
+	}
+	
+	private List<Map<String, Object>> getAssosiateKpis(String username) {
+		
 		List<Main> filedMains = getKpisByUsernameAndIsfiled(username, FILED);
 		setOperatorByIsFiled(filedMains, FILED);
 		
@@ -67,6 +74,27 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 		spellPageAttributes(kpilist, mains);
 		
 		return kpilist;
+	}
+	
+	@Autowired
+	private GroupService groupService;
+	
+	@Override
+	public List<Map<String, Object>> getAllKpis() {
+		List<Map<String, Object>> groupKpiList = new ArrayList<Map<String, Object>>();
+		
+		List<Group> rootGroups = groupService.getGroupsParentIdZero();
+		for(Group group: rootGroups) {
+			User manager = userService.getRootGroupManager(group.getId());
+			List<Map<String, Object>> kpiList = getAssosiateKpis(manager.getUserName());
+			
+			Map<String, Object> kpiMap = new HashMap<String, Object>();
+			kpiMap.put("groupChName", group.getGroupChName());
+			kpiMap.put("kpiList", kpiList);
+			groupKpiList.add(kpiMap);
+		}
+		
+		return groupKpiList;
 	}
 	
 	private void setOperatorByIsFiled(List<Main> mains, int isFiled) {
@@ -140,6 +168,13 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 			kpilist.add(tempMap);
 		}
 	}
+	
+	@Override
+	public Object doFlowSuperView(String method, Long main_id) {
+		Object obj = null;
+		obj = superview(main_id);
+		return obj;
+	}
 
 	@Override
 	public Object doFlowGet(String method, Long main_id) {
@@ -198,6 +233,11 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 		return kpiFlow.enter(main.getProcessinstanceId(), flowTaskinstance.getId());
 	}
 
+	private Object superview(Long main_id) {
+		Main main = mainMapper.selectByPrimaryKey(main_id);
+		return kpiFlow.superview(main.getProcessinstanceId(), 0L);
+	}
+	
 	private Object view(Long main_id) {
 		Main main = mainMapper.selectByPrimaryKey(main_id);
 		return kpiFlow.view(main.getProcessinstanceId(), 0L);
@@ -425,5 +465,13 @@ public class KpiServiceImpl implements KpiService, KpiConstant, FlowConstant {
 		cmain.setAssessStatus(node_id.intValue());
 		mainMapper.updateByPrimaryKeySelective(cmain);
 	}
+
+	@Override
+	public String getWaitAssessmentPerson(Long main_id) {
+		Main main = mainMapper.selectByPrimaryKey(main_id);
+		String waitAssessmentPersonName = userService.getUserRealnameByUserid(main.getWaitAssessmentPersonId());
+		return waitAssessmentPersonName;
+	}
+
 
 }

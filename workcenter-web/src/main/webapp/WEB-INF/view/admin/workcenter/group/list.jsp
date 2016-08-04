@@ -92,6 +92,18 @@
 			<div class="modal-body">
 				<form id="groupForm">
 					<input id="id" name="id" type="hidden" >
+					
+					<input id="type" name="type" value="1" type="hidden" >
+					
+					<div class="form-group">
+						<label for="recipient-name" class="control-label">parentId</label> 
+						<select id="parentId" name="parentId" class="form-control">
+						  <c:forEach items="${parentGroups }" var="parentGroup">
+							  <option value="${parentGroup.id}">${parentGroup.groupChName}</option>
+						  </c:forEach>
+						</select>
+					</div>
+					
 					<div class="form-group">
 						<label for="recipient-name" class="control-label">用户组名:</label> 
 						<input id="groupName" name="groupName" type="text" class="form-control">
@@ -226,7 +238,7 @@
 		
 		$("#edit_btn").on("click", function() {
 			
-			$("#exampleModalLabel").text("编辑角色");
+			$("#exampleModalLabel").text("编辑用户组");
 			
 			var checkedNum = $("#listTable").find("input:checkbox[name='groupId']:checked").length;
 			
@@ -256,6 +268,7 @@
 						$("#groupName").val(group.groupName);
 						$("#groupChName").val(group.groupChName);
 						$("#status").val(group.status);
+						$("#parentId").val(group.parentId);
 						$("#exampleModal").modal('show');
 						$("#model_submit_btn").attr("value1", "edit");
 					} else {

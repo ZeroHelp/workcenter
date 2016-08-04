@@ -38,12 +38,16 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 		
 		if(taskinstance_id == 0) { //view
 			checkRelatedRight(processinstance_id);
+		} else if(taskinstance_id == -1) {//super view
+			
 		} else {
 			check(processinstance_id, taskinstance_id);
 		}
 		Map<String, Object> attributesAccess = null;
 		
 		if(taskinstance_id == 0) { //view
+			attributesAccess = flowService.getVariableaccess(VIEW_NODE_ID);
+		} else if(taskinstance_id == -1) { //super view
 			attributesAccess = flowService.getVariableaccess(VIEW_NODE_ID);
 		} else {
 			FlowTaskinstance currentTaskinstance = flowService.getFlowTaskinstanceById(taskinstance_id);
@@ -128,6 +132,10 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 			kpiService.doPreMainPrepare(processinstance_id, preNode.getId());
 		}
 		return null;
+	}
+	
+	public Object superview(Long processinstance_id, Long taskinstance_id) {
+		return enter(processinstance_id, -1L);
 	}
 
 	@Override
@@ -252,6 +260,9 @@ public class KpiFlow extends DefaultFlow implements FlowConstant {
 	}
 
 	private void checkRelatedRight(Long processinstance_id) {
+		//20160803 如果有KPI_SUPER_ROLE 权限，则有查看权限
+		
+		
 		List<User> relatedUsers = userService.getFlowRelatedUsers(processinstance_id);
 		List<String> relatedUsernames = new ArrayList<String>();
 		for(User u: relatedUsers) {

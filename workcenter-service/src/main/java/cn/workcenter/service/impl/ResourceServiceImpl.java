@@ -12,6 +12,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.workcenter.common.WorkcenterApplication;
 import cn.workcenter.common.WorkcenterCodeEnum;
 import cn.workcenter.common.WorkcenterResult;
 import cn.workcenter.common.cache.RedisCache;
@@ -19,7 +20,6 @@ import cn.workcenter.common.constant.CacheConstant;
 import cn.workcenter.common.constant.WebConstant;
 import cn.workcenter.dao.ResourceMapper;
 import cn.workcenter.dao.RoleResourceMapper;
-import cn.workcenter.model.GroupUser;
 import cn.workcenter.model.Resource;
 import cn.workcenter.model.RoleResource;
 import cn.workcenter.service.ResourceService;
@@ -61,7 +61,9 @@ public class ResourceServiceImpl implements ResourceService , CacheConstant, Web
 	public List<Resource> getUserModule() {
 		String username = userService.getUsername();
 		List<Resource> modules = resourceMapper.getRootResourcesByUsername(username);
-		
+		for(int i=0;i<modules.size();i++) {
+			modules.get(i).setIcons(WorkcenterApplication.iconsList.get(i%WorkcenterApplication.iconsList.size()));
+		}
 		return modules;
 	}
 

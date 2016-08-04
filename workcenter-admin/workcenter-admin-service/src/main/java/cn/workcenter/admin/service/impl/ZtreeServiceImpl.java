@@ -61,9 +61,9 @@ public class ZtreeServiceImpl implements ZtreeService {
 				ztreec.add(nodec);
 				List<User> userc = userService.getUsersByGroupid(c.getId());
 				nodec.setZLeafs(userc);	
-				rootzNode.getChildren().addAll(ztreec);
 				setSubZNode(nodec,c.getId());
 			}
+			rootzNode.getChildren().addAll(ztreec);
 		}
 	}
 	

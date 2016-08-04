@@ -23,5 +23,9 @@ public interface GroupService {
 	List<Group> getGroupsByUserid(Long userId);
 
 	Object updateUserGroups(Long userId, Long[] groupId);
+
+	List<Group> getParentGroups();
+
+	List<Group> getGroupsParentIdZero();
 	
 }

@@ -27,7 +27,7 @@
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<%=basePath%>/${sid }/workcenter/home">workcenter系统</a><a class="navbar-brand" href="#">></a><a class="navbar-brand" href="<%=basePath%>/${sid }/kpi/home">KPI系统</a>
+				<a class="navbar-brand" href="<%=basePath%>/${sid }/workcenter/home">workcenter系统</a><a class="navbar-brand" href="#">></a><a class="navbar-brand" href="<%=basePath%>/${sid }/kpi/superhome">KPI超级用户查看</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 
@@ -372,8 +372,7 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<%-- <span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)" readonly> --%>
-												<span class="input-group-addon" >能力素质</span> <input name="taskContent" type="text" class="form-control" value="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)" readonly>
+												<span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="form-control" placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)" readonly>
 											</div>
 										</div>
 									</div> <!-- /.row -->
@@ -383,8 +382,7 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group">
-												<%-- <span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="form-control " placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)"> --%>
-												<span class="input-group-addon" >能力素质</span> <input name="taskContent" type="text" class="form-control " value="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)" readonly>
+												<span class="input-group-addon" >能力素质</span> <input name="taskContent" value="${cultural.taskContent}" type="text" class="requireds form-control " placeholder="填写能力素质...(1、评价标准参见《宜信员工能力素质指标库》。2、建议选取3-5个指标。)">
 											</div>
 										</div>
 									</div> <!-- /.row -->
@@ -433,49 +431,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<c:choose>
-			<c:when test="${selfDirection_access == 3}">
-			<!-- 起草 -->
-				<div class="span7 text-center">
-					<button value1="save" type="button" class="submit_btn btn btn-primary btn-lg">保存草稿</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button value1="submit" type="button" class="submit_btn btn btn-primary btn-lg">提交审批</button>
-				</div>
-			</c:when>
-		
-			<c:when test="${selfEvaluate_access == 3}">
-			<!-- 任务自评 -->
-				<div class="span7 text-center">
-					<button value1="saveEv" type="button" class="submit_btn btn btn-primary btn-lg">保存自评</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button value1="submitEv" type="button" class="submit_btn btn btn-primary btn-lg">提交审评</button>
-				</div>
-			</c:when>
-			
-			<c:when test="${leaderEvaluation_access == 3}">
-			<!-- 领导审评 -->
-				<div class="span7 text-center">
-					<button value1="reject" type="button" class="submit_btn btn btn-primary btn-lg">驳回</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button value1="finish" type="button" class="submit_btn btn btn-primary btn-lg">审评完成</button>
-				</div>
-			</c:when>
-			
-			<c:when test="${method == 'view'}">
-			<!-- 查看 -->
-				<div class="span7 text-center">
-					<button type="button" class="back_btn btn btn-primary btn-lg">返回</button>
-				</div>
-			</c:when>
-			<c:otherwise>
-			<!-- 领导审批 -->
-				<div class="span7 text-center">
-					<button value1="unpass" type="button" class="submit_btn btn btn-primary btn-lg">不通过审批</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button value1="pass" type="button" class="submit_btn btn btn-primary btn-lg">通过审批</button>
-				</div>
-			</c:otherwise>
-		</c:choose>
 		
 		<div class="col-sm-12">
 			<br>
@@ -579,6 +534,8 @@
 							selfScore: "requireds",
 							leaderEvaluation: "requireds",
 							leaderScore: "requireds",
+							
+							taskContent: "requireds",
 						},
 						messages: {
 							selfDirection: "存在方向为空",
@@ -589,6 +546,7 @@
 							leaderEvaluation: "存在领导评价为空",
 							leaderScore: "存在审评为空",
 							
+							taskContent: "存在能力素质为空",
 						},
 						onfocusout: function(element) { 
 							return ; 

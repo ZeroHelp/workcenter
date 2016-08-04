@@ -20,7 +20,7 @@
 	<context:annotation-config />
 	<!-- 把标记了@Controller注解的类转换为bean -->
 	<context:component-scan base-package="cn.workcenter" >
-		<context:include-filter type="regex" expression="cn.workcenter.controller.*"/>
+		<context:include-filter type="regex" expression="cn.workcenter.controller.*,cn.workcenter.controller.*.*"/>
 	</context:component-scan>
 	
 	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 请求映射 -->
